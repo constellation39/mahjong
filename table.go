@@ -234,6 +234,7 @@ func RonCutJunko(value, shift uint64, cnt int) bool {
 	if cnt == 0 {
 		return true
 	}
+
 	for (value>>shift) != 0 && ((value>>shift)&0xF)%5 == 0 {
 		shift += 4
 	}
@@ -278,5 +279,14 @@ func AnalysisCut2(value uint64, ret *[][]int) {
 func AnalysisCut3(value, shift, pair, junkoCount, junkos, pungCount, pungs uint64, ret *[][]int) {
 	for (value>>shift) != 0 && ((value>>shift)&0xF)%5 == 0 {
 		shift += 4
+	}
+	if value>>shift == 0 {
+		return
+	}
+	var continuous1, singleCount1 uint64
+	Get(value, shift, &continuous1, &singleCount1)
+	if singleCount1 >= 3 {
+		temp1 := singleCount1 - 3
+		AnalysisCut3(Set(value, shift, &continuous1, &temp1), shift, pair, junkoCount, junkos, pungCount+1, (pungs<<8)|((shift>>2)+1), ret)
 	}
 }
