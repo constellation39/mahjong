@@ -32,11 +32,12 @@ func PrintTiles(tiles uint64) {
 func TestTilesEnum(t *testing.T) {
 	cnt := 0
 	now := time.Now()
-	for i := 2; i <= 5; i += 3 {
-		for _, tiles := range TilesEnum(i) {
-			log.Printf("%b", tiles)
-		}
+	for i := 2; i <= 14; i += 3 {
+		cnt += len(Enum(i))
 		log.Printf("i %d cnt %d time %s", i, cnt, time.Now().Sub(now))
 	}
+}
 
+func Enum(n int) []uint64 {
+	return TilesEnum(n)
 }
