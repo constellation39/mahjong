@@ -1,161 +1,178 @@
 package mahjong
 
 import (
-	"sort"
+	"fmt"
+	"mahjong/analysis"
+	"mahjong/ron"
+	. "mahjong/utils"
 )
 
 // 原理：https://zhuanlan.zhihu.com/p/31000381
 //
 
-// EnumQuantity 对数量穷举
-func EnumQuantity(count int) (ret [][]int) {
-	ret = make([][]int, 0)
-	enumQuantity(make([]int, 0, count), count, &ret)
-	return
-}
-func enumQuantity(stack []int, count int, ret *[][]int) {
-	if count == 0 {
-		temp := make([]int, len(stack))
-		*ret = append(*ret, temp)
-		copy(temp, stack)
-		return
-	}
-
-	for i := 1; i <= 4; i++ {
-		if count >= i {
-			stack = append(stack, i)
-			enumQuantity(stack, count-i, ret)
-			stack = stack[:len(stack)-1]
-		}
-	}
-}
-
-func Build(stack []int) (ret uint64) {
-	var shift uint64
-	for i := 0; i < len(stack); i, shift = i+1, shift+4 {
-		ret |= uint64(stack[i]-1) << shift
-	}
-	ret |= 0b1111 << shift
-	return
-}
-
-// EnumDistance 对距离穷举
-func EnumDistance(stack []int) []uint64 {
-	ret := make([]uint64, 0)
-	enumDistance(Build(stack)|0b1000<<((len(stack)-1)*4), 0, len(stack)-1, 0, &ret)
-	return ret
-}
-
-func enumDistance(value uint64, deep, deepCnt int, index uint64, ret *[]uint64) {
-	if deep >= deepCnt {
-		*ret = append(*ret, value)
-		return
-	}
-	for i := uint64(1); i <= 3; i++ {
-		if i == 3 {
-			enumDistance(value|(i-1)<<(deep*4+2), deep+1, deepCnt, 0, ret)
-			continue
-		}
-		if index+i > 8 {
-			continue
-		}
-		enumDistance(value|(i-1)<<(deep*4+2), deep+1, deepCnt, index+i, ret)
-	}
-}
-
-type RebuildItems []*RebuildItem
-type RebuildItem struct {
-	Value  uint64
-	Length uint64
-}
-
-func NewRebuildItem(value, length uint64) *RebuildItem {
-	return &RebuildItem{
-		Value:  Min(value, Reverse(value, length)),
-		Length: length,
-	}
-}
-
-func Min(a, b uint64) uint64 {
-	if a > b {
-		return b
-	}
-	return a
-}
-
-func Reverse(value, length uint64) uint64 {
-	temp := uint64(0b10 << (length - 2))
-	maxShift := length - 4
-	maxShift2 := length - 8
-	for shift := uint64(0); shift < length; shift++ {
-		temp |= (value >> shift) & 0b0011 << (maxShift - shift)
-		if shift < length-4 {
-			temp |= (value >> shift) & 0b1100 << (maxShift2 - shift)
-		}
-	}
-	return temp
-}
-
-func (item RebuildItems) Len() int           { return len(item) }
-func (item RebuildItems) Less(i, j int) bool { return item[i].Value < item[j].Value }
-func (item RebuildItems) Swap(i, j int)      { item[i], item[j] = item[j], item[i] }
-
-func ReBuild(value uint64) uint64 {
-	rebuildItems := make(RebuildItems, 0)
-
-	var shift uint64
-	for value>>shift != 0b1111 {
-		if value>>shift&0b1000 == 0 {
-			shift += 4
-			continue
-		}
+func Shanten(value uint64) (int, []*analysis.Result) {
+	var shift, tiles, remCount uint64
+	for (value>>shift)&0b1111 != 0b1111 {
+		continuous := value >> (shift + 2) & 0b11
+		cnt := (value >> shift & 0b11) + 1
+		remCount += cnt
+		tiles |= (continuous*5 + cnt) << shift
 		shift += 4
-		rebuildItems = append(rebuildItems, NewRebuildItem(value&((1<<shift)-1), shift))
-		value >>= shift
-		shift = 0
 	}
-	sort.Sort(rebuildItems)
-	if value != 0b1111 {
-		panic(value)
+
+	if ron.Ron(tiles, remCount) {
+		ret := Analysis(tiles)
+		return -1, ret
 	}
-	for _, rebuildItem := range rebuildItems {
-		value = value<<rebuildItem.Length | rebuildItem.Value
+
+	if value == 16252928 {
+		fmt.Println()
 	}
-	return value
-}
-func Valid(value uint64) bool {
-	var level, continuous, tempContinuous uint64
-	tempContinuous = 1
-	for shift := uint64(0); (value >> shift) != 0xF; shift += 4 {
-		singleContinuous := (value >> (shift + 2)) & 3
-		if singleContinuous < 2 {
-			if level >= 3 {
-				return false
-			}
-			tempContinuous += singleContinuous + 1
-		} else if level < 3 {
-			if continuous+2+tempContinuous <= 9 {
-				continuous += 2 + tempContinuous
-			} else {
-				continuous = 0
-				tempContinuous = 1
-				level++
-			}
-		}
+
+	args := &analysis.SyantenArgs{
+		N:               remCount / 3,
+		Result:          13,
+		MaxUseTileCount: 0,
 	}
-	return true
+	Syanten(tiles, remCount, args)
+	return int(args.Result), nil
 }
 
-func TilesEnum(sum int) []uint64 {
-	ret := make([]uint64, 0)
-	for _, quantity := range EnumQuantity(sum) {
-		//log.Printf("len(%+v) == %d [%b] \n", quantity, len(quantity), Build(quantity))
-		for _, distance := range EnumDistance(quantity) {
-			if !Valid(distance) {
-				continue
-			}
-			ret = append(ret, ReBuild(distance))
+func Analysis(value uint64) (ret []*analysis.Result) {
+	ret = make([]*analysis.Result, 0)
+	AnalysisCutPair(value, &ret)
+	return
+}
+
+func AnalysisCutPair(value uint64, ret *[]*analysis.Result) {
+	for shift := uint64(0); (value >> shift) != 0; shift += 4 {
+		continuous, singleCount := Get(value, shift)
+		if singleCount >= 2 {
+			AnalysisCut3(Set(value, shift, continuous, singleCount-2), 0, (shift>>2)+1, 0, 0, 0, 0, ret)
 		}
 	}
-	return ret
+}
+
+func AnalysisCut3(value, shift, pair, junkoCount, junkos, pungCount, pungs uint64, ret *[]*analysis.Result) {
+	for (value>>shift) != 0 && ((value>>shift)&0xF)%5 == 0 {
+		shift += 4
+	}
+	if value>>shift == 0 {
+		newResult := analysis.New(pair, junkoCount, junkos, pungCount, pungs)
+		*ret = append(*ret, newResult)
+		return
+	}
+
+	continuous, singleCount := Get(value, shift)
+	if singleCount >= 3 {
+		var temp = Set(value, shift, continuous, singleCount-3)
+		AnalysisCut3(temp, shift, pair, junkoCount, junkos, pungCount+1, (pungs<<8)|((shift>>2)+1), ret)
+	}
+	if continuous == 0 {
+		continuous2, singleCount2 := Get(value, shift+4)
+		if continuous2 == 0 && singleCount2 > 0 {
+			continuous3, singleCount3 := Get(value, shift+8)
+			if singleCount3 > 0 {
+				var temp = Set(value, shift, continuous, singleCount-1)
+				temp = Set(temp, shift+4, continuous2, singleCount2-1)
+				temp = Set(temp, shift+8, continuous3, singleCount3-1)
+				AnalysisCut3(temp, shift, pair, junkoCount+1, (junkos<<8)|((shift>>2)+2), pungCount, pungs, ret)
+			}
+		}
+	}
+}
+
+func Syanten(value, count uint64, args *analysis.SyantenArgs) {
+	for shift := uint64(0); (value >> shift) != 0; shift += 4 {
+		continuous, singleCount := Get(value, shift)
+		if singleCount >= 2 {
+			SyantenCut3(Set(value, shift, continuous, singleCount-2), 0, count-2, 0, 0, 1, args)
+		}
+	}
+	SyantenCut3(value, 0, count, 0, 0, 0, args)
+}
+
+func SyantenCut3(value, shift, remCount, c3, c2, p uint64, args *analysis.SyantenArgs) {
+	for value>>shift != 0 && ((value>>shift)&0xF)%5 == 0 {
+		shift += 4
+	}
+	if value>>shift == 0 {
+		SyantenCut2(value, 0, remCount, c3, c2, p, args)
+		return
+	}
+	continuous, singleCount := Get(value, shift)
+	if singleCount >= 3 {
+		SyantenCut3(Set(value, shift, continuous, singleCount-3), shift+4, remCount-3, c3+1, c2, p, args)
+	}
+	if continuous == 0 {
+		continuous2, singleCount2 := Get(value, shift+4)
+		if continuous2 == 0 && singleCount2 > 0 {
+			continuous3, singleCount3 := Get(value, shift+8)
+			if singleCount3 > 0 {
+				var temp = Set(value, shift, continuous, singleCount-1)
+				temp = Set(temp, shift+4, continuous2, singleCount2-1)
+				temp = Set(temp, shift+8, continuous3, singleCount3-1)
+				SyantenCut3(temp, shift, remCount-3, c3+1, c2, p, args)
+			}
+		}
+	}
+	SyantenCut3(value, shift+4, remCount, c3, c2, p, args)
+}
+
+func SyantenCut2(value, shift, remCount, c3, c2, p uint64, args *analysis.SyantenArgs) {
+	if args.Result == 0 {
+		return
+	}
+	if c3+c2 > args.N {
+		return
+	}
+	useTileCount := c3 + (c3+c2+p)*2
+	if remCount < args.MaxUseTileCount-useTileCount {
+		return
+	}
+
+	if remCount == 0 {
+		num := (args.N-c3)*2 - c2 - p
+		if num < args.Result {
+			args.Result = num
+		}
+		if args.MaxUseTileCount < useTileCount {
+			args.MaxUseTileCount = useTileCount
+		}
+		return
+	}
+
+	for ((value>>shift)&0xF)%5 == 0 {
+		shift += 4
+	}
+
+	continuous, singleCount := Get(value, shift)
+	if singleCount >= 2 {
+		SyantenCut2(Set(value, shift, continuous, singleCount-2), shift, remCount-2, c3, c2+1, p, args)
+	}
+	if continuous == 0 {
+		continuous2, singleCount2 := Get(value, shift+4)
+		if singleCount2 > 0 {
+			var temp = Set(value, shift, continuous, singleCount-1)
+			temp = Set(temp, shift+4, continuous2, singleCount2-1)
+			SyantenCut2(temp, shift, remCount-2, c3, c2+1, p, args)
+		}
+		if continuous2 == 0 {
+			continuous3, singleCount3 := Get(value, shift+8)
+			if singleCount3 > 0 {
+				var temp = Set(value, shift, continuous, singleCount-1)
+				temp = Set(temp, shift+8, continuous3, singleCount3-1)
+				SyantenCut2(temp, shift, remCount-2, c3, c2+1, p, args)
+			}
+		}
+	} else if continuous == 1 {
+		continuous3, singleCount3 := Get(value, shift+4)
+		if singleCount3 > 0 {
+			var temp = Set(value, shift, continuous, singleCount-1)
+			temp = Set(temp, shift+4, continuous3, singleCount3-1)
+			SyantenCut2(temp, shift, remCount-2, c3, c2+1, p, args)
+		}
+	}
+
+	SyantenCut2(value, shift+4, remCount-singleCount, c3, c2, p, args)
 }
