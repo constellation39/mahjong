@@ -1,7 +1,6 @@
 package mahjong
 
 import (
-	"fmt"
 	"mahjong/analysis"
 	"mahjong/ron"
 	. "mahjong/utils"
@@ -23,10 +22,6 @@ func Shanten(value uint64) (int, []*analysis.Result) {
 	if ron.Ron(tiles, remCount) {
 		ret := Analysis(tiles)
 		return -1, ret
-	}
-
-	if value == 16252928 {
-		fmt.Println()
 	}
 
 	args := &analysis.SyantenArgs{
@@ -127,7 +122,8 @@ func SyantenCut2(value, shift, remCount, c3, c2, p uint64, args *analysis.Syante
 		return
 	}
 	useTileCount := c3 + (c3+c2+p)*2
-	if remCount < args.MaxUseTileCount-useTileCount {
+	t := int(args.MaxUseTileCount) - int(useTileCount)
+	if int(remCount) < t {
 		return
 	}
 
