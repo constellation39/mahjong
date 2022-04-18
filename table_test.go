@@ -19,6 +19,6 @@ func TestShanten(t *testing.T) {
 		//}
 		//log.Printf("%d [%b] Shanten %d", tiles, tiles, shanten)
 	}
-	
+
 	log.Printf("%+v", shantenMap)
 }

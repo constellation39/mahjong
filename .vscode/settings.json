@@ -8,5 +8,6 @@
         "Shuntsu",
         "toitsu",
         "Wanzu"
-    ]
+    ],
+    "go.testTimeout": "1h"
 }
