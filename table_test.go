@@ -7,18 +7,30 @@ import (
 )
 
 func TestShanten(t *testing.T) {
-	shantenMap := make(map[int]uint64)
-	for tiles := range table.EnumTiles(2, 5, 8, 11, 14) {
+	shantenMap := make(map[uint64]int)
+	for tiles := range table.EnumTiles(2, 5, 8, 11) {
 		shanten, results := Shanten(tiles)
 		if shanten == -1 && len(results) == 0 {
 			panic(shanten)
 		}
-		shantenMap[shanten]++
+		shantenMap[tiles] = shanten
 		//for _, result := range results {
 		//	log.Printf("%d [%b] Shanten %d Analysis %s", tiles, tiles, shanten, result.String())
 		//}
 		//log.Printf("%d [%b] Shanten %d", tiles, tiles, shanten)
 	}
-	
-	log.Printf("%+v", shantenMap)
+
+	check := []int{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 18}
+	shanten, ok := Suggest(shantenMap, check)
+
+	log.Printf("shanten %d , ok %t", shanten, ok)
+}
+
+func Suggest(shantenMap map[uint64]int, tiles []int) (int, bool) {
+	key := BuildKey(tiles)
+	shanten, ok := shantenMap[key]
+	if !ok {
+		return 99, false
+	}
+	return shanten, true
 }

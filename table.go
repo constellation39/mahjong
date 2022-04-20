@@ -3,6 +3,7 @@ package mahjong
 import (
 	"mahjong/analysis"
 	"mahjong/ron"
+	"mahjong/table"
 	. "mahjong/utils"
 )
 
@@ -171,4 +172,33 @@ func SyantenCut2(value, shift, remCount, c3, c2, p uint64, args *analysis.Syante
 	}
 
 	SyantenCut2(value, shift+4, remCount-singleCount, c3, c2, p, args)
+}
+
+func BuildKey(tiles []int) uint64 {
+	ids := make([]uint64, 34)
+	for _, id := range tiles {
+		ids[id-11]++
+	}
+	//ret := len(tiles) - 1
+	//best := 1 - len(tiles)%3
+	result := uint64(0b1111)
+	prevIndex := -3
+	for i := 0; i < 34; i++ {
+		if i%9 == 0 || i >= 27 {
+			prevIndex = -3
+		}
+		if ids[i] == 0 {
+			continue
+		}
+		diffIndex := uint64(i - prevIndex - 1)
+		if diffIndex >= 2 {
+			result |= result<<4 | 0b1000
+		} else {
+			result |= result<<4 | diffIndex<<2
+
+		}
+		result |= ids[i] - 1
+		prevIndex = i
+	}
+	return table.SortUInt64(result)
 }

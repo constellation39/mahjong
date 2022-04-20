@@ -99,8 +99,8 @@ func (item rebuildItems) Len() int           { return len(item) }
 func (item rebuildItems) Less(i, j int) bool { return item[i].Value < item[j].Value }
 func (item rebuildItems) Swap(i, j int)      { item[i], item[j] = item[j], item[i] }
 
-func sortUInt64(value uint64) uint64 {
-	rebuildItems := make(rebuildItems, 0)
+func SortUInt64(value uint64) uint64 {
+	RebuildItems := make(rebuildItems, 0)
 
 	var shift uint64
 	for value>>shift != 0b1111 {
@@ -109,16 +109,16 @@ func sortUInt64(value uint64) uint64 {
 			continue
 		}
 		shift += 4
-		rebuildItems = append(rebuildItems, newRebuildItem(value&((1<<shift)-1), shift))
+		RebuildItems = append(RebuildItems, newRebuildItem(value&((1<<shift)-1), shift))
 		value >>= shift
 		shift = 0
 	}
-	sort.Sort(rebuildItems)
+	sort.Sort(RebuildItems)
 	if value != 0b1111 {
 		panic(value)
 	}
-	for _, rebuildItem := range rebuildItems {
-		value = (value << rebuildItem.Length) | rebuildItem.Value
+	for _, RebuildItem := range RebuildItems {
+		value = (value << RebuildItem.Length) | RebuildItem.Value
 	}
 	return value
 }
@@ -162,7 +162,7 @@ func EnumValue(num int, set map[uint64]struct{}) {
 			if !valid(distance) {
 				continue
 			}
-			distance = sortUInt64(distance)
+			distance = SortUInt64(distance)
 			set[distance] = struct{}{}
 		}
 	}
