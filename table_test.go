@@ -20,6 +20,7 @@ func TestShanten(t *testing.T) {
 		//log.Printf("%d [%b] Shanten %d", tiles, tiles, shanten)
 	}
 
+<<<<<<< HEAD
 	check := []int{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 18}
 	shanten, ok := Suggest(shantenMap, check)
 
@@ -33,4 +34,7 @@ func Suggest(shantenMap map[uint64]int, tiles []int) (int, bool) {
 		return 99, false
 	}
 	return shanten, true
+=======
+	log.Printf("%+v", shantenMap)
+>>>>>>> 1353c8b588778e6f64c722dcc80b9de5329367de
 }
