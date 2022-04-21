@@ -1,20 +1,22 @@
 package table
 
 import (
+	"fmt"
 	"log"
 	"sort"
+	"sync"
 	"time"
 )
 
 // enumQuantity 对数量穷举
-func enumQuantity(count int) (ret [][]int) {
-	ret = make([][]int, 0)
-	quantitys(make([]int, 0, count), count, &ret)
+func enumQuantity(count int) (ret [][]uint8) {
+	ret = make([][]uint8, 0)
+	quantitys(make([]uint8, 0, count), count, &ret)
 	return
 }
-func quantitys(stack []int, count int, ret *[][]int) {
+func quantitys(stack []uint8, count int, ret *[][]uint8) {
 	if count == 0 {
-		temp := make([]int, len(stack))
+		temp := make([]uint8, len(stack))
 		*ret = append(*ret, temp)
 		copy(temp, stack)
 		return
@@ -22,14 +24,14 @@ func quantitys(stack []int, count int, ret *[][]int) {
 
 	for i := 1; i <= 4; i++ {
 		if count >= i {
-			stack = append(stack, i)
+			stack = append(stack, uint8(i))
 			quantitys(stack, count-i, ret)
 			stack = stack[:len(stack)-1]
 		}
 	}
 }
 
-func buildUint64(stack []int) (ret uint64) {
+func buildUint64(stack []uint8) (ret uint64) {
 	var shift uint64
 	for i := 0; i < len(stack); i, shift = i+1, shift+4 {
 		ret |= uint64(stack[i]-1) << shift
@@ -39,7 +41,7 @@ func buildUint64(stack []int) (ret uint64) {
 }
 
 // enumDistance 对距离穷举
-func enumDistance(stack []int) []uint64 {
+func enumDistance(stack []uint8) []uint64 {
 	ret := make([]uint64, 0)
 	distances(buildUint64(stack)|0b1000<<((len(stack)-1)*4), 0, len(stack)-1, 0, &ret)
 	return ret
@@ -145,25 +147,35 @@ func valid(value uint64) bool {
 	return true
 }
 
-func EnumTiles(values ...int) map[uint64]struct{} {
-	set := make(map[uint64]struct{})
+func EnumTiles(values ...int) *sync.Map {
+	set := new(sync.Map)
 	for _, value := range values {
 		now := time.Now()
 		EnumValue(value, set)
-		log.Printf("%d cnt %d use time %s", value, len(set), time.Now().Sub(now))
+		log.Printf("%d use time %s", value, time.Now().Sub(now))
 	}
 	return set
 }
 
-func EnumValue(num int, set map[uint64]struct{}) {
+func EnumValue(num int, set *sync.Map) {
+	wg := sync.WaitGroup{}
 	for _, quantity := range enumQuantity(num) {
+		wg.Add(1)
+		//go func() {/
 		for _, distance := range enumDistance(quantity) {
 			//注释则不过滤无效牌型
 			if !valid(distance) {
 				continue
 			}
+			if distance == 3972 {
+				fmt.Println()
+			}
+
 			distance = SortUInt64(distance)
-			set[distance] = struct{}{}
+			set.Store(distance, struct{}{})
 		}
+		wg.Done()
+		//}()
 	}
+	wg.Wait()
 }
