@@ -5,14 +5,19 @@ import (
 	"mahjong/ibukisaar/table"
 	"sort"
 	"testing"
+	"time"
 )
 
 func TestBuildKey(t *testing.T) {
-	tiles := []int{11, 12}
+	tiles := []int{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19, 19}
 	sort.Ints(tiles)
 	key := BuildKey(tiles)
 	key = table.SortUInt64(key)
-	fmt.Printf("key %d \n", key)
-	shanten, ok := ShantenMap.Load(key)
-	fmt.Printf("shanten %d ok %t", shanten, ok)
+	fmt.Printf("key %d %b \n", key, key)
+
+	results, ok := ResultsMap.Load(key)
+	fmt.Printf("Contains %+v(%t) results %+v ok %t \n", tiles, ShantenBitMap.Contains(key), results, ok)
+	//log.Println(ShantenBitMap.String())
+
+	time.Sleep(time.Minute * 60)
 }

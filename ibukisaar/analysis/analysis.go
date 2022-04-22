@@ -2,7 +2,6 @@ package analysis
 
 import (
 	"fmt"
-	"mahjong/ibukisaar/utils"
 	. "mahjong/ibukisaar/utils"
 )
 
@@ -13,8 +12,8 @@ type SyantenArgs struct {
 }
 
 type Result struct {
-	JunkoCount uint64
 	Pair       uint64
+	JunkoCount uint64
 	Groups     uint64
 }
 
@@ -31,65 +30,30 @@ func New(pair, junkoCount, junkos, pungCount, pungs uint64) *Result {
 func BuildAnalysisResult(arithmetic uint64) *Result {
 	junkoCount := arithmetic % 5
 	arithmetic = arithmetic / 5
+
 	pair := arithmetic % 15
 	arithmetic = arithmetic / 15
 	groups := uint64(0)
-	x := utils.ToBytes(groups)
+	x := ToBytes(groups)
 	i := 0
 	for arithmetic != 0 {
 		group := arithmetic % 15
 		arithmetic = arithmetic / 15
-		if group > 255 {
-			panic(group)
-		}
-		x[i] = byte(groups)
+		x[i] = byte(group)
 		i++
 	}
 	return &Result{
 		JunkoCount: junkoCount,
 		Pair:       pair,
-		Groups:     utils.ToUInt64(x),
+		Groups:     ToUInt64(x),
 	}
-}
-
-func GetUInt64Bytes4(value uint64) uint64 {
-	x := utils.ToBytes(value)
-	for i := uint64(3); i >= 0; i-- {
-		if x[i] != 0 {
-			return i + 1
-		}
-	}
-	return 0
-}
-
-func GetUInt64Bytes8(value uint64) uint64 {
-	x := utils.ToBytes(value)
-	for i := uint64(7); i >= 0; i-- {
-		if x[i] != 0 {
-			return i + 1
-		}
-	}
-	return 0
-}
-
-func Sort(value, length uint64) uint64 {
-	x := utils.ToBytes(value)
-	for i := uint64(0); i < length; i++ {
-		for j := i + 1; j < length; j++ {
-			if x[i] > x[j] {
-				x[i], x[j] = x[j], x[i]
-			}
-		}
-	}
-	return utils.ToUInt64(x)
 }
 
 func (analysis *Result) GetArithmetic(end uint64) uint64 {
 	result := uint64(0)
 	groups := analysis.Groups
-	x := utils.ToBytes(groups)
+	x := ToBytes(groups)
 	for i := 3; i >= 0; i-- {
-
 		if x[i] == 0 {
 			continue
 		}
@@ -98,7 +62,7 @@ func (analysis *Result) GetArithmetic(end uint64) uint64 {
 	result = result*15 + analysis.Pair
 	result = result*5 + analysis.JunkoCount
 	result <<= 3
-	bytes := GetUInt64Bytes4(result)
+	bytes := GetUInt64Bytes8(result)
 	return result | ((bytes - 1) << 1) | end
 }
 
@@ -115,6 +79,38 @@ func (analysis *Result) String() string {
 		}
 	}
 	return fmt.Sprintf("Pair %d, Junko %+v, Pung %+v", analysis.Pair, junkoCnt, pungCnt)
+}
+
+func GetUInt64Bytes4(value uint64) uint64 {
+	x := ToBytes(value)
+	for i := uint64(3); i <= 0; i-- {
+		if x[i] != 0 {
+			return i + 1
+		}
+	}
+	return 0
+}
+
+func GetUInt64Bytes8(value uint64) uint64 {
+	x := ToBytes(value)
+	for i := uint64(7); i >= 0; i-- {
+		if x[i] != 0 {
+			return i + 1
+		}
+	}
+	return 0
+}
+
+func Sort(value, length uint64) uint64 {
+	x := ToBytes(value)
+	for i := uint64(0); i < length; i++ {
+		for j := i + 1; j < length; j++ {
+			if x[i] > x[j] {
+				x[i], x[j] = x[j], x[i]
+			}
+		}
+	}
+	return ToUInt64(x)
 }
 
 func Ron(value, cnt uint64) bool {
@@ -236,7 +232,7 @@ func AnalysisCut3(value, shift, pair, junkoCount, junkos, pungCount, pungs uint6
 				var temp = Set(value, shift, continuous, singleCount-1)
 				temp = Set(temp, shift+4, continuous2, singleCount2-1)
 				temp = Set(temp, shift+8, continuous3, singleCount3-1)
-				AnalysisCut3(temp, shift, pair, junkoCount+1, (junkos<<8)|((shift>>2)+2), pungCount, pungs, ret)
+				AnalysisCut3(temp, shift, pair, junkoCount+1, (junkos<<8)|((shift>>2)+1), pungCount, pungs, ret)
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 package table
 
 import (
-	"fmt"
 	"log"
 	"sort"
 	"sync"
@@ -159,23 +158,20 @@ func EnumTiles(values ...int) *sync.Map {
 
 func EnumValue(num int, set *sync.Map) {
 	wg := sync.WaitGroup{}
-	for _, quantity := range enumQuantity(num) {
+	qs := enumQuantity(num)
+	for i := 0; i < len(qs); i++ {
 		wg.Add(1)
-		//go func() {/
-		for _, distance := range enumDistance(quantity) {
-			//注释则不过滤无效牌型
-			if !valid(distance) {
-				continue
+		go func(j int) {
+			for _, distance := range enumDistance(qs[j]) {
+				//注释则不过滤无效牌型
+				if !valid(distance) {
+					continue
+				}
+				distance = SortUInt64(distance)
+				set.Store(distance, struct{}{})
 			}
-			if distance == 3972 {
-				fmt.Println()
-			}
-
-			distance = SortUInt64(distance)
-			set.Store(distance, struct{}{})
-		}
-		wg.Done()
-		//}()
+			wg.Done()
+		}(i)
 	}
 	wg.Wait()
 }
