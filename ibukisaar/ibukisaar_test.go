@@ -5,7 +5,6 @@ import (
 	"mahjong/ibukisaar/table"
 	"sort"
 	"testing"
-	"time"
 )
 
 func TestBuildKey(t *testing.T) {
@@ -18,6 +17,4 @@ func TestBuildKey(t *testing.T) {
 	results, ok := ResultsMap.Load(key)
 	fmt.Printf("Contains %+v(%t) results %+v ok %t \n", tiles, ShantenBitMap.Contains(key), results, ok)
 	//log.Println(ShantenBitMap.String())
-
-	time.Sleep(time.Minute * 60)
 }

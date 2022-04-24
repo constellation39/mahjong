@@ -8,13 +8,13 @@ import (
 	"log"
 	"mahjong/ibukisaar/analysis"
 	"mahjong/ibukisaar/table"
-	"runtime"
 	"sync"
 	"time"
 )
 
 var (
 	ShantenBitMap = &roaring64.Bitmap{}
+	ShantenMap    = sync.Map{}
 	ResultsMap    = sync.Map{}
 	//ResultsMap    = make(map[uint64][]*analysis.Result)
 )
@@ -39,27 +39,28 @@ func init() {
 
 	iterator := ShantenBitMap.Iterator()
 
+	count := 0
 	wg := sync.WaitGroup{}
 	for iterator.HasNext() {
+		count++
 		wg.Add(1)
 		tiles := iterator.Next()
 		go func() {
+
 			shanten, results := analysis.Shanten(tiles)
 			_ = results
+
 			if shanten == -1 && len(results) == 0 {
 				panic(shanten)
 			}
-			//for _, result := range results {
-			//arithmetic := result.GetArithmetic(0)
-			//}
-			//ResultsMap.Store(tiles, results)
+			ShantenMap.Store(tiles, shanten)
+			ResultsMap.Store(tiles, results)
 			wg.Done()
 		}()
 	}
 	wg.Wait()
 
-	runtime.GC()
-	log.Printf("use time %s", time.Now().Sub(now))
+	log.Printf("%d use time %s", count, time.Now().Sub(now))
 }
 
 func Store(path string) error {
