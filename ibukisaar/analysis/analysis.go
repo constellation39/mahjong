@@ -3,6 +3,7 @@ package analysis
 import (
 	"fmt"
 	. "mahjong/ibukisaar/utils"
+	"reflect"
 )
 
 type SyantenArgs struct {
@@ -15,6 +16,17 @@ type Result struct {
 	Pair       uint64
 	JunkoCount uint64
 	Groups     uint64
+}
+
+type MentsuToitsu struct {
+	Toitsu  uint64
+	KoTsu   []uint64
+	Shuntsu []uint64
+}
+
+type Info struct {
+	Shanten int
+	Results []*Result
 }
 
 func New(pair, junkoCount, junkos, pungCount, pungs uint64) *Result {
@@ -64,6 +76,25 @@ func (analysis *Result) GetArithmetic(end uint64) uint64 {
 	result <<= 3
 	bytes := GetUInt64Bytes8(result)
 	return result | ((bytes - 1) << 1) | end
+}
+
+func (analysis *Result) MentsuToitsu() *MentsuToitsu {
+	groups := analysis.Groups
+	junkoCnt := make([]uint64, 0)
+	for junkoIndex := uint64(0); junkoIndex < analysis.JunkoCount; junkoIndex, groups = junkoIndex+1, groups>>8 {
+		junkoCnt = append(junkoCnt, groups&0xFF)
+	}
+	pungCnt := make([]uint64, 0)
+	if groups != 0 {
+		for ; groups != 0; groups >>= 8 {
+			pungCnt = append(pungCnt, groups&0xFF)
+		}
+	}
+	return &MentsuToitsu{
+		Toitsu:  analysis.Pair,
+		KoTsu:   pungCnt,
+		Shuntsu: junkoCnt,
+	}
 }
 
 func (analysis *Result) String() string {
@@ -170,7 +201,7 @@ func CutJunko(value, shift, cnt uint64) bool {
 	return false
 }
 
-func Shanten(value uint64) (int, []*Result) {
+func Shanten(value uint64) *Info {
 	var shift, tiles, remCount uint64
 	for (value>>shift)&0b1111 != 0b1111 {
 		continuous := value >> (shift + 2) & 0b11
@@ -181,8 +212,10 @@ func Shanten(value uint64) (int, []*Result) {
 	}
 
 	if Ron(tiles, remCount) {
-		ret := Analysis(tiles)
-		return -1, ret
+		return &Info{
+			Shanten: -1,
+			Results: Analysis(tiles),
+		}
 	}
 
 	args := &SyantenArgs{
@@ -191,7 +224,10 @@ func Shanten(value uint64) (int, []*Result) {
 		MaxUseTileCount: 0,
 	}
 	Syanten(tiles, remCount, args)
-	return int(args.Result), nil
+	return &Info{
+		Shanten: int(args.Result),
+		Results: nil,
+	}
 }
 
 func Analysis(value uint64) (ret []*Result) {
@@ -215,6 +251,11 @@ func AnalysisCut3(value, shift, pair, junkoCount, junkos, pungCount, pungs uint6
 	}
 	if value>>shift == 0 {
 		newResult := New(pair, junkoCount, junkos, pungCount, pungs)
+		for _, result := range *ret {
+			if reflect.DeepEqual(result, newResult) {
+				return
+			}
+		}
 		*ret = append(*ret, newResult)
 		return
 	}

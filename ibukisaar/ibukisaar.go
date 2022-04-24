@@ -8,63 +8,37 @@ import (
 	"log"
 	"mahjong/ibukisaar/analysis"
 	"mahjong/ibukisaar/table"
+	"sort"
 	"sync"
 	"time"
 )
 
 var (
-	ShantenBitMap = &roaring64.Bitmap{}
-	ShantenMap    = sync.Map{}
-	ResultsMap    = sync.Map{}
+	ShantenMap = sync.Map{}
 	//ResultsMap    = make(map[uint64][]*analysis.Result)
 )
 
 func init() {
 	now := time.Now()
-	if err := Load("table.data"); err != nil {
-		table.EnumTiles(2, 5, 8, 11, 14).Range(func(key, _ interface{}) bool {
-			tiles := key.(uint64)
-			//shanten, results := analysis.Shanten(tiles)
-			//_ = results
-			//if shanten == -1 && len(results) == 0 {
-			//	panic(shanten)
-			//}
-			ShantenBitMap.Add(tiles)
-			//ShantenMap[tiles] = shanten
-			//ResultsMap[tiles] = results
-			return true
-		})
-		Store("table.data")
+	bitMap, err := Load("table.data")
+	if err != nil {
+		bitMap = table.EnumTiles(2, 5, 8, 11, 14)
+		Store("table.data", bitMap)
 	}
+	iterator := bitMap.Iterator()
 
-	iterator := ShantenBitMap.Iterator()
-
-	count := 0
-	wg := sync.WaitGroup{}
 	for iterator.HasNext() {
-		count++
-		wg.Add(1)
 		tiles := iterator.Next()
 		go func() {
-
-			shanten, results := analysis.Shanten(tiles)
-			_ = results
-
-			if shanten == -1 && len(results) == 0 {
-				panic(shanten)
-			}
-			ShantenMap.Store(tiles, shanten)
-			ResultsMap.Store(tiles, results)
-			wg.Done()
+			info := analysis.Shanten(tiles)
+			ShantenMap.Store(tiles, info)
 		}()
 	}
-	wg.Wait()
-
-	log.Printf("%d use time %s", count, time.Now().Sub(now))
+	log.Printf("time use %+v", time.Now().Sub(now))
 }
 
-func Store(path string) error {
-	data, err := ShantenBitMap.ToBytes()
+func Store(path string, bitMap *roaring64.Bitmap) error {
+	data, err := bitMap.ToBytes()
 	if err != nil {
 		return err
 	}
@@ -75,17 +49,18 @@ func Store(path string) error {
 	return nil
 }
 
-func Load(path string) error {
+func Load(path string) (*roaring64.Bitmap, error) {
+	bitMap := &roaring64.Bitmap{}
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	read := bytes.NewReader(data)
-	_, err = ShantenBitMap.ReadFrom(read)
+	_, err = bitMap.ReadFrom(read)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return bitMap, nil
 }
 
 func BuildKey(tiles []int) (key uint64) {
@@ -115,4 +90,53 @@ func BuildKey(tiles []int) (key uint64) {
 
 	key |= 0b1111 << (len(set) * 4)
 	return key
+}
+
+func Parse(tiles []int) (ret [][][]int) {
+	sort.Ints(tiles)
+	key := BuildKey(tiles)
+	key = table.SortUInt64(key)
+	data, ok := ShantenMap.Load(key)
+	if !ok {
+		return nil
+	}
+	info := data.(*analysis.Info)
+	if info.Shanten != -1 {
+		return nil
+	}
+	sort.Sort(sort.Reverse(sort.IntSlice(tiles)))
+	tMap := make(map[int]int)
+	sortKey := make([]int, 0, 14)
+	for _, tile := range tiles {
+		if _, ok := tMap[tile]; ok {
+			tMap[tile]++
+			continue
+		}
+		tMap[tile]++
+		sortKey = append(sortKey, tile)
+	}
+	for _, result := range info.Results {
+		r := [][]int{}
+		mentsuToitsu := result.MentsuToitsu()
+		toitsu := mentsuToitsu.Toitsu
+		toitsu--
+		tMap[sortKey[toitsu]] -= 2
+		r = append(r, []int{sortKey[toitsu], sortKey[toitsu]})
+
+		for _, koTsu := range mentsuToitsu.KoTsu {
+			koTsu--
+			tMap[sortKey[koTsu]] -= 3
+			r = append(r, []int{sortKey[koTsu], sortKey[koTsu], sortKey[koTsu]})
+		}
+
+		for _, shuntsu := range mentsuToitsu.Shuntsu {
+			shuntsu--
+			tMap[sortKey[shuntsu]] -= 1
+			tMap[sortKey[shuntsu+1]] -= 1
+			tMap[sortKey[shuntsu+2]] -= 1
+			r = append(r, []int{sortKey[shuntsu], sortKey[shuntsu+1], sortKey[shuntsu+2]})
+		}
+		ret = append(ret, r)
+	}
+	return
 }

@@ -1,6 +1,7 @@
 package table
 
 import (
+	"github.com/RoaringBitmap/roaring/roaring64"
 	"log"
 	"sort"
 	"sync"
@@ -146,17 +147,17 @@ func valid(value uint64) bool {
 	return true
 }
 
-func EnumTiles(values ...int) *sync.Map {
-	set := new(sync.Map)
+func EnumTiles(values ...int) *roaring64.Bitmap {
+	bitMap := new(roaring64.Bitmap)
 	for _, value := range values {
 		now := time.Now()
-		EnumValue(value, set)
+		EnumValue(value, bitMap)
 		log.Printf("%d use time %s", value, time.Now().Sub(now))
 	}
-	return set
+	return bitMap
 }
 
-func EnumValue(num int, set *sync.Map) {
+func EnumValue(num int, bitMap *roaring64.Bitmap) {
 	wg := sync.WaitGroup{}
 	qs := enumQuantity(num)
 	for i := 0; i < len(qs); i++ {
@@ -168,7 +169,7 @@ func EnumValue(num int, set *sync.Map) {
 					continue
 				}
 				distance = SortUInt64(distance)
-				set.Store(distance, struct{}{})
+				bitMap.Add(distance)
 			}
 			wg.Done()
 		}(i)
