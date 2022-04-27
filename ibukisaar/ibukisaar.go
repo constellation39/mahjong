@@ -9,12 +9,14 @@ import (
 	"mahjong/ibukisaar/analysis"
 	"mahjong/ibukisaar/table"
 	"sort"
+	"sync"
 	"time"
 )
 
 var (
-	ShantenMap = make(map[uint64]*analysis.Info)
-	sortTiles  = map[int]int{
+	ShantenMap = sync.Map{}
+	//ShantenMap = make(map[uint64]*analysis.Info)
+	sortTiles = map[int]int{
 		11: 0, 21: 9, 31: 18, 41: 27,
 		12: 1, 22: 10, 32: 19, 42: 28,
 		13: 2, 23: 11, 33: 20, 43: 29,
@@ -25,7 +27,6 @@ var (
 		18: 7, 28: 16, 38: 25,
 		19: 8, 29: 17, 39: 26,
 	}
-	//ResultsMap    = make(map[uint64][]*analysis.Result)
 )
 
 func getIndex(tile int) int {
@@ -40,13 +41,18 @@ func init() {
 		Store("table.data", bitMap)
 	}
 	iterator := bitMap.Iterator()
-
+	wg := sync.WaitGroup{}
 	for iterator.HasNext() {
 		tiles := iterator.Next()
-		info := analysis.Shanten(tiles)
-		ShantenMap[tiles] = info
-		//ShantenMap.Store(tiles, info)
+		wg.Add(1)
+		go func() {
+			info := analysis.Shanten(tiles)
+			//ShantenMap[tiles] = info
+			ShantenMap.Store(tiles, info)
+			wg.Done()
+		}()
 	}
+	wg.Wait()
 	log.Printf("time use %+v", time.Now().Sub(now))
 }
 
@@ -209,7 +215,7 @@ func Analysis(info *analysis.Info, keys Keys) [][][]int {
 		groups = append(groups, pairs)
 		groupIds := result.Groups
 
-		for junkoIndex := uint64(0); junkoIndex < result.JunkoCount; junkoIndex, groupIds = junkoIndex+1, groupIds>>8 {
+		for junkoIndex := uint(0); junkoIndex < uint(result.JunkoCount); junkoIndex, groupIds = junkoIndex+1, groupIds>>8 {
 			index := int(groupIds & 0xFF)
 			junko := make([]int, 0, 3)
 			cur2 := indexes[index-2]
@@ -222,7 +228,6 @@ func Analysis(info *analysis.Info, keys Keys) [][][]int {
 			junko = append(junko, temp[index-1][cur1])
 			junko = append(junko, temp[index-0][cur0])
 			groups = append(groups, junko)
-			//junkoCnt = append(junkoCnt, groupIds&0xFF)
 		}
 
 		for ; groupIds != 0; groupIds >>= 8 {

@@ -2,6 +2,8 @@ package ibukisaar
 
 import (
 	"log"
+	"mahjong/ibukisaar/analysis"
+	"os"
 	"sort"
 	"testing"
 	"time"
@@ -41,8 +43,6 @@ var tilesList = [][]int{
 }
 
 func TestBuildKey1(t *testing.T) {
-	//tiles := []int{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19, 19}
-
 	for _, ints := range tilesList {
 		sort.Ints(ints)
 	}
@@ -53,8 +53,14 @@ func TestBuildKey1(t *testing.T) {
 			//sort.Ints(tiles)
 			keys := Parse(tiles)
 			key := BuildKey(keys)
-			info, _ := ShantenMap[key]
-			list := Analysis(info, keys)
+			info, ok := ShantenMap.Load(key)
+			//info, _ := ShantenMap[key]
+			if !ok {
+				log.Printf("Error %v Key %v", tiles, key)
+				os.Exit(0)
+			}
+
+			list := Analysis(info.(*analysis.Info), keys)
 			_ = list
 			//log.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
 		}

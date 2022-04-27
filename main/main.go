@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"mahjong/ibukisaar"
-	"sort"
+	_ "mahjong/ibukisaar"
+	"runtime"
 	"time"
 )
 
@@ -41,19 +42,25 @@ var tilesList = [][]int{
 }
 
 func main() {
-	for _, ints := range tilesList {
-		sort.Ints(ints)
-	}
+	//for _, ints := range tilesList {
+	//	sort.Ints(ints)
+	//}
 
 	now := time.Now()
-	for i := 0; i < 100000; i++ {
-		for _, tiles := range tilesList {
-			keys := ibukisaar.Parse(tiles)
-			key := ibukisaar.BuildKey(keys)
-			info, _ := ibukisaar.ShantenMap[key]
-			list := ibukisaar.Analysis(info, keys)
-			_ = list
-		}
-	}
+	//for i := 0; i < 100000; i++ {
+	//	for _, tiles := range tilesList {
+	//		keys := ibukisaar.Parse(tiles)
+	//		key := ibukisaar.BuildKey(keys)
+	//		info, _ := ibukisaar.ShantenMap.Load(key)
+	//		if info == nil {
+	//			log.Printf("%v", tiles)
+	//			os.Exit(0)
+	//		}
+	//		list := ibukisaar.Analysis(info.(*analysis.Info), keys)
+	//		_ = list
+	//	}
+	//}
 	log.Printf("time use %dms", time.Now().Sub(now).Milliseconds())
+	runtime.GC()
+	fmt.Scanln()
 }

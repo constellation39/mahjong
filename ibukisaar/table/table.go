@@ -162,17 +162,15 @@ func EnumValue(num int, bitMap *roaring64.Bitmap) {
 	qs := enumQuantity(num)
 	for i := 0; i < len(qs); i++ {
 		wg.Add(1)
-		go func(j int) {
-			for _, distance := range enumDistance(qs[j]) {
-				//注释则不过滤无效牌型
-				if !valid(distance) {
-					continue
-				}
-				distance = SortUInt64(distance)
-				bitMap.Add(distance)
+		for _, distance := range enumDistance(qs[i]) {
+			//注释则不过滤无效牌型
+			if !valid(distance) {
+				continue
 			}
-			wg.Done()
-		}(i)
+			distance = SortUInt64(distance)
+			bitMap.Add(distance)
+		}
+		wg.Done()
 	}
 	wg.Wait()
 }

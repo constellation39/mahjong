@@ -13,19 +13,13 @@ type SyantenArgs struct {
 }
 
 type Result struct {
-	Pair       uint64
-	JunkoCount uint64
-	Groups     uint64
-}
-
-type MentsuToitsu struct {
-	Toitsu  uint64
-	KoTsu   []uint64
-	Shuntsu []uint64
+	Pair       byte
+	JunkoCount byte
+	Groups     uint
 }
 
 type Info struct {
-	Shanten int
+	Shanten int8
 	Results []*Result
 }
 
@@ -33,13 +27,13 @@ func New(pair, junkoCount, junkos, pungCount, pungs uint64) *Result {
 	junkos = Sort(junkos, junkoCount)
 	pungs = Sort(pungs, pungCount)
 	return &Result{
-		Pair:       pair,
-		JunkoCount: junkoCount,
-		Groups:     pungs<<(junkoCount*8) | junkos,
+		Pair:       byte(pair),
+		JunkoCount: byte(junkoCount),
+		Groups:     uint(pungs<<(junkoCount*8) | junkos),
 	}
 }
 
-func BuildAnalysisResult(arithmetic uint64) *Result {
+func BuildAnalysisResult(arithmetic uint) *Result {
 	junkoCount := arithmetic % 5
 	arithmetic = arithmetic / 5
 
@@ -55,55 +49,36 @@ func BuildAnalysisResult(arithmetic uint64) *Result {
 		i++
 	}
 	return &Result{
-		JunkoCount: junkoCount,
-		Pair:       pair,
-		Groups:     ToUInt64(x),
+		JunkoCount: byte(junkoCount),
+		Pair:       byte(pair),
+		Groups:     uint(ToUInt64(x)),
 	}
 }
 
-func (analysis *Result) GetArithmetic(end uint64) uint64 {
+func (analysis *Result) GetArithmetic(end uint64) uint {
 	result := uint64(0)
 	groups := analysis.Groups
-	x := ToBytes(groups)
+	x := ToBytes(uint64(groups))
 	for i := 3; i >= 0; i-- {
 		if x[i] == 0 {
 			continue
 		}
 		result = result*15 + uint64(x[i])
 	}
-	result = result*15 + analysis.Pair
-	result = result*5 + analysis.JunkoCount
+	result = result*15 + uint64(analysis.Pair)
+	result = result*5 + uint64(analysis.JunkoCount)
 	result <<= 3
 	bytes := GetUInt64Bytes8(result)
-	return result | ((bytes - 1) << 1) | end
-}
-
-func (analysis *Result) MentsuToitsu() *MentsuToitsu {
-	groups := analysis.Groups
-	junkoCnt := make([]uint64, 0)
-	for junkoIndex := uint64(0); junkoIndex < analysis.JunkoCount; junkoIndex, groups = junkoIndex+1, groups>>8 {
-		junkoCnt = append(junkoCnt, groups&0xFF)
-	}
-	pungCnt := make([]uint64, 0)
-	if groups != 0 {
-		for ; groups != 0; groups >>= 8 {
-			pungCnt = append(pungCnt, groups&0xFF)
-		}
-	}
-	return &MentsuToitsu{
-		Toitsu:  analysis.Pair,
-		KoTsu:   pungCnt,
-		Shuntsu: junkoCnt,
-	}
+	return uint(result | ((bytes - 1) << 1) | end)
 }
 
 func (analysis *Result) String() string {
 	groups := analysis.Groups
-	junkoCnt := make([]uint64, 0)
-	for junkoIndex := uint64(0); junkoIndex < analysis.JunkoCount; junkoIndex, groups = junkoIndex+1, groups>>8 {
+	junkoCnt := make([]uint, 0)
+	for junkoIndex := byte(0); junkoIndex < analysis.JunkoCount; junkoIndex, groups = junkoIndex+1, groups>>8 {
 		junkoCnt = append(junkoCnt, groups&0xFF)
 	}
-	pungCnt := make([]uint64, 0)
+	pungCnt := make([]uint, 0)
 	if groups != 0 {
 		for ; groups != 0; groups >>= 8 {
 			pungCnt = append(pungCnt, groups&0xFF)
@@ -225,7 +200,7 @@ func Shanten(value uint64) *Info {
 	}
 	Syanten(tiles, remCount, args)
 	return &Info{
-		Shanten: int(args.Result),
+		Shanten: int8(args.Result),
 		Results: nil,
 	}
 }
