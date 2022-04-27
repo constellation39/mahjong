@@ -1,9 +1,9 @@
-package ibukisaar
+package main
 
 import (
 	"log"
+	"mahjong/ibukisaar"
 	"sort"
-	"testing"
 	"time"
 )
 
@@ -40,9 +40,7 @@ var tilesList = [][]int{
 	{12, 13, 13, 13, 14, 15, 16, 17, 25, 26, 26, 27, 27, 28},
 }
 
-func TestBuildKey1(t *testing.T) {
-	//tiles := []int{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19, 19}
-
+func main() {
 	for _, ints := range tilesList {
 		sort.Ints(ints)
 	}
@@ -50,13 +48,11 @@ func TestBuildKey1(t *testing.T) {
 	now := time.Now()
 	for i := 0; i < 100000; i++ {
 		for _, tiles := range tilesList {
-			//sort.Ints(tiles)
-			keys := Parse(tiles)
-			key := BuildKey(keys)
-			info, _ := ShantenMap[key]
-			list := Analysis(info, keys)
+			keys := ibukisaar.Parse(tiles)
+			key := ibukisaar.BuildKey(keys)
+			info, _ := ibukisaar.ShantenMap[key]
+			list := ibukisaar.Analysis(info, keys)
 			_ = list
-			//log.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
 		}
 	}
 	log.Printf("time use %dms", time.Now().Sub(now).Milliseconds())

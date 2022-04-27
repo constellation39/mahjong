@@ -273,7 +273,7 @@ func AnalysisCut3(value, shift, pair, junkoCount, junkos, pungCount, pungs uint6
 				var temp = Set(value, shift, continuous, singleCount-1)
 				temp = Set(temp, shift+4, continuous2, singleCount2-1)
 				temp = Set(temp, shift+8, continuous3, singleCount3-1)
-				AnalysisCut3(temp, shift, pair, junkoCount+1, (junkos<<8)|((shift>>2)+1), pungCount, pungs, ret)
+				AnalysisCut3(temp, shift, pair, junkoCount+1, (junkos<<8)|((shift>>2)+2), pungCount, pungs, ret)
 			}
 		}
 	}
