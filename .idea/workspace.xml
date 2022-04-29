@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2b59b73d-1882-4462-abf2-14e3a1f4d2f5" name="Changes" comment="create Table">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibukisaar/analysis/analysis.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/analysis/analysis.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ibukisaar/ibukisaar.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/ibukisaar.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibukisaar/ibukisaar_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/ibukisaar_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ibukisaar/table/table.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/table/table.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibukisaar/table.data" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

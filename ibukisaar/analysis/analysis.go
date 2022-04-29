@@ -15,7 +15,7 @@ type SyantenArgs struct {
 type Result struct {
 	Pair       byte
 	JunkoCount byte
-	Groups     uint
+	Groups     uint64
 }
 
 type Info struct {
@@ -29,18 +29,18 @@ func New(pair, junkoCount, junkos, pungCount, pungs uint64) *Result {
 	return &Result{
 		Pair:       byte(pair),
 		JunkoCount: byte(junkoCount),
-		Groups:     uint(pungs<<(junkoCount*8) | junkos),
+		Groups:     pungs<<(junkoCount*8) | junkos,
 	}
 }
 
-func BuildAnalysisResult(arithmetic uint) *Result {
+func BuildAnalysisResult(arithmetic uint64) *Result {
 	junkoCount := arithmetic % 5
 	arithmetic = arithmetic / 5
 
 	pair := arithmetic % 15
 	arithmetic = arithmetic / 15
 	groups := uint64(0)
-	x := ToBytes(groups)
+	x := UInt64ToBytes(groups)
 	i := 0
 	for arithmetic != 0 {
 		group := arithmetic % 15
@@ -51,14 +51,14 @@ func BuildAnalysisResult(arithmetic uint) *Result {
 	return &Result{
 		JunkoCount: byte(junkoCount),
 		Pair:       byte(pair),
-		Groups:     uint(ToUInt64(x)),
+		Groups:     ByteToUInt64(x),
 	}
 }
 
-func (analysis *Result) GetArithmetic(end uint64) uint {
+func (analysis *Result) GetArithmetic(end bool) uint64 {
 	result := uint64(0)
 	groups := analysis.Groups
-	x := ToBytes(uint64(groups))
+	x := UInt64ToBytes(uint64(groups))
 	for i := 3; i >= 0; i-- {
 		if x[i] == 0 {
 			continue
@@ -69,16 +69,19 @@ func (analysis *Result) GetArithmetic(end uint64) uint {
 	result = result*5 + uint64(analysis.JunkoCount)
 	result <<= 3
 	bytes := GetUInt64Bytes8(result)
-	return uint(result | ((bytes - 1) << 1) | end)
+	if end {
+		return result | ((bytes - 1) << 1) | 1
+	}
+	return result | ((bytes - 1) << 1) | 0
 }
 
 func (analysis *Result) String() string {
 	groups := analysis.Groups
-	junkoCnt := make([]uint, 0)
+	junkoCnt := make([]uint64, 0)
 	for junkoIndex := byte(0); junkoIndex < analysis.JunkoCount; junkoIndex, groups = junkoIndex+1, groups>>8 {
 		junkoCnt = append(junkoCnt, groups&0xFF)
 	}
-	pungCnt := make([]uint, 0)
+	pungCnt := make([]uint64, 0)
 	if groups != 0 {
 		for ; groups != 0; groups >>= 8 {
 			pungCnt = append(pungCnt, groups&0xFF)
@@ -88,7 +91,7 @@ func (analysis *Result) String() string {
 }
 
 func GetUInt64Bytes4(value uint64) uint64 {
-	x := ToBytes(value)
+	x := UInt64ToBytes(value)
 	for i := uint64(3); i <= 0; i-- {
 		if x[i] != 0 {
 			return i + 1
@@ -98,7 +101,7 @@ func GetUInt64Bytes4(value uint64) uint64 {
 }
 
 func GetUInt64Bytes8(value uint64) uint64 {
-	x := ToBytes(value)
+	x := UInt64ToBytes(value)
 	for i := uint64(7); i >= 0; i-- {
 		if x[i] != 0 {
 			return i + 1
@@ -108,7 +111,7 @@ func GetUInt64Bytes8(value uint64) uint64 {
 }
 
 func Sort(value, length uint64) uint64 {
-	x := ToBytes(value)
+	x := UInt64ToBytes(value)
 	for i := uint64(0); i < length; i++ {
 		for j := i + 1; j < length; j++ {
 			if x[i] > x[j] {
@@ -116,7 +119,7 @@ func Sort(value, length uint64) uint64 {
 			}
 		}
 	}
-	return ToUInt64(x)
+	return ByteToUInt64(x)
 }
 
 func Ron(value, cnt uint64) bool {

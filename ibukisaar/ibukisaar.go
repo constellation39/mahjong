@@ -2,19 +2,26 @@
 package ibukisaar
 
 import (
+	"archive/zip"
 	"bytes"
-	"github.com/RoaringBitmap/roaring/roaring64"
+	"io"
 	"io/ioutil"
 	"log"
 	"mahjong/ibukisaar/analysis"
 	"mahjong/ibukisaar/table"
+	. "mahjong/ibukisaar/utils"
+	"os"
+	"runtime"
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/RoaringBitmap/roaring/roaring64"
 )
 
 var (
-	ShantenMap = sync.Map{}
+	ShantenMap  = sync.Map{}
+	ShantenList = [10][]uint64{}
 	//ShantenMap = make(map[uint64]*analysis.Info)
 	sortTiles = map[int]int{
 		11: 0, 21: 9, 31: 18, 41: 27,
@@ -42,18 +49,89 @@ func init() {
 	}
 	iterator := bitMap.Iterator()
 	wg := sync.WaitGroup{}
+	mx := sync.Mutex{}
 	for iterator.HasNext() {
 		tiles := iterator.Next()
 		wg.Add(1)
 		go func() {
 			info := analysis.Shanten(tiles)
+			mx.Lock()
+			ShantenList[info.Shanten+1] = append(ShantenList[info.Shanten+1], tiles)
+			mx.Unlock()
 			//ShantenMap[tiles] = info
 			ShantenMap.Store(tiles, info)
 			wg.Done()
 		}()
 	}
 	wg.Wait()
+	buff := new(bytes.Buffer)
+	w := zip.NewWriter(buff)
+	z, _ := w.Create("shanten.data")
+	for _, shantens := range ShantenList {
+		DiffEncode(z, shantens)
+	}
+	w.Close()
+	ioutil.WriteFile("shanten.zip", buff.Bytes(), 0666)
+	if err != nil {
+		log.Println(err)
+	}
+	runtime.GC()
 	log.Printf("time use %+v", time.Now().Sub(now))
+}
+
+// DiffEncode encodes the diff between two bitMap
+func DiffEncode(buff io.Writer, tiles []uint64) {
+	// write the length of the diff
+	buff.Write(UInt64ToBytes(uint64(len(tiles))))
+	sort.Sort(UInt64Slice(tiles))
+	// write the diff header
+	buff.Write(UInt64ToBytes(tiles[0]))
+	iInfo, _ := ShantenMap.Load(tiles[0])
+	info := iInfo.(*analysis.Info)
+	for index, result := range info.Results {
+		arithmetic := result.GetArithmetic(index == len(info.Results)-1)
+		buff.Write(UInt64ToBytes(arithmetic))
+	}
+
+	for i := 1; i < len(tiles); i++ {
+		value := tiles[i]
+		preValue := tiles[i-1]
+		if value-preValue > 1 {
+			buff.Write(UInt64ToBytes(value - preValue - 1))
+		}
+
+		iInfo, _ := ShantenMap.Load(value)
+		info := iInfo.(*analysis.Info)
+		for index, result := range info.Results {
+			arithmetic := result.GetArithmetic(index == len(info.Results)-1)
+			buff.Write(UInt64ToBytes(arithmetic))
+		}
+	}
+}
+
+func LoadTable(path string) {
+	reader, err := zip.OpenReader("shanten.zip")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range reader.File {
+		if file.Name != "shanten.data" {
+			continue
+		}
+		log.Printf("fileName %s", file.Name)
+		rc, err := file.Open()
+		if err != nil {
+			log.Printf(err.Error())
+		}
+		_, err = io.CopyN(os.Stdout, rc, int64(file.UncompressedSize64))
+		if err != nil {
+			log.Printf(err.Error())
+		}
+		rc.Close()
+	}
+
 }
 
 func Store(path string, bitMap *roaring64.Bitmap) error {

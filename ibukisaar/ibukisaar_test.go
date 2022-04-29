@@ -2,8 +2,6 @@ package ibukisaar
 
 import (
 	"log"
-	"mahjong/ibukisaar/analysis"
-	"os"
 	"sort"
 	"testing"
 	"time"
@@ -42,28 +40,32 @@ var tilesList = [][]int{
 	{12, 13, 13, 13, 14, 15, 16, 17, 25, 26, 26, 27, 27, 28},
 }
 
-func TestBuildKey1(t *testing.T) {
+func TestBuildKey(t *testing.T) {
 	for _, ints := range tilesList {
 		sort.Ints(ints)
 	}
 
 	now := time.Now()
-	for i := 0; i < 100000; i++ {
-		for _, tiles := range tilesList {
-			//sort.Ints(tiles)
-			keys := Parse(tiles)
-			key := BuildKey(keys)
-			info, ok := ShantenMap.Load(key)
-			//info, _ := ShantenMap[key]
-			if !ok {
-				log.Printf("Error %v Key %v", tiles, key)
-				os.Exit(0)
-			}
+	// for i := 0; i < 100000; i++ {
+	// 	for _, tiles := range tilesList {
+	// 		//sort.Ints(tiles)
+	// 		keys := Parse(tiles)
+	// 		key := BuildKey(keys)
+	// 		info, ok := ShantenMap.Load(key)
+	// 		//info, _ := ShantenMap[key]
+	// 		if !ok {
+	// 			log.Printf("Error %v Key %v", tiles, key)
+	// 			os.Exit(0)
+	// 		}
 
-			list := Analysis(info.(*analysis.Info), keys)
-			_ = list
-			//log.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
-		}
-	}
+	// 		list := Analysis(info.(*analysis.Info), keys)
+	// 		_ = list
+	// 		//log.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
+	// 	}
+	// }
 	log.Printf("time use %dms", time.Now().Sub(now).Milliseconds())
+}
+
+func TestLoadTable(t *testing.T) {
+	LoadTable("shanten.zip")
 }
