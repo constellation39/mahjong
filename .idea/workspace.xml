@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b59b73d-1882-4462-abf2-14e3a1f4d2f5" name="Changes" comment="create Table">
+      <change afterPath="$PROJECT_DIR$/ibukisaar/pack.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibukisaar/ibukisaar.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/ibukisaar.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibukisaar/logic.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/create.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ibukisaar/logic_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ibukisaar/create_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

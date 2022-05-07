@@ -24,9 +24,9 @@ const (
 )
 
 var (
-	ShantenMap  = sync.Map{}
-	ShantenList = [10][]uint64{}
-	//ShantenMap = make(map[uint64]*analysis.Info)
+	shantenMap  = sync.Map{}
+	shantenList = [10][]uint64{}
+	//shantenMap = make(map[uint64]*analysis.Info)
 	sortTiles = map[int]int{
 		11: 0, 21: 9, 31: 18, 41: 27,
 		12: 1, 22: 10, 32: 19, 42: 28,
@@ -47,13 +47,13 @@ func getIndex(tile int) int {
 func init() {
 	if !loadTable(fileName) {
 		log.Printf("Loaded %s Failed, Redo Generation", fileName)
-		StoreTable(fileName)
+		storeTable(fileName)
 		log.Printf("Generated %s Successfully Program Exit", fileName)
 		os.Exit(0)
 	}
 }
 
-func StoreTable(path string) {
+func storeTable(path string) {
 	now := time.Now()
 	// Load check data
 	bitMap, err := loadCache(cacheName)
@@ -79,9 +79,9 @@ func StoreTable(path string) {
 		go func() {
 			info := analysis.Shanten(tiles)
 			mx.Lock()
-			ShantenList[info.Shanten+1] = append(ShantenList[info.Shanten+1], tiles)
+			shantenList[info.Shanten+1] = append(shantenList[info.Shanten+1], tiles)
 			mx.Unlock()
-			ShantenMap.Store(tiles, info)
+			shantenMap.Store(tiles, info)
 			wg.Done()
 		}()
 	}
@@ -92,7 +92,7 @@ func StoreTable(path string) {
 	buff := new(bytes.Buffer)
 	w := zip.NewWriter(buff)
 	z, _ := w.Create(bucketName)
-	for _, shantens := range ShantenList {
+	for _, shantens := range shantenList {
 		writerTable(z, shantens)
 	}
 	err = w.Close()
@@ -116,7 +116,7 @@ func writerTable(buff io.Writer, tiles []uint64) {
 	sort.Sort(UInt64Slice(tiles))
 	// write the diff header
 	buff.Write(UInt64ToBytes(tiles[0]))
-	iInfo, _ := ShantenMap.Load(tiles[0])
+	iInfo, _ := shantenMap.Load(tiles[0])
 	info := iInfo.(*analysis.Info)
 	for index, result := range info.Results {
 		arithmetic := result.GetArithmetic(index == len(info.Results)-1)
@@ -131,7 +131,7 @@ func writerTable(buff io.Writer, tiles []uint64) {
 		}
 		buff.Write(UInt64ToBytes(value - preValue - 1))
 
-		iInfo, _ = ShantenMap.Load(value)
+		iInfo, _ = shantenMap.Load(value)
 		info = iInfo.(*analysis.Info)
 		for index, result := range info.Results {
 			arithmetic := result.GetArithmetic(index == len(info.Results)-1)
@@ -210,7 +210,7 @@ func loadTable(path string) bool {
 				}
 			}
 		}
-		ShantenMap.Store(preValue, info)
+		shantenMap.Store(preValue, info)
 		for z := uint64(1); z < tilesLenInt; z++ {
 			n, err = buff.Read(temp)
 			if err != nil {
@@ -241,7 +241,7 @@ func loadTable(path string) bool {
 					}
 				}
 			}
-			ShantenMap.Store(tile, info)
+			shantenMap.Store(tile, info)
 		}
 	}
 	return true
@@ -383,62 +383,4 @@ func buildKey(keys keys) uint64 {
 		value = (value << keys[i].Bits) | keys[i].Value
 	}
 	return value
-}
-
-func dfs(info *analysis.Info, keys keys) [][][]int {
-	keys.Reverse()
-	temp := make([][]int, 0)
-	for _, key := range keys {
-		temp = append(temp, key.Tiles...)
-	}
-	groupsList := make([][][]int, 0)
-	for i := 0; i < len(info.Results); i++ {
-		indexes := make([]int, len(temp))
-		var result = info.Results[i]
-		groups := make([][]int, 0, 5)
-
-		pairIndex := result.Pair - 1
-		cur := indexes[pairIndex]
-		indexes[pairIndex]++
-		pairs := make([]int, 0, 2)
-		pairs = append(pairs, temp[pairIndex][cur])
-		cur = indexes[pairIndex]
-		indexes[pairIndex]++
-		pairs = append(pairs, temp[pairIndex][cur])
-		groups = append(groups, pairs)
-		groupIds := result.Groups
-
-		for junkoIndex := uint(0); junkoIndex < uint(result.JunkoCount); junkoIndex, groupIds = junkoIndex+1, groupIds>>8 {
-			index := int(groupIds & 0xFF)
-			junko := make([]int, 0, 3)
-			cur2 := indexes[index-2]
-			indexes[index-2]++
-			cur1 := indexes[index-1]
-			indexes[index-1]++
-			cur0 := indexes[index-0]
-			indexes[index-0]++
-			junko = append(junko, temp[index-2][cur2])
-			junko = append(junko, temp[index-1][cur1])
-			junko = append(junko, temp[index-0][cur0])
-			groups = append(groups, junko)
-		}
-
-		for ; groupIds != 0; groupIds >>= 8 {
-			index := (int)(groupIds&0xFF) - 1
-			cur2 := indexes[index]
-			indexes[index]++
-			cur1 := indexes[index]
-			indexes[index]++
-			cur0 := indexes[index]
-			indexes[index]++
-			pung := make([]int, 0, 3)
-			pung = append(pung, temp[index][cur2])
-			pung = append(pung, temp[index][cur1])
-			pung = append(pung, temp[index][cur0])
-			groups = append(groups, pung)
-		}
-		groupsList = append(groupsList, groups)
-	}
-	return groupsList
-
 }

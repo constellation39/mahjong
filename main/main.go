@@ -6,14 +6,12 @@ import (
 	"log"
 	"mahjong/ibukisaar"
 	_ "mahjong/ibukisaar"
+	"runtime"
 	"sort"
 	"time"
 )
 
 var tilesList = [][]int{
-	{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19, 21},
-	{11, 14, 17, 22, 25, 28, 33, 36, 39, 41, 42, 43, 44, 45},
-	{11, 11},
 	{11, 11, 12, 12, 12},
 	{11, 11, 11, 21, 21, 21, 22, 22, 22, 23, 23, 23, 24, 24},
 	{13, 13, 14, 15, 16, 24, 25, 26, 26, 27, 28, 29, 29, 13},
@@ -62,6 +60,7 @@ func main() {
 	}
 	QueryTest()
 	AnalysisTest()
+	runtime.GC()
 	fmt.Scanln()
 }
 
@@ -80,7 +79,7 @@ func Test() {
 
 func QueryTest() {
 	now := time.Now()
-	count := 1000000
+	count := 300000
 	for i := 0; i < count; i++ {
 		for _, ints := range tilesList {
 			ibukisaar.Query(ints)
@@ -91,7 +90,7 @@ func QueryTest() {
 
 func AnalysisTest() {
 	now := time.Now()
-	count := 1000000
+	count := 300000
 	for i := 0; i < count; i++ {
 		for _, ints := range tilesList {
 			ibukisaar.Analysis(ints)

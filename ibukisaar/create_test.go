@@ -53,8 +53,8 @@ func TestBuildKey(t *testing.T) {
 	// 		//sort.Ints(tiles)
 	// 		keys := parse(tiles)
 	// 		key := buildKey(keys)
-	// 		info, ok := ShantenMap.Load(key)
-	// 		//info, _ := ShantenMap[key]
+	// 		info, ok := shantenMap.Load(key)
+	// 		//info, _ := shantenMap[key]
 	// 		if !ok {
 	// 			log.Printf("Error %v key %v", tiles, key)
 	// 			os.Exit(0)
