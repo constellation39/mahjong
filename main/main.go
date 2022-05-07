@@ -6,10 +6,13 @@ import (
 	"log"
 	"mahjong/ibukisaar"
 	_ "mahjong/ibukisaar"
+	"sort"
 	"time"
 )
 
 var tilesList = [][]int{
+	{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19, 21},
+	{11, 14, 17, 22, 25, 28, 33, 36, 39, 41, 42, 43, 44, 45},
 	{11, 11},
 	{11, 11, 12, 12, 12},
 	{11, 11, 11, 21, 21, 21, 22, 22, 22, 23, 23, 23, 24, 24},
@@ -35,7 +38,6 @@ var tilesList = [][]int{
 	{11, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 16, 16},
 	{11, 11, 12, 12, 13, 13, 15, 17, 17, 18, 18, 19, 19, 15},
 	{11, 11, 11, 21, 21, 21, 29, 29, 29, 39, 39, 39, 19, 19},
-	{11, 14, 17, 22, 25, 28, 33, 36, 39, 41, 42, 43, 44, 45},
 	{31, 31, 41, 41, 41, 42, 42, 42, 43, 43, 43, 44, 44, 31},
 	{12, 12, 12, 13, 13, 45, 45, 45, 46, 46, 46, 47, 47, 13},
 	{12, 13, 14, 22, 22, 22, 28, 28, 29, 29, 29, 41, 41, 41},
@@ -46,6 +48,9 @@ var tilesList = [][]int{
 
 func main() {
 	buff := new(bytes.Buffer)
+	for _, ints := range tilesList {
+		sort.Ints(ints)
+	}
 	for _, ints := range tilesList {
 		buff.Reset()
 		info, ok := ibukisaar.Query(ints)
@@ -58,6 +63,19 @@ func main() {
 	QueryTest()
 	AnalysisTest()
 	fmt.Scanln()
+}
+
+func Test() {
+	temp := map[int]int32{}
+	for i := 0; i < 1000000; i++ {
+		temp[i] = int32(i)
+	}
+	now := time.Now()
+	for i := 0; i < 9000000; i++ {
+		_, ok := temp[i%1000000]
+		_ = ok
+	}
+	log.Printf("time-consuming %s", time.Since(now).String())
 }
 
 func QueryTest() {
