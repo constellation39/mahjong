@@ -1,6 +1,8 @@
 package ibukisaar
 
 import (
+	"bytes"
+	"encoding/binary"
 	"log"
 	"sort"
 	"testing"
@@ -49,16 +51,16 @@ func TestBuildKey(t *testing.T) {
 	// for i := 0; i < 100000; i++ {
 	// 	for _, tiles := range tilesList {
 	// 		//sort.Ints(tiles)
-	// 		keys := Parse(tiles)
-	// 		key := BuildKey(keys)
+	// 		keys := parse(tiles)
+	// 		key := buildKey(keys)
 	// 		info, ok := ShantenMap.Load(key)
 	// 		//info, _ := ShantenMap[key]
 	// 		if !ok {
-	// 			log.Printf("Error %v Key %v", tiles, key)
+	// 			log.Printf("Error %v key %v", tiles, key)
 	// 			os.Exit(0)
 	// 		}
 
-	// 		list := Analysis(info.(*analysis.Info), keys)
+	// 		list := analysis(info.(*analysis.Info), keys)
 	// 		_ = list
 	// 		//log.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
 	// 	}
@@ -67,5 +69,14 @@ func TestBuildKey(t *testing.T) {
 }
 
 func TestLoadTable(t *testing.T) {
-	LoadTable("shanten.zip")
+	//loadTable("shanten.zip")
+	//fmt.Scanln()
+
+	println(UInt8ToBytes(80))
+}
+
+func UInt8ToBytes(value int16) []byte {
+	var buffer bytes.Buffer
+	binary.Write(&buffer, binary.LittleEndian, value)
+	return buffer.Bytes()
 }

@@ -1,14 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
+	"mahjong/ibukisaar"
 	_ "mahjong/ibukisaar"
-	"runtime"
 	"time"
 )
 
 var tilesList = [][]int{
+	{11, 11},
+	{11, 11, 12, 12, 12},
 	{11, 11, 11, 21, 21, 21, 22, 22, 22, 23, 23, 23, 24, 24},
 	{13, 13, 14, 15, 16, 24, 25, 26, 26, 27, 28, 29, 29, 13},
 	{15, 15, 15, 16, 16, 16, 17, 17, 17, 25, 25, 25, 26, 27},
@@ -42,8 +45,39 @@ var tilesList = [][]int{
 }
 
 func main() {
-	now := time.Now()
-	log.Printf("time use %dms", time.Now().Sub(now).Milliseconds())
-	runtime.GC()
+	buff := new(bytes.Buffer)
+	for _, ints := range tilesList {
+		buff.Reset()
+		info, ok := ibukisaar.Query(ints)
+		buff.WriteString(fmt.Sprintf("Query %+v Ok %t %+v", ints, ok, info))
+		if ok {
+			buff.WriteString(fmt.Sprintf(" Analysis %+v", ibukisaar.Analysis(ints)))
+		}
+		println(buff.String())
+	}
+	QueryTest()
+	AnalysisTest()
 	fmt.Scanln()
+}
+
+func QueryTest() {
+	now := time.Now()
+	count := 1000000
+	for i := 0; i < count; i++ {
+		for _, ints := range tilesList {
+			ibukisaar.Query(ints)
+		}
+	}
+	log.Printf("time-consuming %s Query %d", time.Since(now).String(), count*len(tilesList))
+}
+
+func AnalysisTest() {
+	now := time.Now()
+	count := 1000000
+	for i := 0; i < count; i++ {
+		for _, ints := range tilesList {
+			ibukisaar.Analysis(ints)
+		}
+	}
+	log.Printf("time-consuming %s Query %d", time.Since(now).String(), count*len(tilesList))
 }

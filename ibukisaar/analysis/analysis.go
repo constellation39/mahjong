@@ -58,7 +58,7 @@ func BuildAnalysisResult(arithmetic uint64) *Result {
 func (analysis *Result) GetArithmetic(end bool) uint64 {
 	result := uint64(0)
 	groups := analysis.Groups
-	x := UInt64ToBytes(uint64(groups))
+	x := UInt64ToBytes(groups)
 	for i := 3; i >= 0; i-- {
 		if x[i] == 0 {
 			continue
