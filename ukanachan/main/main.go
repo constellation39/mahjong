@@ -1,8 +1,8 @@
 package main
 
 import (
+	_ "mahjong/ukanachan/paipu"
 	"time"
-	_ "ukanachan/paipu"
 )
 
 func main() {
