@@ -1,0 +1,27 @@
+### 这个文件描述了对牌谱屋 amae-koromo.sapk.ch 的抓取
+
+# @protocol = https
+# @hostname = ak-data-3.sapk.ch
+# @host = {{protocol}}://{{hostname}}
+@start_timestamp = 1566662400000
+
+
+
+### 返回当天有多少个记录
+# timestamp 为当天时间的0点
+# @name count
+GET https://ak-data-3.sapk.ch/api/count/{{start_timestamp}}/
+
+
+@length = {{count.response.body.count}}
+
+
+### 返回当天的记录
+@end_timestamp = 1566748799999
+GET https://ak-data-1.sapk.ch/api/v2/pl4/games/1566748799999/1566662400000?limit=2659&descending=true&mode=12
+# GET {{host}}api/v2/pl4/games/{{end_timestamp}}/{{start_timestamp}}?limit=2659&descending=true&mode=12
+
+
+### 返回具体记录的表
+# 该 api 已不受支持
+GET  https://ak-data-3.sapk.ch/api/games/{{start_timestamp}}?skip=100&limit=100
