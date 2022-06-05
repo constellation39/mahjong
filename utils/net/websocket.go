@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
-	"http/http"
-	"logger"
+	"net/http"
 	"sync"
+	"utils/logger"
 )
 
 type WSClient struct {

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"config"
 	"go.uber.org/zap"
-	"logger"
 	"majsoul/client"
+	"utils/config"
+	"utils/logger"
 )
 
 func main() {

@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"go.uber.org/zap"
-	"http/http"
-	"logger"
 	"math/rand"
+	"utils/logger"
+	"utils/net"
 )
 
 type Config struct {
@@ -21,12 +21,12 @@ type Version struct {
 
 // Client 实现了与服务器的交互
 type Client struct {
-	r *http.Request
+	r *net.Request
 }
 
 func New(c *Config) *Client {
 	return &Client{
-		r: http.NewRequest(c.ServerAddress),
+		r: net.NewRequest(c.ServerAddress),
 	}
 }
 

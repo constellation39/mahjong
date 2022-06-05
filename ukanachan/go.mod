@@ -11,7 +11,7 @@ require (
 )
 
 replace (
-	logger => ../logger
+	logger => ./../utils/logger
 	utils => ./../utils
 )
 
