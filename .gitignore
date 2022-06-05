@@ -16,3 +16,4 @@
 # vendor/
 ibukisaar.zip
 ibukisaar.cache
+*.log
