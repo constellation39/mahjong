@@ -9,12 +9,13 @@ import (
 )
 
 func main() {
-	c := new(client.Config)
-	err := config.Read("majsoul.json", c)
-
+	cfg := new(client.Config)
+	err := config.Read("majsoul.json", cfg)
 	if err != nil {
 		logger.Panic("init client fail", zap.Error(err))
 	}
+	majsoul := client.New(cfg)
 
-	fmt.Printf("%+v", c)
+	version := majsoul.GetVersion()
+	fmt.Printf("%+v", version)
 }
