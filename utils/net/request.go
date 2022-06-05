@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"go.uber.org/zap"
+	"http/http"
+	"http/http/cookiejar"
 	"io/ioutil"
 	"logger"
-	"net/http"
-	"net/http/cookiejar"
 	"sync"
 	"time"
 )

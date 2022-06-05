@@ -1,12 +1,11 @@
 module majsoul
 
 require (
-	config v0.0.0
 	go.uber.org/zap v1.21.0
 	google.golang.org/grpc v1.47.0
 	google.golang.org/protobuf v1.28.0
 	logger v0.0.0
-	net v0.0.0
+	utils v0.0.0
 )
 
 require (
@@ -20,9 +19,8 @@ require (
 )
 
 replace (
-	config => ../config
 	logger => ../logger
-	net => ../net
+	utils => ./../utils
 )
 
 go 1.18

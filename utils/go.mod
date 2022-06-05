@@ -1,4 +1,4 @@
-module request
+module utils
 
 go 1.18
 

@@ -5,19 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b59b73d-1882-4462-abf2-14e3a1f4d2f5" name="Changes" comment="create Table">
-      <change afterPath="$PROJECT_DIR$/majsoul/buildProto.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/net/websocket.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/go.mod" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/client/liqi.json" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/liqi.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/net/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/net/request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/net/websocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/websocket.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,30 +52,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/const",
-    "settings.editor.selected.configurable": "http.proxy"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/const&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;http.proxy&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\const\Desktop\mahjong\utils\net" />
+      <recent name="C:\Users\const\Desktop\mahjong\utils" />
+      <recent name="C:\Users\const\Desktop\mahjong\config" />
       <recent name="C:\Users\const\Desktop\mahjong\majsoul\main" />
       <recent name="C:\Users\const\Desktop\mahjong\majsoul" />
-      <recent name="C:\Users\const\Desktop\mahjong\proc" />
-      <recent name="C:\Users\const\Desktop\mahjong\ibukisaar" />
-      <recent name="C:\Users\const\Desktop\mahjong" />
     </key>
   </component>
   <component name="RunManager">
