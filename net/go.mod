@@ -1,10 +1,11 @@
-module ukanachan
+module request
+
+go 1.18
 
 require (
-	config v0.0.0
+	github.com/gorilla/websocket v1.5.0
 	go.uber.org/zap v1.21.0
 	logger v0.0.0
-	net v0.0.0
 )
 
 require (
@@ -12,10 +13,4 @@ require (
 	go.uber.org/multierr v1.6.0 // indirect
 )
 
-replace (
-	config => ../config
-	logger => ../logger
-	net => ./../net
-)
-
-go 1.18
+replace logger => ../logger

@@ -1,10 +1,12 @@
-package request
+package net
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"go.uber.org/zap"
 	"io/ioutil"
+	"logger"
 	"net/http"
 	"net/http/cookiejar"
 	"sync"
@@ -18,7 +20,7 @@ type Request struct {
 	rwMutex sync.RWMutex
 }
 
-func New(host string) *Request {
+func NewRequest(host string) *Request {
 	jar, _ := cookiejar.New(nil)
 	request := &Request{
 		Host:   host,
@@ -76,6 +78,7 @@ func (request *Request) Post(path string, body interface{}) ([]byte, error) {
 
 func (request *Request) do(req *http.Request) ([]byte, error) {
 	req.Header = request.header
+	logger.Debug("request.do", zap.Reflect("Request", req))
 	res, err := request.client.Do(req)
 
 	if err != nil {

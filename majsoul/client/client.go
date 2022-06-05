@@ -6,7 +6,6 @@ import (
 	"go.uber.org/zap"
 	"logger"
 	"math/rand"
-	"request"
 )
 
 type Config struct {

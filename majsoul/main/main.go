@@ -2,7 +2,6 @@ package main
 
 import (
 	"config"
-	"fmt"
 	"go.uber.org/zap"
 	"logger"
 	"majsoul/client"
@@ -14,8 +13,12 @@ func main() {
 	if err != nil {
 		logger.Panic("init client fail", zap.Error(err))
 	}
+
 	majsoul := client.New(cfg)
 
 	version := majsoul.GetVersion()
-	fmt.Printf("%+v", version)
+	if version.Version != "0.10.105.w" {
+		logger.Info("雀魂当前版本为", zap.String("Version", version.Version))
+	}
+
 }
