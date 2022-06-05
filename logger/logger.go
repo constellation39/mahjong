@@ -1,11 +1,10 @@
 package logger
 
 import (
-	"os"
-	"runtime"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
+	"runtime"
 )
 
 var logger *zap.Logger

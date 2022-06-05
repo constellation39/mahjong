@@ -15,7 +15,7 @@ func ExitsFile(path string) bool {
 }
 
 func Read(path string, data interface{}) error {
-	if !ExitsFile(path) {
+	if ExitsFile(path) {
 		return fmt.Errorf("open %s error: File does not exist", path)
 	}
 	return loadConfig(reflect.ValueOf(data), path)

@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b59b73d-1882-4462-abf2-14e3a1f4d2f5" name="Changes" comment="create Table">
-      <change afterPath="$PROJECT_DIR$/request/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/majsoul/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/runDirectory/majsoul.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/logger/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/logger/logger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.mod" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -61,7 +62,7 @@
     "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/const",
+    "last_opened_file_path": "C:/Users/const/Desktop/mahjong/runDirectory",
     "settings.editor.selected.configurable": "http.proxy"
   }
 }]]></component>
@@ -82,6 +83,15 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build majsoul" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="mahjong" />
+      <working_directory value="$PROJECT_DIR$/runDirectory" />
+      <kind value="PACKAGE" />
+      <package value="majsoul" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/majsoul/main.go" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="mahjong" />
       <working_directory value="$PROJECT_DIR$" />
@@ -92,6 +102,11 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build majsoul" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
