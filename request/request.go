@@ -1,4 +1,4 @@
-package paipu
+package request
 
 import (
 	"bytes"
@@ -18,7 +18,7 @@ type Request struct {
 	rwMutex sync.RWMutex
 }
 
-func newRequest(host string) *Request {
+func NewRequest(host string) *Request {
 	jar, _ := cookiejar.New(nil)
 	request := &Request{
 		Host:   host,
