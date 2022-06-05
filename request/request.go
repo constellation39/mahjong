@@ -18,7 +18,7 @@ type Request struct {
 	rwMutex sync.RWMutex
 }
 
-func NewRequest(host string) *Request {
+func New(host string) *Request {
 	jar, _ := cookiejar.New(nil)
 	request := &Request{
 		Host:   host,

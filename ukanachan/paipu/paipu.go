@@ -1,19 +1,19 @@
 package paipu
 
 import (
+	"config"
 	"encoding/json"
 	"fmt"
-	"mahjong/config"
-	"mahjong/logger"
-	"time"
-
 	"go.uber.org/zap"
+	"logger"
+	"request"
+	"time"
 )
 
 // 设置一个开始时间戳
 var StartTimestamp = time.Date(2019, time.November, 29, 0, 0, 0, 0, time.Local)
 var ToDay = time.Now()
-var request = newRequest("https://ak-data-1.sapk.ch")
+var r = request.New("https://ak-data-1.sapk.ch")
 var Mode = map[string]int{
 	"王座":   16,
 	"玉":    12,
@@ -90,7 +90,7 @@ type Count struct {
 
 // 得到当前时间戳的对局数统计
 func GetCount(timestamp time.Time) (int, error) {
-	body, err := request.Get(fmt.Sprintf("api/count/%d", timestamp.Unix()))
+	body, err := r.Get(fmt.Sprintf("api/count/%d", timestamp.Unix()))
 
 	if err != nil {
 		logger.Error("GetCount", zap.Error(err))
@@ -124,7 +124,7 @@ type Players struct {
 
 func GetRecord(timestamp time.Time, count, mode int) (Record, error) {
 	tde := ToDayEndTimestamp(timestamp)
-	body, err := request.Get(fmt.Sprintf("api/v2/pl4/games/%d/%d?limit=%d&descending=true&mode=%d", tde.Unix(), timestamp.Unix(), count, mode))
+	body, err := r.Get(fmt.Sprintf("api/v2/pl4/games/%d/%d?limit=%d&descending=true&mode=%d", tde.Unix(), timestamp.Unix(), count, mode))
 	if err != nil {
 		logger.Error("GetRecord", zap.Error(err))
 		return nil, err
