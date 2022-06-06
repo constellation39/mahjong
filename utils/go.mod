@@ -12,4 +12,3 @@ require (
 	go.uber.org/multierr v1.6.0 // indirect
 )
 
-replace utils => ./../utils
