@@ -23,7 +23,8 @@ type ClientConn struct {
 func (c ClientConn) Invoke(ctx context.Context, method string, args interface{}, reply interface{}, opts ...grpc.CallOption) error {
 	tokens := strings.Split("/lq.Lobby/login", "/")
 	api := strings.Join(tokens, ".")
-
+	_ = api
+	return nil
 }
 
 func (c ClientConn) NewStream(ctx context.Context, desc *grpc.StreamDesc, method string, opts ...grpc.CallOption) (grpc.ClientStream, error) {
