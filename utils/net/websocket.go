@@ -62,15 +62,6 @@ func (client *WSClient) Read() []byte {
 func (client *WSClient) Send(body []byte) {
 	client.mu.Lock()
 	defer client.mu.Unlock()
-	//
-	//logger.Debug("send message", zap.Reflect("data", data))
-	//
-	//body, err := json.Marshal(data)
-	//
-	//if err != nil {
-	//	logger.DPanic("marshal message failed", zap.Error(err))
-	//	return
-	//}
 
 	err := client.conn.WriteMessage(websocket.BinaryMessage, body)
 	if err != nil {

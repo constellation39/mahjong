@@ -92,9 +92,8 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, args interface{}
 	buff := new(bytes.Buffer)
 	c.msgIndex %= 255
 	buff.WriteByte(MsgTypeRequest)
-	buff.WriteByte(c.msgIndex - (c.msgIndex >> 7 << 7))
-	buff.WriteByte(c.msgIndex >> 7)
-	//buff.Write([]byte{2, 0, 0, 10, 18, 46, 108, 113, 46, 76, 111, 98, 98, 121, 46, 104, 101, 97, 116, 98, 101, 97, 116, 18, 0})
+	buff.WriteByte(c.msgIndex - (c.msgIndex >> 8 << 8))
+	buff.WriteByte(c.msgIndex >> 8)
 	buff.Write(body)
 	c.Send(buff.Bytes())
 	c.msgIndex++

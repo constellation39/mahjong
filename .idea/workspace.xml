@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb039f79-c477-496b-9ede-b32df661e57a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/majsoul.json" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/majsoul.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/net/websocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/websocket.go" afterDir="false" />
     </list>
