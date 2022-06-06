@@ -1,18 +1,19 @@
 package paipu
 
 import (
-	"config"
 	"encoding/json"
 	"fmt"
 	"go.uber.org/zap"
 	"time"
+	"utils/config"
 	"utils/logger"
+	"utils/net"
 )
 
 // 设置一个开始时间戳
 var StartTimestamp = time.Date(2019, time.November, 29, 0, 0, 0, 0, time.Local)
 var ToDay = time.Now()
-var r = request.New("https://ak-data-1.sapk.ch")
+var r = net.NewRequest("https://ak-data-1.sapk.ch")
 var Mode = map[string]int{
 	"王座":   16,
 	"玉":    12,
