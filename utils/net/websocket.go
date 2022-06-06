@@ -43,8 +43,6 @@ func (client *WSClient) Connect() error {
 func (client *WSClient) Read() []byte {
 	t, payload, err := client.conn.ReadMessage()
 
-	println(111)
-
 	if err != nil {
 		logger.DPanic("read message failed", zap.Error(err))
 		return []byte{}
@@ -54,8 +52,6 @@ func (client *WSClient) Read() []byte {
 		logger.DPanic("read message failed", zap.Error(err))
 		return []byte{}
 	}
-
-	logger.Debug("receive message", zap.String("payload", string(payload)))
 	return payload
 }
 

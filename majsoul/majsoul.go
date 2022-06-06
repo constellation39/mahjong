@@ -15,6 +15,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strings"
+	"sync"
 	"utils/logger"
 	"utils/net"
 )
@@ -34,6 +35,12 @@ type ClientConn struct {
 	Ctx context.Context
 	*net.WSClient
 	msgIndex uint8
+	replys   sync.Map // 回复消息 map[uint8]*Reply
+}
+
+type Reply struct {
+	out  proto.Message
+	wait chan struct{}
 }
 
 func NewClientConn(ctx context.Context, addr string) *ClientConn {
@@ -58,8 +65,14 @@ func (c *ClientConn) Loop() {
 receive:
 	for {
 		msg := c.WSClient.Read()
-		fmt.Printf("%s", msg)
-		//bot.handle(msg)
+		switch msg[0] {
+		case MsgTypeNotify:
+			c.HandleNotify(msg)
+		case MsgTypeResponse:
+			c.HandleResponse(msg)
+		default:
+			logger.Info("message does not have any path", zap.ByteString("msg", msg))
+		}
 		select {
 		case <-c.Ctx.Done():
 			break receive
@@ -68,12 +81,46 @@ receive:
 	}
 }
 
-func (c *ClientConn) Invoke(ctx context.Context, method string, args interface{}, reply interface{}, opts ...grpc.CallOption) error {
+func (c *ClientConn) HandleNotify(msg []byte) {
+	wrapper := new(message.Wrapper)
+	err := proto.Unmarshal(msg[1:], wrapper)
+	if err != nil {
+		return
+	}
+}
+
+func (c *ClientConn) HandleResponse(msg []byte) {
+	key := (msg[2] << 8) + msg[1]
+	v, ok := c.replys.Load(key)
+	if !ok {
+		logger.Error("Response not found", zap.Uint8("key", key))
+		return
+	}
+	reply, ok := v.(*Reply)
+	if !ok {
+		logger.Error("rv not proto.Message", zap.Reflect("rv", reply))
+		return
+	}
+	wrapper := new(message.Wrapper)
+	err := proto.Unmarshal(msg[3:], wrapper)
+	if err != nil {
+		logger.Error("proto.Unmarshal failed", zap.Error(err))
+		return
+	}
+	err = proto.Unmarshal(wrapper.Data, reply.out)
+	if err != nil {
+		logger.Error("proto.Unmarshal failed", zap.Error(err))
+		return
+	}
+	close(reply.wait)
+}
+
+func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, out interface{}, opts ...grpc.CallOption) error {
 	tokens := strings.Split(method, "/")
 	api := strings.Join(tokens, ".")
 	_ = api
 
-	body, err := proto.Marshal(args.(proto.Message))
+	body, err := proto.Marshal(in.(proto.Message))
 	if err != nil {
 		logger.DPanic("marshal message failed", zap.Error(err))
 		return fmt.Errorf("marshal message failed")
@@ -96,8 +143,16 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, args interface{}
 	buff.WriteByte(c.msgIndex >> 8)
 	buff.Write(body)
 	c.Send(buff.Bytes())
+	reply := &Reply{
+		out:  out.(proto.Message),
+		wait: make(chan struct{}),
+	}
+	if _, ok := c.replys.LoadOrStore(c.msgIndex, reply); ok {
+		logger.DPanic("c.msgIndex exists", zap.Uint8("msgIndex", c.msgIndex))
+	}
 	c.msgIndex++
-	//c.Send(wrapper)
+
+	<-reply.wait
 	return nil
 }
 
