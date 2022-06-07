@@ -52,7 +52,7 @@ func (request *Request) Options(path string) ([]byte, error) {
 
 func (request *Request) Get(path string) ([]byte, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", request.Host, path), nil)
-	logger.Debug("Get", zap.String("host", request.Host), zap.String("path", path))
+	logger.Debug("request.Get", zap.String("host", request.Host), zap.String("path", path))
 	if err != nil {
 		return nil, err
 	}
@@ -68,8 +68,7 @@ func (request *Request) Post(path string, body interface{}) ([]byte, error) {
 	}
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s", request.Host, path), bytes.NewReader(data))
-	logger.Debug("POST", zap.String("host", request.Host), zap.String("path", path))
-
+	logger.Debug("request.POST", zap.String("host", request.Host), zap.String("path", path))
 
 	if err != nil {
 		return nil, err
@@ -128,4 +127,51 @@ func (request *Request) AddHeader(key, value string) *Request {
 	defer request.rwMutex.Unlock()
 	request.header.Add(key, value)
 	return request
+}
+
+func Get(url string) ([]byte, error) {
+	req, err := http.NewRequest("GET", url, nil)
+	logger.Debug("net.Get", zap.String("url", url))
+	if err != nil {
+		return nil, err
+	}
+	return Do(req)
+}
+
+func Post(url string, body interface{}) ([]byte, error) {
+	data, err := json.Marshal(body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewReader(data))
+	logger.Debug("net.POST", zap.String("url", url))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return Do(req)
+}
+
+func Do(req *http.Request) ([]byte, error) {
+	res, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if res.StatusCode != 200 {
+		return nil, fmt.Errorf("%s", res.Status)
+	}
+
+	defer res.Body.Close()
+	resData, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return resData, err
 }

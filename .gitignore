@@ -17,3 +17,5 @@
 ibukisaar.zip
 ibukisaar.cache
 *.log
+*.linux
+record/

@@ -75,7 +75,7 @@ type Count struct {
 
 // 得到当前时间戳的对局数统计
 func GetCount() (int, error) {
-	body, err := r.Get(fmt.Sprintf("api/count/%d", StartTimestamp))
+	body, err := r.Get(fmt.Sprintf("api/count/%d", StartTimestamp.Unix()))
 
 	if err != nil {
 		logger.Error("GetCount", zap.Error(err))

@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ukanachan/main/majsoul.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ukanachan/main/build.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/paipu.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/main/log/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/log/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/net/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/request.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,5 +100,16 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/majsoul/main/main.go</url>
+          <line>81</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
