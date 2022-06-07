@@ -34,24 +34,9 @@ type C struct {
 	LastTimestamp  int64 `json:"last_timestamp"`
 }
 
-func init() {
-	go UpdateToDay()
-	LoadConfig()
-	count, err := GetCount(StartTimestamp)
-	if err != nil {
-		logger.Error("GetCount", zap.Error(err))
-	}
-	logger.Debug("GetCount", zap.Int("count", count))
-	body, err := GetRecord(StartTimestamp, count, 12)
-	if err != nil {
-		logger.Error("GetCount", zap.Error(err))
-	}
-	logger.Debug("GetRecord", zap.Reflect("body", body))
-}
-
 func LoadConfig() {
 	var c C
-	err := config.Read("config/config.json", &c)
+	err := config.Read("paipu.json", &c)
 	if err != nil {
 		logger.Info("LoadConfig", zap.Error(err))
 		return
@@ -60,7 +45,7 @@ func LoadConfig() {
 }
 
 func SaveConfig() {
-	err := config.Write("config/config.json", &C{
+	err := config.Write("paipu.json", &C{
 		StartTimestamp: StartTimestamp.Unix(),
 		LastTimestamp:  ToDay.Unix(),
 	})
@@ -89,8 +74,8 @@ type Count struct {
 }
 
 // 得到当前时间戳的对局数统计
-func GetCount(timestamp time.Time) (int, error) {
-	body, err := r.Get(fmt.Sprintf("api/count/%d", timestamp.Unix()))
+func GetCount() (int, error) {
+	body, err := r.Get(fmt.Sprintf("api/count/%d", StartTimestamp))
 
 	if err != nil {
 		logger.Error("GetCount", zap.Error(err))
@@ -122,9 +107,9 @@ type Players struct {
 	GradingScore int    `json:"gradingScore"`
 }
 
-func GetRecord(timestamp time.Time, count, mode int) (Record, error) {
-	tde := ToDayEndTimestamp(timestamp)
-	body, err := r.Get(fmt.Sprintf("api/v2/pl4/games/%d/%d?limit=%d&descending=true&mode=%d", tde.Unix(), timestamp.Unix(), count, mode))
+func GetRecord(count, mode int) (Record, error) {
+	tde := ToDayEndTimestamp(StartTimestamp)
+	body, err := r.Get(fmt.Sprintf("api/v2/pl4/games/%d/%d?limit=%d&descending=true&mode=%d", tde.Unix(), StartTimestamp.Unix(), count, mode))
 	if err != nil {
 		logger.Error("GetRecord", zap.Error(err))
 		return nil, err

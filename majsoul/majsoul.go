@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"utils/config"
 	"utils/logger"
 	"utils/net"
 )
@@ -184,6 +185,16 @@ func Hash(data string) string {
 	hash := hmac.New(sha256.New, []byte("lailai"))
 	hash.Write([]byte(data))
 	return hex.EncodeToString(hash.Sum(nil))
+}
+
+func LoadConfig() *Config {
+	cfg := new(Config)
+	err := config.Read("majsoul.json", cfg)
+	if err != nil {
+		logger.Panic("init client fail", zap.Error(err))
+	}
+
+	return cfg
 }
 
 func (majsoul *Majsoul) Start() {

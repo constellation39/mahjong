@@ -4,17 +4,11 @@ import (
 	"go.uber.org/zap"
 	"majsoul"
 	"majsoul/message"
-	"utils/config"
 	"utils/logger"
 )
 
 func main() {
-	cfg := new(majsoul.Config)
-	err := config.Read("majsoul.json", cfg)
-	if err != nil {
-		logger.Panic("init client fail", zap.Error(err))
-	}
-
+	cfg := majsoul.LoadConfig()
 	m := majsoul.New(cfg)
 
 	version := m.GetVersion()

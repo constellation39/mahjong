@@ -4,22 +4,22 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb039f79-c477-496b-9ede-b32df661e57a" name="Changes" comment="">
+    <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ukanachan/main/majsoul.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/net/websocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/websocket.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/main/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/paipu.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Go File" />
-      </list>
-    </option>
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/scoop/apps/go/current" />
   <component name="Git.Settings">
@@ -31,40 +31,12 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2ABQCs2qT3hGtvEToQsa0LfRz02" />
+  <component name="ProjectId" id="2AEDilFHLpmSHyh8MchZcQR7HeQ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/const/Desktop/mahjong/majsoul/main&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;http.proxy&quot;
-  }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\const\Desktop\mahjong\majsoul\main" />
-      <recent name="C:\Users\const\Desktop\mahjong\majsoul" />
-      <recent name="C:\Users\const\Desktop\mahjong\utils" />
-      <recent name="C:\Users\const\Desktop\mahjong\utils\net" />
-      <recent name="C:\Users\const\Desktop\mahjong\config" />
-    </key>
-=======
   <component name="PropertiesComponent">
-    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -74,11 +46,17 @@
     <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/majsoul/main" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
->>>>>>> 51005386ac90ffbde44e1ea7898fa40f89023bfe
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ukanachan/main" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build ukanachan/main">
     <configuration name="go build majsoul/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="mahjong" />
       <working_directory value="$PROJECT_DIR$/majsoul/main" />
@@ -88,8 +66,22 @@
       <filePath value="$PROJECT_DIR$/majsoul/main/main.go" />
       <method v="2" />
     </configuration>
+    <configuration name="go build ukanachan/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="mahjong" />
+      <working_directory value="$PROJECT_DIR$/ukanachan/main" />
+      <kind value="PACKAGE" />
+      <package value="ukanachan/main" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/ukanachan/main/main.go" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build majsoul/main" />
+      <item itemvalue="Go Build.go build ukanachan/main" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build ukanachan/main" />
         <item itemvalue="Go Build.go build majsoul/main" />
       </list>
     </recent_temporary>

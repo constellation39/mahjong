@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 	"net/http/cookiejar"
 	"sync"
 	"time"
+	"utils/logger"
 )
 
 type Request struct {
@@ -50,7 +52,7 @@ func (request *Request) Options(path string) ([]byte, error) {
 
 func (request *Request) Get(path string) ([]byte, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", request.Host, path), nil)
-
+	logger.Debug("Get", zap.String("host", request.Host), zap.String("path", path))
 	if err != nil {
 		return nil, err
 	}
@@ -66,6 +68,8 @@ func (request *Request) Post(path string, body interface{}) ([]byte, error) {
 	}
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s", request.Host, path), bytes.NewReader(data))
+	logger.Debug("POST", zap.String("host", request.Host), zap.String("path", path))
+
 
 	if err != nil {
 		return nil, err
