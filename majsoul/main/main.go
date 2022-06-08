@@ -73,7 +73,7 @@ func main() {
 	logger.Debug("FetchGameRecordList", zap.Reflect("Res", fetchGameRecordList))
 	//220606-86339438-f468-432a-9123-87f75dd129a9_a414418030
 	fetchGameRecord, err := m.FetchGameRecord(m.Ctx, &message.ReqGameRecord{
-		GameUuid:            "220606-86339438-f468-432a-9123-87f75dd129a9",
+		GameUuid:            "190824-6af40fdd-4cd0-4ded-9d6f-70a0736076b6",
 		ClientVersionString: "web-0.10.105",
 	})
 	if err != nil {

@@ -1107,3 +1107,318 @@ majsoul.(*ClientConn).Loop
 2022-06-08T11:15:53.009+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-8de93a37-048a-48ac-a83c-5a79a19db3c0"}
 2022-06-08T11:15:54.926+0800	DEBUG	main/main.go:165	SaveRecord	{"filename": "record/191201-8de93a37-048a-48ac-a83c-5a79a19db3c0"}
 2022-06-08T11:15:54.927+0800	DEBUG	main/main.go:176	file len	{"filename": "record/191201-8de93a37-048a-48ac-a83c-5a79a19db3c0", "L": 48666, "L1": 48666}
+2022-06-08T12:27:13.900+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T12:27:14.850+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T12:27:14.850+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T12:27:16.587+0800	DEBUG	main/main.go:111	GetPaiPu
+2022-06-08T12:27:16.588+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1575129600"}
+2022-06-08T12:27:17.237+0800	DEBUG	main/main.go:119	GetPaiPu	{"StartTimestamp": "2019-12-01 00:00:00 +0800 CST", "count": 2514}
+2022-06-08T12:27:17.237+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=11"}
+2022-06-08T12:27:17.374+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=8"}
+2022-06-08T12:27:17.752+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=22"}
+2022-06-08T12:27:18.683+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=21"}
+2022-06-08T12:27:19.451+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=25"}
+2022-06-08T12:27:19.579+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=15"}
+2022-06-08T12:27:20.088+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=12"}
+2022-06-08T12:27:20.303+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=9"}
+2022-06-08T12:27:21.768+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=24"}
+2022-06-08T12:27:22.211+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=26"}
+2022-06-08T12:27:23.122+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=23"}
+2022-06-08T12:27:23.389+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=16"}
+2022-06-08T12:27:23.518+0800	DEBUG	main/main.go:129	GetPaiPu return	{"count": 2909}
+2022-06-08T12:27:23.518+0800	DEBUG	main/main.go:134	GetRecord
+2022-06-08T12:27:23.518+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-ffac2a76-da02-40ab-8c50-768e2d53f231"}
+2022-06-08T12:27:23.787+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-ffac2a76-da02-40ab-8c50-768e2d53f231"}
+2022-06-08T12:27:25.528+0800	DEBUG	main/main.go:165	SaveRecord	{"filename": "record/191201-ffac2a76-da02-40ab-8c50-768e2d53f231"}
+2022-06-08T12:27:25.528+0800	DEBUG	main/main.go:175	file len	{"filename": "record/191201-ffac2a76-da02-40ab-8c50-768e2d53f231", "L": 57240, "L1": 57240}
+2022-06-08T12:27:35.531+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-12c7e116-afec-49ff-be31-de266e5302b0"}
+2022-06-08T12:27:35.800+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-12c7e116-afec-49ff-be31-de266e5302b0"}
+2022-06-08T12:27:36.592+0800	DEBUG	main/main.go:165	SaveRecord	{"filename": "record/191201-12c7e116-afec-49ff-be31-de266e5302b0"}
+2022-06-08T12:27:36.592+0800	DEBUG	main/main.go:175	file len	{"filename": "record/191201-12c7e116-afec-49ff-be31-de266e5302b0", "L": 32697, "L1": 32697}
+2022-06-08T12:28:03.979+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T12:28:04.977+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T12:28:04.977+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T12:28:06.960+0800	DEBUG	main/main.go:111	GetPaiPu
+2022-06-08T12:28:06.960+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1575129600"}
+2022-06-08T12:28:07.496+0800	DEBUG	main/main.go:119	GetPaiPu	{"StartTimestamp": "2019-12-01 00:00:00 +0800 CST", "count": 2514}
+2022-06-08T12:28:07.497+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=21"}
+2022-06-08T12:28:08.052+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=23"}
+2022-06-08T12:28:08.177+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=25"}
+2022-06-08T12:28:08.304+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=12"}
+2022-06-08T12:28:08.857+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=15"}
+2022-06-08T12:28:08.988+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=24"}
+2022-06-08T12:28:09.182+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=26"}
+2022-06-08T12:28:09.311+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=22"}
+2022-06-08T12:28:09.695+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=16"}
+2022-06-08T12:28:10.334+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=9"}
+2022-06-08T12:28:11.027+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=11"}
+2022-06-08T12:28:11.162+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=8"}
+2022-06-08T12:28:11.728+0800	DEBUG	main/main.go:129	GetPaiPu return	{"count": 2909}
+2022-06-08T12:28:11.728+0800	DEBUG	main/main.go:134	GetRecord
+2022-06-08T12:28:11.728+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-527c634b-484f-492e-94f7-fb9159b05764"}
+2022-06-08T12:28:11.979+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-527c634b-484f-492e-94f7-fb9159b05764"}
+2022-06-08T12:28:13.164+0800	DEBUG	main/main.go:165	SaveRecord	{"filename": "record/191201-527c634b-484f-492e-94f7-fb9159b05764"}
+2022-06-08T12:28:13.165+0800	DEBUG	main/main.go:175	file len	{"filename": "record/191201-527c634b-484f-492e-94f7-fb9159b05764", "L": 14674, "L1": 14674}
+2022-06-08T12:28:23.167+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-c437040d-fc89-4f5b-8bc2-d76112e5a81f"}
+2022-06-08T12:28:23.422+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-c437040d-fc89-4f5b-8bc2-d76112e5a81f"}
+2022-06-08T12:28:23.936+0800	DEBUG	main/main.go:165	SaveRecord	{"filename": "record/191201-c437040d-fc89-4f5b-8bc2-d76112e5a81f"}
+2022-06-08T12:28:23.936+0800	DEBUG	main/main.go:175	file len	{"filename": "record/191201-c437040d-fc89-4f5b-8bc2-d76112e5a81f", "L": 15645, "L1": 15645}
+2022-06-08T13:00:04.871+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:00:55.352+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:00:56.573+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:00:56.573+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:00:59.388+0800	DEBUG	main/main.go:111	GetPaiPu
+2022-06-08T13:00:59.389+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1575129600"}
+2022-06-08T13:01:00.053+0800	DEBUG	main/main.go:119	GetPaiPu	{"StartTimestamp": "2019-12-01 00:00:00 +0800 CST", "count": 2514}
+2022-06-08T13:01:00.053+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=11"}
+2022-06-08T13:01:00.158+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=8"}
+2022-06-08T13:01:00.665+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=22"}
+2022-06-08T13:01:00.880+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=26"}
+2022-06-08T13:01:00.986+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=21"}
+2022-06-08T13:01:01.491+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=25"}
+2022-06-08T13:01:01.584+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=12"}
+2022-06-08T13:01:02.281+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=9"}
+2022-06-08T13:01:03.438+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=24"}
+2022-06-08T13:01:03.837+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=23"}
+2022-06-08T13:01:03.961+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=16"}
+2022-06-08T13:01:04.475+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=15"}
+2022-06-08T13:01:04.575+0800	DEBUG	main/main.go:129	GetPaiPu return	{"count": 2909}
+2022-06-08T13:01:04.575+0800	DEBUG	main/main.go:134	GetRecord
+2022-06-08T13:01:04.575+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-ffac2a76-da02-40ab-8c50-768e2d53f231"}
+2022-06-08T13:01:04.868+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-ffac2a76-da02-40ab-8c50-768e2d53f231"}
+2022-06-08T13:01:14.876+0800	INFO	main/main.go:149	GetRecord	{"error": "Get \"https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-ffac2a76-da02-40ab-8c50-768e2d53f231\": net/http: TLS handshake timeout"}
+2022-06-08T13:01:17.885+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-12c7e116-afec-49ff-be31-de266e5302b0"}
+2022-06-08T13:01:18.178+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-12c7e116-afec-49ff-be31-de266e5302b0"}
+2022-06-08T13:01:19.644+0800	DEBUG	main/main.go:169	SaveRecord	{"filename": "record/191201-12c7e116-afec-49ff-be31-de266e5302b0"}
+2022-06-08T13:01:19.644+0800	DEBUG	main/main.go:179	file len	{"filename": "record/191201-12c7e116-afec-49ff-be31-de266e5302b0", "L": 32697, "L1": 32697}
+2022-06-08T13:01:29.657+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-5bfb538b-87b4-4cdd-843f-927883e7d865"}
+2022-06-08T13:01:29.954+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-5bfb538b-87b4-4cdd-843f-927883e7d865"}
+2022-06-08T13:01:30.351+0800	DEBUG	main/main.go:169	SaveRecord	{"filename": "record/191201-5bfb538b-87b4-4cdd-843f-927883e7d865"}
+2022-06-08T13:01:30.351+0800	DEBUG	main/main.go:179	file len	{"filename": "record/191201-5bfb538b-87b4-4cdd-843f-927883e7d865", "L": 46524, "L1": 46524}
+2022-06-08T13:01:40.356+0800	DEBUG	main/main.go:136	FetchGameRecord	{"uuid": "191201-af4cde62-2179-42a7-aef8-961fad402b2f"}
+2022-06-08T13:01:40.647+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-af4cde62-2179-42a7-aef8-961fad402b2f"}
+2022-06-08T13:01:41.086+0800	DEBUG	main/main.go:169	SaveRecord	{"filename": "record/191201-af4cde62-2179-42a7-aef8-961fad402b2f"}
+2022-06-08T13:01:41.087+0800	DEBUG	main/main.go:179	file len	{"filename": "record/191201-af4cde62-2179-42a7-aef8-961fad402b2f", "L": 23275, "L1": 23275}
+2022-06-08T13:08:37.222+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:08:38.872+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:08:38.872+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:08:39.806+0800	DEBUG	main/main.go:111	GetPaiPu
+2022-06-08T13:08:39.806+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654664280"}
+2022-06-08T13:08:41.482+0800	DEBUG	main/main.go:134	GetRecord
+2022-06-08T13:08:49.082+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:08:50.373+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:08:50.373+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:08:52.344+0800	DEBUG	main/main.go:111	GetPaiPu
+2022-06-08T13:08:52.344+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654750680"}
+2022-06-08T13:08:53.546+0800	DEBUG	main/main.go:134	GetRecord
+2022-06-08T13:10:53.487+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:10:55.860+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:10:55.860+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:10:58.552+0800	DEBUG	main/main.go:111	GetPaiPu
+2022-06-08T13:10:58.552+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654664280"}
+2022-06-08T13:10:59.163+0800	DEBUG	main/main.go:134	GetRecord
+2022-06-08T13:11:41.392+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:11:43.543+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:11:43.544+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:11:45.108+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:11:47.164+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654750680000"}
+2022-06-08T13:13:19.283+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:13:20.031+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:13:20.031+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:13:20.890+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:13:20.890+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654837079000"}
+2022-06-08T13:13:23.289+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:13:51.893+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:13:52.884+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:13:52.884+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:13:55.811+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:13:55.811+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654837080000"}
+2022-06-08T13:13:56.304+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:14:32.539+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:14:33.262+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:14:33.262+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:14:34.012+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:14:34.012+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654617600000"}
+2022-06-08T13:14:34.571+0800	DEBUG	main/main.go:118	GetPaiPu	{"StartTimestamp": "2022-06-08 00:00:00 +0800 CST", "count": 6946}
+2022-06-08T13:14:34.571+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=23"}
+2022-06-08T13:14:35.274+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=16"}
+2022-06-08T13:14:35.567+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=12"}
+2022-06-08T13:14:36.313+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=11"}
+2022-06-08T13:14:36.988+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=8"}
+2022-06-08T13:14:37.621+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=24"}
+2022-06-08T13:14:38.211+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=26"}
+2022-06-08T13:14:38.889+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=21"}
+2022-06-08T13:14:39.480+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=9"}
+2022-06-08T13:14:40.117+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=15"}
+2022-06-08T13:14:40.283+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=22"}
+2022-06-08T13:14:41.049+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6946&descending=true&mode=25"}
+2022-06-08T13:14:41.215+0800	DEBUG	main/main.go:128	GetPaiPu return	{"count": 4608}
+2022-06-08T13:14:41.215+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:14:41.215+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-1c1604c5-fa51-42ad-ae68-37b8eff9ab95"}
+2022-06-08T13:14:41.546+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-1c1604c5-fa51-42ad-ae68-37b8eff9ab95(3)不是4人麻将"}
+2022-06-08T13:14:44.548+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-d5a5779f-8209-42e0-a1c3-5a4132abcbda"}
+2022-06-08T13:14:45.002+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-d5a5779f-8209-42e0-a1c3-5a4132abcbda(3)不是4人麻将"}
+2022-06-08T13:14:48.003+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-d0368f8d-c3a8-4f72-925f-1e7d5280810e"}
+2022-06-08T13:14:48.344+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-d0368f8d-c3a8-4f72-925f-1e7d5280810e(3)不是4人麻将"}
+2022-06-08T13:14:51.357+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-b2406e94-72dc-4a3a-ad28-893beae7d832"}
+2022-06-08T13:14:51.699+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-b2406e94-72dc-4a3a-ad28-893beae7d832(3)不是4人麻将"}
+2022-06-08T13:14:54.715+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-f5d1fc5d-c75a-43e7-800d-f576a3776d27"}
+2022-06-08T13:14:55.035+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-f5d1fc5d-c75a-43e7-800d-f576a3776d27(3)不是4人麻将"}
+2022-06-08T13:14:58.041+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-b6fff050-df9f-4ea1-b80a-083a8470d558"}
+2022-06-08T13:14:58.345+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-b6fff050-df9f-4ea1-b80a-083a8470d558(3)不是4人麻将"}
+2022-06-08T13:15:01.347+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-ec98d0d3-4e29-427e-b903-3855fb75c7e8"}
+2022-06-08T13:15:01.629+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-ec98d0d3-4e29-427e-b903-3855fb75c7e8(3)不是4人麻将"}
+2022-06-08T13:15:04.634+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-1cd3f8e9-6f4c-4e42-ae7c-4432f0163153"}
+2022-06-08T13:15:05.121+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-1cd3f8e9-6f4c-4e42-ae7c-4432f0163153(3)不是4人麻将"}
+2022-06-08T13:15:08.127+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-5889f6a4-412a-4eb5-9bec-a50599fc262b"}
+2022-06-08T13:15:08.451+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-5889f6a4-412a-4eb5-9bec-a50599fc262b(3)不是4人麻将"}
+2022-06-08T13:15:11.451+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-058d2a46-705f-4038-bd76-a04b12397060"}
+2022-06-08T13:15:11.770+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-058d2a46-705f-4038-bd76-a04b12397060(3)不是4人麻将"}
+2022-06-08T13:15:14.774+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-6c3f43f2-e5ba-4397-8d12-e853ec32d095"}
+2022-06-08T13:15:15.472+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-6c3f43f2-e5ba-4397-8d12-e853ec32d095(3)不是4人麻将"}
+2022-06-08T13:15:18.473+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-2afadc3e-8358-47fd-b289-4a201c969f65"}
+2022-06-08T13:15:18.767+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-2afadc3e-8358-47fd-b289-4a201c969f65(3)不是4人麻将"}
+2022-06-08T13:15:21.778+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-6acdd385-04ab-4ba3-9137-b22bc90de2a5"}
+2022-06-08T13:15:22.094+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-6acdd385-04ab-4ba3-9137-b22bc90de2a5(3)不是4人麻将"}
+2022-06-08T13:15:25.104+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-5294035f-3e04-49f8-871c-ac944f9e5a39"}
+2022-06-08T13:15:25.640+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-5294035f-3e04-49f8-871c-ac944f9e5a39(3)不是4人麻将"}
+2022-06-08T13:15:28.643+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-3c79be1c-520e-4273-a42e-640dff54c9b6"}
+2022-06-08T13:15:29.209+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-3c79be1c-520e-4273-a42e-640dff54c9b6(3)不是4人麻将"}
+2022-06-08T13:15:32.224+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-7a98ccc5-4f39-4adb-bb4f-727fecfc84e8"}
+2022-06-08T13:15:32.727+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-7a98ccc5-4f39-4adb-bb4f-727fecfc84e8(3)不是4人麻将"}
+2022-06-08T13:15:35.730+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-7a178b3b-11b4-4a0c-8359-2b7a6608968d"}
+2022-06-08T13:15:36.192+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-7a178b3b-11b4-4a0c-8359-2b7a6608968d(3)不是4人麻将"}
+2022-06-08T13:15:39.200+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-df2a1d5c-dc99-4a25-b308-e22be8ced26c"}
+2022-06-08T13:15:40.359+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-df2a1d5c-dc99-4a25-b308-e22be8ced26c(3)不是4人麻将"}
+2022-06-08T13:15:43.367+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-0dbcaa8b-4226-4d4b-aa01-8cca3f28736d"}
+2022-06-08T13:15:43.772+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-0dbcaa8b-4226-4d4b-aa01-8cca3f28736d(3)不是4人麻将"}
+2022-06-08T13:15:46.785+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-4d6d805f-b0cc-4e52-892b-26521b8045dc"}
+2022-06-08T13:15:47.254+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-4d6d805f-b0cc-4e52-892b-26521b8045dc(3)不是4人麻将"}
+2022-06-08T13:15:50.263+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-8e0d85d5-ffb0-4998-9bad-100110d25e4b"}
+2022-06-08T13:15:50.653+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-8e0d85d5-ffb0-4998-9bad-100110d25e4b(3)不是4人麻将"}
+2022-06-08T13:15:53.664+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-b0fa184a-2e3c-461e-acad-d38e3ae057c4"}
+2022-06-08T13:15:54.074+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-b0fa184a-2e3c-461e-acad-d38e3ae057c4(3)不是4人麻将"}
+2022-06-08T13:15:57.084+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-2339334f-3550-4073-8f45-febbb028ecfe"}
+2022-06-08T13:15:57.411+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-2339334f-3550-4073-8f45-febbb028ecfe(3)不是4人麻将"}
+2022-06-08T13:16:00.420+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-474f817b-a8cf-4ea9-b1e4-0f03e3823425"}
+2022-06-08T13:16:00.784+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-474f817b-a8cf-4ea9-b1e4-0f03e3823425(3)不是4人麻将"}
+2022-06-08T13:16:57.006+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:16:57.693+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:16:57.693+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:16:58.527+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:16:58.527+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654617600000"}
+2022-06-08T13:16:59.072+0800	DEBUG	main/main.go:118	GetPaiPu	{"StartTimestamp": "2022-06-08 00:00:00 +0800 CST", "count": 6947}
+2022-06-08T13:16:59.072+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=16"}
+2022-06-08T13:16:59.354+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=22"}
+2022-06-08T13:16:59.956+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=24"}
+2022-06-08T13:17:00.523+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=26"}
+2022-06-08T13:17:01.126+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=21"}
+2022-06-08T13:17:01.773+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=12"}
+2022-06-08T13:17:02.327+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=9"}
+2022-06-08T13:17:03.223+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=15"}
+2022-06-08T13:17:03.400+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=11"}
+2022-06-08T13:17:04.145+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=8"}
+2022-06-08T13:17:04.727+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=23"}
+2022-06-08T13:17:05.319+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6947&descending=true&mode=25"}
+2022-06-08T13:17:05.496+0800	DEBUG	main/main.go:128	GetPaiPu return	{"count": 4610}
+2022-06-08T13:17:05.496+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:17:05.496+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-ed256988-a65b-47a0-8ce8-73a9b80065e8"}
+2022-06-08T13:17:05.746+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/190824-6af40fdd-4cd0-4ded-9d6f-70a0736076b6"}
+2022-06-08T13:17:07.616+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-ed256988-a65b-47a0-8ce8-73a9b80065e8"}
+2022-06-08T13:18:33.873+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:18:34.966+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:18:34.966+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:18:37.356+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:18:37.356+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654617600000"}
+2022-06-08T13:18:39.161+0800	DEBUG	main/main.go:118	GetPaiPu	{"StartTimestamp": "2022-06-08 00:00:00 +0800 CST", "count": 6981}
+2022-06-08T13:18:39.161+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=24"}
+2022-06-08T13:18:40.445+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=21"}
+2022-06-08T13:18:41.122+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=25"}
+2022-06-08T13:18:41.291+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=11"}
+2022-06-08T13:18:41.798+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=8"}
+2022-06-08T13:18:42.566+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=22"}
+2022-06-08T13:18:43.408+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=26"}
+2022-06-08T13:18:44.178+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=16"}
+2022-06-08T13:18:44.874+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=12"}
+2022-06-08T13:18:45.766+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=9"}
+2022-06-08T13:18:46.611+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=15"}
+2022-06-08T13:18:47.223+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=6981&descending=true&mode=23"}
+2022-06-08T13:18:48.123+0800	DEBUG	main/main.go:128	GetPaiPu return	{"count": 4613}
+2022-06-08T13:18:48.123+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:18:48.123+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-af794edc-c6c5-47d8-af8d-e35795694ada"}
+2022-06-08T13:18:49.080+0800	INFO	main/main.go:148	GetRecord	{"error": "记录record/220608-af794edc-c6c5-47d8-af8d-e35795694ada(3)不是4人麻将"}
+2022-06-08T13:18:52.082+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-17a18165-df59-4cb7-870b-83b2b76d232f"}
+2022-06-08T13:18:52.507+0800	ERROR	majsoul/majsoul.go:99	Response not found	{"key": 6}
+majsoul.(*ClientConn).HandleResponse
+	C:/Users/const/Desktop/mahjong/majsoul/majsoul.go:99
+majsoul.(*ClientConn).Loop
+	C:/Users/const/Desktop/mahjong/majsoul/majsoul.go:75
+2022-06-08T13:22:00.956+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:22:03.228+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:22:03.228+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:22:04.254+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:22:04.254+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654617600000"}
+2022-06-08T13:22:05.018+0800	DEBUG	main/main.go:118	GetPaiPu	{"StartTimestamp": "2022-06-08 00:00:00 +0800 CST", "count": 7038}
+2022-06-08T13:22:05.018+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=8"}
+2022-06-08T13:22:05.873+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=9"}
+2022-06-08T13:22:06.698+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=11"}
+2022-06-08T13:22:07.623+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=12"}
+2022-06-08T13:22:08.193+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=15"}
+2022-06-08T13:22:08.413+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=16"}
+2022-06-08T13:22:08.875+0800	DEBUG	main/main.go:128	GetPaiPu return	{"count": 2133}
+2022-06-08T13:22:08.875+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:22:08.875+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-3ed03f5e-7e2c-4fee-a98b-a9312468e45c"}
+2022-06-08T13:22:10.295+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-3ed03f5e-7e2c-4fee-a98b-a9312468e45c"}
+2022-06-08T13:22:21.104+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:22:21.820+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:22:21.820+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:22:59.308+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:22:59.999+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:22:59.999+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:23:01.968+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:23:01.968+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1654617600000"}
+2022-06-08T13:23:02.489+0800	DEBUG	main/main.go:118	GetPaiPu	{"StartTimestamp": "2022-06-08 00:00:00 +0800 CST", "count": 7038}
+2022-06-08T13:23:02.489+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=9"}
+2022-06-08T13:23:02.845+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=11"}
+2022-06-08T13:23:03.031+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=12"}
+2022-06-08T13:23:03.647+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=15"}
+2022-06-08T13:23:03.740+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=16"}
+2022-06-08T13:23:04.378+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1654703999/1654617600?limit=7038&descending=true&mode=8"}
+2022-06-08T13:23:05.148+0800	DEBUG	main/main.go:128	GetPaiPu return	{"count": 2133}
+2022-06-08T13:23:05.148+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:23:05.148+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-a551812b-f326-40f3-b52f-e7e3ee8d1473"}
+2022-06-08T13:23:05.516+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-a551812b-f326-40f3-b52f-e7e3ee8d1473"}
+2022-06-08T13:23:15.522+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-d4299d05-2eae-41ec-b1ef-d94389643bfb"}
+2022-06-08T13:23:16.433+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-d4299d05-2eae-41ec-b1ef-d94389643bfb"}
+2022-06-08T13:23:26.439+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-f32d5b9b-628a-4c9c-84ea-016617763dab"}
+2022-06-08T13:23:26.770+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-f32d5b9b-628a-4c9c-84ea-016617763dab"}
+2022-06-08T13:23:36.787+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-6e99e660-c88c-4cfa-946d-93380115759e"}
+2022-06-08T13:23:37.323+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-6e99e660-c88c-4cfa-946d-93380115759e"}
+2022-06-08T13:23:47.332+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-714c7614-000e-4e89-8e63-081258b6729e"}
+2022-06-08T13:23:48.792+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-714c7614-000e-4e89-8e63-081258b6729e"}
+2022-06-08T13:23:58.803+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-9296e5a3-7532-4ecb-b3b9-321268f9fe64"}
+2022-06-08T13:23:59.151+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-9296e5a3-7532-4ecb-b3b9-321268f9fe64"}
+2022-06-08T13:24:09.159+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-e8cb463f-6b02-4b99-b261-829250fd2b4f"}
+2022-06-08T13:24:09.739+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-e8cb463f-6b02-4b99-b261-829250fd2b4f"}
+2022-06-08T13:24:19.749+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-ae97b9d6-1594-410a-ba12-eba83296a9a4"}
+2022-06-08T13:24:20.291+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-ae97b9d6-1594-410a-ba12-eba83296a9a4"}
+2022-06-08T13:24:30.305+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-f967bece-2201-46fe-8737-ccddcff0f276"}
+2022-06-08T13:24:30.576+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-f967bece-2201-46fe-8737-ccddcff0f276"}
+2022-06-08T13:24:40.591+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "220608-e52828f3-d437-487b-9c9d-574e7b8acfd7"}
+2022-06-08T13:24:41.583+0800	DEBUG	main/main.go:168	SaveRecord	{"filename": "record/220608-e52828f3-d437-487b-9c9d-574e7b8acfd7"}
+2022-06-08T13:25:21.266+0800	INFO	net/websocket.go:28	connecting to websocket server	{"addr": "wss://gateway-v2.maj-soul.com:6443"}
+2022-06-08T13:25:22.325+0800	INFO	net/websocket.go:38	connect to websocket server success	{"addr": "wss://gateway-v2.maj-soul.com:6443", "response": "101 Switching Protocols"}
+2022-06-08T13:25:22.325+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://game.maj-soul.com", "path": "1/version.json?randv=298498081"}
+2022-06-08T13:25:23.122+0800	DEBUG	main/main.go:110	GetPaiPu
+2022-06-08T13:25:23.122+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/count/1575129600000"}
+2022-06-08T13:25:23.932+0800	DEBUG	main/main.go:118	GetPaiPu	{"StartTimestamp": "2019-12-01 00:00:00 +0800 CST", "count": 2514}
+2022-06-08T13:25:23.932+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=15"}
+2022-06-08T13:25:24.233+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=16"}
+2022-06-08T13:25:24.551+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=8"}
+2022-06-08T13:25:25.232+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=9"}
+2022-06-08T13:25:25.617+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=11"}
+2022-06-08T13:25:26.265+0800	DEBUG	net/request.go:55	request.Get	{"host": "https://ak-data-1.sapk.ch", "path": "api/v2/pl4/games/1575215999/1575129600?limit=2514&descending=true&mode=12"}
+2022-06-08T13:25:26.630+0800	DEBUG	main/main.go:128	GetPaiPu return	{"count": 1619}
+2022-06-08T13:25:26.630+0800	DEBUG	main/main.go:133	GetRecord
+2022-06-08T13:25:26.630+0800	DEBUG	main/main.go:135	FetchGameRecord	{"uuid": "191201-593f44f5-0706-4e39-930f-7672b52208ef"}
+2022-06-08T13:25:26.913+0800	DEBUG	net/request.go:134	net.Get	{"url": "https://record-v3.maj-soul.com:9443/majsoul/game_record/191201-593f44f5-0706-4e39-930f-7672b52208ef"}

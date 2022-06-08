@@ -15,18 +15,18 @@ var StartTimestamp = time.Date(2019, time.November, 29, 0, 0, 0, 0, time.Local)
 var ToDay = time.Now()
 var r = net.NewRequest("https://ak-data-1.sapk.ch")
 var Mode = map[string]int{
-	"王座":   16,
-	"玉":    12,
-	"金":    9,
-	"王座东":  15,
-	"玉东":   11,
 	"金东":   8,
-	"三金":   22,
-	"三玉":   24,
-	"三王座":  26,
-	"三金东":  21,
-	"三玉东":  23,
-	"三王座东": 25,
+	"金":    9,
+	"玉东":   11,
+	"玉":    12,
+	"王座东":  15,
+	"王座":   16,
+	//"三金":   22,
+	//"三玉":   24,
+	//"三王座":  26,
+	//"三金东":  21,
+	//"三玉东":  23,
+	//"三王座东": 25,
 }
 
 type C struct {
@@ -41,13 +41,13 @@ func LoadConfig() {
 		logger.Info("LoadConfig", zap.Error(err))
 		return
 	}
-	StartTimestamp = time.Unix(c.StartTimestamp, 0)
+	StartTimestamp = time.UnixMilli(c.StartTimestamp)
 }
 
 func SaveConfig() {
 	err := config.Write("paipu.json", &C{
-		StartTimestamp: StartTimestamp.Unix(),
-		LastTimestamp:  ToDay.Unix(),
+		StartTimestamp: StartTimestamp.UnixMilli(),
+		LastTimestamp:  ToDay.UnixMilli(),
 	})
 	if err != nil {
 		logger.Error("SaveConfig", zap.Error(err))
@@ -75,7 +75,7 @@ type Count struct {
 
 // 得到当前时间戳的对局数统计
 func GetCount() (int, error) {
-	body, err := r.Get(fmt.Sprintf("api/count/%d", StartTimestamp.Unix()))
+	body, err := r.Get(fmt.Sprintf("api/count/%d", StartTimestamp.UnixMilli()))
 
 	if err != nil {
 		logger.Error("GetCount", zap.Error(err))

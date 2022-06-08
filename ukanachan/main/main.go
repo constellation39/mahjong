@@ -104,7 +104,6 @@ func main() {
 			return
 		}
 	}
-
 }
 
 func GetPaiPu() paipu.Record {
@@ -147,7 +146,7 @@ func GetRecord(m *majsoul.Majsoul, records paipu.Record) {
 		err = SaveRecord(filename, fetchGameRecord)
 		if err != nil {
 			logger.Info("GetRecord", zap.Error(err))
-			time.Sleep(time.Millisecond)
+			time.Sleep(time.Second * 3)
 			continue
 		}
 		time.Sleep(time.Second * 10)
@@ -162,6 +161,10 @@ func SaveRecord(filename string, record *message.ResGameRecord) error {
 			return err
 		}
 	}
+	l := len(record.Head.Result.Players)
+	if l != 4 {
+		return fmt.Errorf("记录%s(%d)不是4人麻将", filename, l)
+	}
 	logger.Debug("SaveRecord", zap.String("filename", filename))
 	wrapper := new(message.Wrapper)
 	wrapper.Data, err = proto.Marshal(record)
@@ -172,7 +175,6 @@ func SaveRecord(filename string, record *message.ResGameRecord) error {
 	if err != nil {
 		logger.Debug("SaveRecord", zap.Error(err))
 	}
-	logger.Debug("file len", zap.String("filename", filename), zap.Int("L", len(body)), zap.Int("L1", len(string(body))))
 	err = ioutil.WriteFile(filename, body, 0666)
 	if err != nil {
 		return err

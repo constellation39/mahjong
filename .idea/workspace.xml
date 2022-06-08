@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ukanachan/main/main_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/message/liqi.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/message/liqi.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/log/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/log/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/main/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/main/paipu.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/paipu.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,13 +51,13 @@
     <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ukanachan" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ukanachan/main" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan" />
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main\record" />
-      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\paipu" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -117,8 +117,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build ukanachan/main" />
-        <item itemvalue="Go Test.TestSaveRecord in ukanachan/main" />
         <item itemvalue="Go Build.go build majsoul/main" />
+        <item itemvalue="Go Test.TestSaveRecord in ukanachan/main" />
         <item itemvalue="Go Test.TestSaveConfig in ukanachan/paipu" />
       </list>
     </recent_temporary>
@@ -153,6 +153,11 @@
           <url>file://$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go</url>
           <line>68</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/ukanachan/main/main_test.go</url>
+          <line>29</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

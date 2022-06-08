@@ -43,7 +43,7 @@ type ClientConn struct {
 type Reply struct {
 	out  proto.Message
 	wait chan struct{}
-	hook func(*message.Wrapper)
+	hook func([]byte)
 }
 
 func NewClientConn(ctx context.Context, addr string) *ClientConn {
@@ -106,7 +106,7 @@ func (c *ClientConn) HandleResponse(msg []byte) {
 	}
 	wrapper := new(message.Wrapper)
 	err := proto.Unmarshal(msg[3:], wrapper)
-	reply.hook(wrapper)
+	//reply.hook(msg)
 	if err != nil {
 		logger.Error("proto.Unmarshal failed", zap.Error(err))
 		return
@@ -149,7 +149,7 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, 
 	reply := &Reply{
 		out:  out.(proto.Message),
 		wait: make(chan struct{}),
-		hook: func(wrapper *message.Wrapper) {
+		hook: func([]byte) {
 			body, err := proto.Marshal(wrapper)
 			if err != nil {
 				logger.Debug("SaveRecord", zap.Error(err))

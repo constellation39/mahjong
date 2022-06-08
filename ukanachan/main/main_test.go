@@ -9,7 +9,7 @@ import (
 )
 
 func TestSaveRecord(t *testing.T) {
-	body, _ := ioutil.ReadFile("191201-ae8c22ad-8b71-4544-9ec2-76d7a4f80ff4")
+	body, _ := ioutil.ReadFile("191201-5bfb538b-87b4-4cdd-843f-927883e7d865")
 
 	fmt.Printf("%s \n", body)
 
