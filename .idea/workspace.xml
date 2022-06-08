@@ -5,18 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ukanachan/main/build.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ukanachan/main/main_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/message/liqi.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/message/liqi.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/log/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/log/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/net/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/request.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/scoop/apps/go/current" />
   <component name="Git.Settings">
@@ -43,14 +51,18 @@
     <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ukanachan/main" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ukanachan" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan" />
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main\record" />
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\paipu" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
+      <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main\record" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build ukanachan/main">
@@ -72,14 +84,42 @@
       <filePath value="$PROJECT_DIR$/ukanachan/main/main.go" />
       <method v="2" />
     </configuration>
+    <configuration name="TestSaveConfig in ukanachan/paipu" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="mahjong" />
+      <working_directory value="$PROJECT_DIR$/ukanachan/paipu" />
+      <root_directory value="$PROJECT_DIR$/ukanachan" />
+      <kind value="PACKAGE" />
+      <package value="ukanachan/paipu" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestSaveConfig\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSaveRecord in ukanachan/main" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="mahjong" />
+      <working_directory value="$PROJECT_DIR$/ukanachan/main" />
+      <root_directory value="$PROJECT_DIR$/ukanachan" />
+      <kind value="PACKAGE" />
+      <package value="ukanachan/main" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestSaveRecord\E$" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Go Build.go build majsoul/main" />
       <item itemvalue="Go Build.go build ukanachan/main" />
+      <item itemvalue="Go Test.TestSaveConfig in ukanachan/paipu" />
+      <item itemvalue="Go Test.TestSaveRecord in ukanachan/main" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build ukanachan/main" />
+        <item itemvalue="Go Test.TestSaveRecord in ukanachan/main" />
         <item itemvalue="Go Build.go build majsoul/main" />
+        <item itemvalue="Go Test.TestSaveConfig in ukanachan/paipu" />
       </list>
     </recent_temporary>
   </component>
@@ -108,6 +148,11 @@
           <url>file://$PROJECT_DIR$/majsoul/main/main.go</url>
           <line>81</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go</url>
+          <line>68</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

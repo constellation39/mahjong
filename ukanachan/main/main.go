@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"majsoul"
@@ -12,6 +13,21 @@ import (
 	"utils/logger"
 	"utils/net"
 )
+
+//func init() {
+//	go UpdateToDay()
+//	LoadConfig()
+//	count, err := GetCount(StartTimestamp)
+//	if err != nil {
+//		logger.Error("GetCount", zap.Error(err))
+//	}
+//	logger.Debug("GetCount", zap.Int("count", count))
+//	body, err := GetRecord(StartTimestamp, count, 12)
+//	if err != nil {
+//		logger.Error("GetCount", zap.Error(err))
+//	}
+//	logger.Debug("GetRecord", zap.Reflect("body", body))
+//}
 
 func main() {
 	mCfg := majsoul.LoadConfig()
@@ -146,8 +162,18 @@ func SaveRecord(filename string, record *message.ResGameRecord) error {
 			return err
 		}
 	}
-	logger.Debug("WriteFile", zap.String("filename", filename))
-	err = ioutil.WriteFile(filename, record.Data, 0666)
+	logger.Debug("SaveRecord", zap.String("filename", filename))
+	wrapper := new(message.Wrapper)
+	wrapper.Data, err = proto.Marshal(record)
+	if err != nil {
+		logger.Debug("SaveRecord", zap.Error(err))
+	}
+	body, err := proto.Marshal(wrapper)
+	if err != nil {
+		logger.Debug("SaveRecord", zap.Error(err))
+	}
+	logger.Debug("file len", zap.String("filename", filename), zap.Int("L", len(body)), zap.Int("L1", len(string(body))))
+	err = ioutil.WriteFile(filename, body, 0666)
 	if err != nil {
 		return err
 	}
