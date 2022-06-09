@@ -6,4 +6,6 @@ import (
 
 func main() {
 	uakochan.Service()
+
+	select {}
 }

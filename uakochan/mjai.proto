@@ -4,45 +4,57 @@ package message;
 
 option go_package = "./message";
 
-message type {
+message message_type {
     string type = 1;
 }
 
 // mjai连接时发送
-message hello {
+message message_hello {
     string type = 1;
     string protocol = 2;
     int32 protocol_version = 3;
 }
 
 // mjai响应hello
-message join {
+message message_join {
     string type = 1;
     string name = 2;
     string room = 3;
 }
 
 // 告诉mjai游戏已经开始
-message start_game {
+message message_start_game {
     string type = 1;
     int32 id = 2;
     repeated string names = 3;
 }
 
+//	{"type":"start_kyoku","bakaze":"E","kyoku":1,"honba":0,"kyotaku":0,"oya":0,"dora_marker":"7s","tehais":[["?","?","?","?","?","?","?","?","?","?","?","?","?"],["3m","4m","3p","5pr","7p","9p","4s","4s","5sr","7s","7s","W","N"],["?","?","?","?","?","?","?","?","?","?","?","?","?"],["?","?","?","?","?","?","?","?","?","?","?","?","?"]]}
+message message_start_kyoku {
+    string type = 1;
+    string bakaze = 2;
+    int32 kyoku = 3;
+    int32 honba = 4;
+    int32 kyotaku = 5;
+    int32 oya = 6;
+    string dora_marker = 7;
+    repeated int32 tehais = 8;
+}
+
 // 没有对应消息回应时发送
-message none {
+message message_none {
     string type = 1;
 }
 
 // 摸牌
-message tsumo {
+message message_tsumo {
     string type = 1;
     int32 actor =2;
     string pai = 3;
 }
 
 // 打牌
-message dahai {
+message message_dahai {
     string type = 1;
     int32 actor = 2;
     string pai = 3;
@@ -50,7 +62,7 @@ message dahai {
 }
 
 // 碰牌
-message pon {
+message message_pon {
     string type = 1;
     int32 actor = 2;
     int32 target = 3;
@@ -59,7 +71,7 @@ message pon {
 }
 
 // 吃牌
-message chi {
+message message_chi {
     string type = 1;
     int32 actor = 2;
     int32 target = 3;
@@ -68,7 +80,7 @@ message chi {
 }
 
 // 加槓
-message kakan {
+message message_kakan {
     string type = 1;
     int32 actor = 2;
     string pai = 3;
@@ -76,7 +88,7 @@ message kakan {
 }
 
 // 大明槓
-message daiminkan {
+message message_daiminkan {
     string type = 1;
     int32 actor = 2;
     int32 target = 3;
@@ -85,20 +97,20 @@ message daiminkan {
 }
 
 // 暗槓
-message ankan {
+message message_ankan {
     string type = 1;
     int32 actor = 2;
     repeated string consumed = 3;
 }
 
 // 立直宣告
-message reach {
+message message_reach {
     string type = 1;
     int32 actor = 2;
 }
 
 // 立直结果
-message reach_accepted {
+message message_reach_accepted {
     string type = 1;
     int32 actor = 2;
     repeated int32 deltas = 3;
@@ -108,7 +120,7 @@ message reach_accepted {
 // {"type":"hora","actor":2,"target":2,"pai":"2m","uradora_markers":["8p"],"hora_tehais":["1m","3m","5m","6m","7m","1p","2p","3p","4p","5pr","6p","W","W","2m"],"yakus":[["akadora",1],["reach",1],["menzenchin_tsumoho",1]],"fu":30,"fan":3,"hora_points":4000,"deltas":[-2100,-1100,6300,-1100],"scores":[25900,21900,29300,22900]}
 
 // 自摸
-message hora {
+message message_hora {
     string type = 1;
     int32 actor = 2;
     int32 target = 3;
@@ -124,14 +136,12 @@ message hora {
 }
 
 // 结束
-message end_kyoku {
+message message_end_kyoku {
     string type = 1;
 }
 
-// {"type":"ryukyoku","reason":"fanpai","tehais":[["5m","5m","5mr","3s","3s","N","N"],["?","?","?","?","?","?","?","?","?","?","?","?","?"],["?","?","?","?","?","?","?","?","?","?","?","?","?"],["?","?","?","?"]],"tenpais":[true,false,false,false],"deltas":[3000,-1000,-1000,-1000],"scores":[28000,24000,24000,24000]}
-
 // 流局
-message ryukyoku {
+message message_ryukyoku {
     string type = 1;
     string reason = 2;
     repeated string tehais = 3;
@@ -141,9 +151,8 @@ message ryukyoku {
 }
 
 service Service {
-    rpc onNew(none) returns (hello);
-    rpc hello(join) returns (start_game);
-    rpc round(none) returns (start_kyoku);
-    rpc tsumo(tsumo) returns (tsumo);
-
+    rpc onNew(message_none) returns (message_hello);
+    rpc hello(message_join) returns (message_start_game);
+    rpc round(message_none) returns (message_start_kyoku);
+    rpc tsumo(message_tsumo) returns (message_tsumo);
 }
