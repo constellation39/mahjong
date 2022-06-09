@@ -14,25 +14,23 @@ import (
 
 var Conns sync.Map // map[string]*Conn
 
-func init() {
+func Listen() {
 	conn, err := net.Listen("tcp", ":11600")
 	if err != nil {
 		logger.Panic("listen error:", zap.Error(err))
 	}
 	logger.Info("listen on port 11600")
-	go listen(conn)
-}
-
-func listen(conn net.Listener) {
-	for {
-		conn, err := conn.Accept()
-		if err != nil {
-			logger.Debug("accept error:", zap.Error(err))
-			continue
+	go func() {
+		for {
+			conn, err := conn.Accept()
+			if err != nil {
+				logger.Debug("accept error:", zap.Error(err))
+				continue
+			}
+			logger.Debug("accept a new connection from", zap.String("addr", conn.RemoteAddr().String()))
+			New(conn).handle()
 		}
-		logger.Debug("accept a new connection from", zap.String("addr", conn.RemoteAddr().String()))
-		New(conn).handle()
-	}
+	}()
 }
 
 type Conn struct {
