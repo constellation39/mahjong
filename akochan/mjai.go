@@ -1,4 +1,4 @@
-package proxy
+package akochan
 
 import (
 	"bufio"
