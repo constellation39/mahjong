@@ -8,51 +8,15 @@ import (
 	"majsoul"
 	"majsoul/message"
 	"time"
-	"ukanachan/paipu"
-	_ "ukanachan/paipu"
+	"ukanachan/sapk"
+	_ "ukanachan/sapk"
 	"utils/logger"
 	"utils/net"
 )
 
-//func init() {
-//	go UpdateToDay()
-//	LoadConfig()
-//	count, err := GetCount(StartTimestamp)
-//	if err != nil {
-//		logger.Error("GetCount", zap.Error(err))
-//	}
-//	logger.Debug("GetCount", zap.Int("count", count))
-//	body, err := GetRecord(StartTimestamp, count, 12)
-//	if err != nil {
-//		logger.Error("GetCount", zap.Error(err))
-//	}
-//	logger.Debug("GetRecord", zap.Reflect("body", body))
-//}
-
 func main() {
 	mCfg := majsoul.LoadConfig()
 	m := majsoul.New(mCfg)
-
-	version := m.GetVersion()
-	if version.Version != "0.10.105.w" {
-		logger.Info("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
-	}
-
-	paipu.LoadConfig()
-
-	go func() {
-		t := time.NewTicker(time.Second * 3)
-		for {
-			select {
-			case <-t.C:
-				_, err := m.Heatbeat(m.Ctx, &message.ReqHeatBeat{})
-				if err != nil {
-					logger.Info("Heatbeat", zap.Error(err))
-					return
-				}
-			}
-		}
-	}()
 
 	loginRes, err := m.Login(m.Ctx, &message.ReqLogin{
 		Account:   "1601198895@qq.com",
@@ -92,92 +56,61 @@ func main() {
 		logger.Panic("Login failed", zap.Reflect("Error", loginRes.Error))
 	}
 
-	t := time.NewTicker(time.Millisecond)
+	handle(m)
+}
 
-	for {
-		select {
-		case <-t.C:
-			records := GetPaiPu()
-			GetRecord(m, records)
-			paipu.StartTimestamp = paipu.NextDayTimestamp(paipu.StartTimestamp)
-			paipu.SaveConfig()
-			return
-		}
+func handle(m *majsoul.Majsoul) {
+	ticker := time.NewTicker(time.Second * 5)
+	for records := range sapk.GetRecord(m.Ctx, ticker) {
+		handleRecords(m, ticker, records)
 	}
 }
 
-func GetPaiPu() paipu.Record {
-	logger.Debug("GetPaiPu")
-	count, err := paipu.GetCount()
-	if err != nil {
-		logger.Error("GetPaiPu", zap.Error(err))
-	}
-	if count == 0 {
-		return nil
-	}
-	logger.Debug("GetPaiPu", zap.String("StartTimestamp", paipu.StartTimestamp.String()), zap.Int("count", count))
-	ret := make(paipu.Record, 0)
-	for _, v := range paipu.Mode {
-		body, err := paipu.GetRecord(count, v)
-		if err != nil {
-			logger.Error("GetPaiPu", zap.Error(err))
-			continue
-		}
-		ret = append(ret, body...)
-	}
-	logger.Debug("GetPaiPu return", zap.Int("count", len(ret)))
-	return ret
-}
-
-func GetRecord(m *majsoul.Majsoul, records paipu.Record) {
-	logger.Debug("GetRecord")
-	for _, record := range records {
-		logger.Debug("FetchGameRecord", zap.String("uuid", record.UUID))
-		fetchGameRecord, err := m.FetchGameRecord(m.Ctx, &message.ReqGameRecord{
-			GameUuid:            record.UUID,
-			ClientVersionString: "web-0.10.105",
-		})
-		if err != nil {
-			logger.Info("GetRecord", zap.Error(err))
-			time.Sleep(time.Millisecond)
-			continue
-		}
-		filename := fmt.Sprintf("record/%s", record.UUID)
-		err = SaveRecord(filename, fetchGameRecord)
-		if err != nil {
-			logger.Info("GetRecord", zap.Error(err))
-			time.Sleep(time.Second * 3)
-			continue
-		}
-		time.Sleep(time.Second * 10)
-	}
-}
-
-func SaveRecord(filename string, record *message.ResGameRecord) error {
-	var err error
-	if len(record.Data) == 0 {
-		record.Data, err = net.Get(record.DataUrl)
-		if err != nil {
-			return err
-		}
-	}
-	l := len(record.Head.Result.Players)
-	if l != 4 {
-		return fmt.Errorf("记录%s(%d)不是4人麻将", filename, l)
-	}
-	logger.Debug("SaveRecord", zap.String("filename", filename))
+func handleRecords(m *majsoul.Majsoul, ticker *time.Ticker, records sapk.Record) {
 	wrapper := new(message.Wrapper)
-	wrapper.Data, err = proto.Marshal(record)
-	if err != nil {
-		logger.Debug("SaveRecord", zap.Error(err))
+main:
+	for _, record := range records {
+		select {
+		case <-ticker.C:
+			fetchGameRecord, err := m.FetchGameRecord(m.Ctx, &message.ReqGameRecord{
+				GameUuid:            record.UUID,
+				ClientVersionString: "web-0.10.105",
+			})
+			if err != nil {
+				logger.Info("FetchGameRecord", zap.Error(err))
+				time.Sleep(time.Millisecond)
+				continue
+			}
+			filename := fmt.Sprintf("record/%s", record.UUID)
+			if len(fetchGameRecord.Data) == 0 {
+				fetchGameRecord.Data, err = net.Get(fetchGameRecord.DataUrl)
+				if err != nil {
+					logger.Info("net.Get(fetchGameRecord.DataUrl)", zap.Error(err))
+					continue
+				}
+			}
+			l := len(fetchGameRecord.Head.Result.Players)
+			if l != 4 {
+				logger.Info("Players.len != 4", zap.String("filename", filename), zap.Int("l", l))
+			}
+			wrapper.Data, err = proto.Marshal(fetchGameRecord)
+			if err != nil {
+				logger.Info("Marshal", zap.Error(err))
+			}
+			body, err := proto.Marshal(wrapper)
+			if err != nil {
+				logger.Info("Marshal", zap.Error(err))
+			}
+			//buffer := new(bytes.Buffer)
+			//buffer.Write(make([]byte, 3))
+			//buffer.Write(body)
+			err = ioutil.WriteFile(filename, body, 0666)
+			if err != nil {
+				logger.Info("WriteFile", zap.Error(err), zap.String("filename", filename), zap.ByteString("content", body))
+			}
+			logger.Info("WriteFile", zap.String("filename", filename))
+		case <-m.Ctx.Done():
+			break main
+		}
 	}
-	body, err := proto.Marshal(wrapper)
-	if err != nil {
-		logger.Debug("SaveRecord", zap.Error(err))
-	}
-	err = ioutil.WriteFile(filename, body, 0666)
-	if err != nil {
-		return err
-	}
-	return nil
 }

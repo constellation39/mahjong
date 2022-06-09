@@ -5,14 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ukanachan/main/out" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ukanachan/sapk/sapk.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ukanachan/uannotation/uannotation.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/log/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/log/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/paipu.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/paipu.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/main/paipu.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/sapk.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/api.rest" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/sapk/api.rest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/sapk/sapk.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -61,6 +66,7 @@
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\paipu" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\const\Desktop\mahjong\majsoul" />
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main\record" />
     </key>
@@ -153,11 +159,6 @@
           <url>file://$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go</url>
           <line>68</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/ukanachan/main/main_test.go</url>
-          <line>29</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
