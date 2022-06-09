@@ -61,7 +61,6 @@ func LoadConfig() *Config {
 	if err != nil {
 		logger.Panic("init client fail", zap.Error(err))
 	}
-
 	return cfg
 }
 

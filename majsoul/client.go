@@ -7,7 +7,6 @@ import (
 	"github.com/golang/protobuf/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"io/ioutil"
 	"majsoul/message"
 	"net/http"
 	"strings"
@@ -26,7 +25,6 @@ type ClientConn struct {
 type Reply struct {
 	out  proto.Message
 	wait chan struct{}
-	hook func([]byte)
 }
 
 func NewClientConn(ctx context.Context, addr string) *ClientConn {
@@ -73,6 +71,7 @@ func (c *ClientConn) HandleNotify(msg []byte) {
 	if err != nil {
 		return
 	}
+	logger.Debug("notify", zap.String("name", wrapper.Name))
 }
 
 func (c *ClientConn) HandleResponse(msg []byte) {
@@ -89,7 +88,6 @@ func (c *ClientConn) HandleResponse(msg []byte) {
 	}
 	wrapper := new(message.Wrapper)
 	err := proto.Unmarshal(msg[3:], wrapper)
-	//reply.hook(msg)
 	if err != nil {
 		logger.Error("proto.Unmarshal failed", zap.Error(err))
 		return
@@ -132,16 +130,6 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, 
 	reply := &Reply{
 		out:  out.(proto.Message),
 		wait: make(chan struct{}),
-		hook: func([]byte) {
-			body, err := proto.Marshal(wrapper)
-			if err != nil {
-				logger.Debug("SaveRecord", zap.Error(err))
-			}
-			err = ioutil.WriteFile(fmt.Sprintf("./record/%s-%d", api, c.msgIndex), body, 0666)
-			if err != nil {
-				logger.Debug("SaveRecord", zap.Error(err))
-			}
-		},
 	}
 	if _, ok := c.replys.LoadOrStore(c.msgIndex, reply); ok {
 		logger.DPanic("c.msgIndex exists", zap.Uint8("msgIndex", c.msgIndex))

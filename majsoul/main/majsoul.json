@@ -1,4 +1,4 @@
 {
   "serverAddress": "https://game.maj-soul.com",
-  "gatewayAddress": "wss://gateway-v2.maj-soul.com:6443"
+  "gatewayAddress": "wss://gateway-hw.maj-soul.com/gateway"
 }

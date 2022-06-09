@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ukanachan/main/out" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ukanachan/sapk/sapk.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ukanachan/uannotation/uannotation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/majsoul.json" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/majsoul.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/log/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/log/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/main/paipu.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/main/sapk.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/api.rest" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/sapk/api.rest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ukanachan/paipu/paipu.json" beforeDir="false" afterPath="$PROJECT_DIR$/ukanachan/sapk/sapk.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/main/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,23 +36,24 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2AEDilFHLpmSHyh8MchZcQR7HeQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="go.format.on.save.advertiser.fired" value="true" />
-    <property name="go.formatter.settings.were.checked" value="true" />
-    <property name="go.import.settings.migrated" value="true" />
-    <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
-    <property name="go.sdk.automatically.set" value="true" />
-    <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ukanachan/main" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/const&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />
@@ -71,7 +67,7 @@
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main\record" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build ukanachan/main">
+  <component name="RunManager" selected="Go Build.go build majsoul/main">
     <configuration name="go build majsoul/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="mahjong" />
       <working_directory value="$PROJECT_DIR$/majsoul/main" />
@@ -79,6 +75,15 @@
       <package value="majsoul/main" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/majsoul/main/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build uakochan/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="mahjong" />
+      <working_directory value="$PROJECT_DIR$/uakochan" />
+      <kind value="PACKAGE" />
+      <package value="uakochan/main" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/uakochan/main/main.go" />
       <method v="2" />
     </configuration>
     <configuration name="go build ukanachan/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -90,42 +95,16 @@
       <filePath value="$PROJECT_DIR$/ukanachan/main/main.go" />
       <method v="2" />
     </configuration>
-    <configuration name="TestSaveConfig in ukanachan/paipu" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="mahjong" />
-      <working_directory value="$PROJECT_DIR$/ukanachan/paipu" />
-      <root_directory value="$PROJECT_DIR$/ukanachan" />
-      <kind value="PACKAGE" />
-      <package value="ukanachan/paipu" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <pattern value="^\QTestSaveConfig\E$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestSaveRecord in ukanachan/main" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="mahjong" />
-      <working_directory value="$PROJECT_DIR$/ukanachan/main" />
-      <root_directory value="$PROJECT_DIR$/ukanachan" />
-      <kind value="PACKAGE" />
-      <package value="ukanachan/main" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <pattern value="^\QTestSaveRecord\E$" />
-      <method v="2" />
-    </configuration>
     <list>
+      <item itemvalue="Go Build.go build uakochan/main" />
       <item itemvalue="Go Build.go build majsoul/main" />
       <item itemvalue="Go Build.go build ukanachan/main" />
-      <item itemvalue="Go Test.TestSaveConfig in ukanachan/paipu" />
-      <item itemvalue="Go Test.TestSaveRecord in ukanachan/main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build ukanachan/main" />
         <item itemvalue="Go Build.go build majsoul/main" />
-        <item itemvalue="Go Test.TestSaveRecord in ukanachan/main" />
-        <item itemvalue="Go Test.TestSaveConfig in ukanachan/paipu" />
+        <item itemvalue="Go Build.go build uakochan/main" />
+        <item itemvalue="Go Build.go build ukanachan/main" />
       </list>
     </recent_temporary>
   </component>
@@ -145,20 +124,15 @@
     </option>
   </component>
   <component name="VgoProject">
-    <integration-enabled>true</integration-enabled>
+    <settings-migrated>true</settings-migrated>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/majsoul/main/main.go</url>
-          <line>81</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/majsoul/message/liqi_grpc.pb.go</url>
-          <line>68</line>
-          <option name="timeStamp" value="9" />
+          <line>10</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

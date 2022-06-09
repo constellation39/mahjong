@@ -6,4 +6,5 @@ import (
 
 func main() {
 	uakochan.Listen()
+	select {}
 }
