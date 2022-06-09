@@ -1,0 +1,62 @@
+<-	{"type":"hello","protocol":"mjsonp","protocol_version":1}
+->	{"type":"join","name":"shanten","room":"default"}
+<-	{"type":"start_game","id":1,"names":["shanten","shanten","shanten","shanten"]}
+->	{"type":"none"}
+<-	{"type":"start_kyoku","bakaze":"E","kyoku":1,"honba":0,"kyotaku":0,"oya":0,"dora_marker":"7s","tehais":[["?","?","?","?","?","?","?","?","?","?","?","?","?"],["3m","4m","3p","5pr","7p","9p","4s","4s","5sr","7s","7s","W","N"],["?","?","?","?","?","?","?","?","?","?","?","?","?"],["?","?","?","?","?","?","?","?","?","?","?","?","?"]]}
+->	{"type":"none"}
+<-	{"type":"tsumo","actor":0,"pai":"?"} actor 应该是位置
+->	{"type":"none"}
+<-	{"type":"dahai","actor":0,"pai":"6s","tsumogiri":false} tsumogiri 是否为摸切
+->	{"type":"none"}
+<-	{"type":"tsumo","actor":1,"pai":"3m"} 给 mjai 发送摸牌
+->	{"type":"dahai","actor":1,"pai":"7s","tsumogiri":false} mjai 告知要出什么
+<-	{"type":"dahai","actor":1,"pai":"7s","tsumogiri":false} 回复 mjai 出牌
+->	{"type":"none"}
+
+
+<-	{"type":"dahai","actor":1,"pai":"5sr","tsumogiri":false} 告知 mjai 出了什么
+->	{"type":"pon","actor":0,"target":1,"pai":"5sr","consumed":["5s","5s"]} mjai 告知要碰什么
+<-	{"type":"pon","actor":0,"target":1,"pai":"5sr","consumed":["5s","5s"]} 回复 mjai 碰了什么
+
+<-	{"type":"dahai","actor":3,"pai":"4p","tsumogiri":true} 告知 mjai 出了什么
+->	{"type":"chi","actor":0,"target":3,"pai":"4p","consumed":["5p","6p"]} mjai 告知要吃什么
+<-	{"type":"chi","actor":0,"target":3,"pai":"4p","consumed":["5p","6p"]} 回复 mjai 吃了什么
+
+<-	{"type":"tsumo","actor":0,"pai":"6m"} 给 mjai 发送摸牌
+->	{"type":"kakan","actor":0,"pai":"6m","consumed":["6m","6m","6m"]} mjai 告知要杠什么
+<-	{"type":"kakan","actor":0,"pai":"6m","consumed":["6m","6m","6m"]} 回复 mjai 杠了什么
+
+<-	{"type":"dahai","actor":1,"pai":"5m","tsumogiri":false} 告知 mjai 出了什么
+->	{"type":"daiminkan","actor":3,"target":1,"pai":"5m","consumed":["5m","5m","5mr"]} mjai 告知要明杠什么
+<-	{"type":"daiminkan","actor":3,"target":1,"pai":"5m","consumed":["5m","5m","5mr"]} 回复 mjai 明杠了什么
+
+<-	{"type":"tsumo","actor":1,"pai":"N"} 给 mjai 发送摸牌
+->	{"type":"ankan","actor":1,"consumed":["N","N","N","N"]} mjai 告知要暗杠什么
+<-	{"type":"ankan","actor":1,"consumed":["N","N","N","N"]} 回复 mjai 暗杠了什么
+
+<-	{"type":"tsumo","actor":1,"pai":"2m"} 给 mjai 发送摸牌
+->	{"type":"reach","actor":1} mjai 告知要立直
+<-	{"type":"reach","actor":1} 回复 mjai 立直了
+->	{"type":"dahai","actor":1,"pai":"7s","tsumogiri":false}
+<-	{"type":"dahai","actor":1,"pai":"7s","tsumogiri":false}
+->	{"type":"none"}
+<-	{"type":"reach_accepted","actor":1,"deltas":[0,-1000,0,0],"scores":[28000,23000,24000,24000]} 回复 mjai 立直的结果
+
+<-	{"type":"tsumo","actor":2,"pai":"2m"} 给 mjai 发送摸牌
+->	{"type":"hora","actor":2,"target":2,"pai":"2m"} mjai 告知要自摸什么
+<-	{"type":"hora","actor":2,"target":2,"pai":"2m","uradora_markers":["8p"],"hora_tehais":["1m","3m","5m","6m","7m","1p","2p","3p","4p","5pr","6p","W","W","2m"],"yakus":[["akadora",1],["reach",1],["menzenchin_tsumoho",1]],"fu":30,"fan":3,"hora_points":4000,"deltas":[-2100,-1100,6300,-1100],"scores":[25900,21900,29300,22900]} 告知 mjai 结果
+->	{"type":"none"}
+<-	{"type":"end_kyoku"} 回复 mjai 结束了一局
+->	{"type":"none"}
+
+<-  {"type":"dahai","actor":0,"pai":"7s","tsumogiri":true} 告知 mjai 出了什么
+->	{"type":"hora","actor":1,"target":0,"pai":"7s"} mjai 告知要和什么
+<-	{"type":"hora","actor":1,"target":0,"pai":"7s","uradora_markers":["3s"],"hora_tehais":["2m","3m","4m","4p","5pr","6p","6p","7p","8p","6s","8s","N","N"],"yakus":[["akadora",1],["reach",1]],"fu":40,"fan":2,"hora_points":2600,"deltas":[-4400,8400,0,0],"scores":[27500,22300,24300,25900]} 告知 mjai 结果
+->	{"type":"none"}
+<-	{"type":"end_kyoku"} 回复 mjai 结束了一局
+->	{"type":"none"}
+
+<-	{"type":"ryukyoku","reason":"fanpai","tehais":[["5m","5m","5mr","3s","3s","N","N"],["?","?","?","?","?","?","?","?","?","?","?","?","?"],["?","?","?","?","?","?","?","?","?","?","?","?","?"],["?","?","?","?"]],"tenpais":[true,false,false,false],"deltas":[3000,-1000,-1000,-1000],"scores":[28000,24000,24000,24000]} 告知 mjai 流局
+->	{"type":"none"}
+<-	{"type":"end_kyoku"} 回复 mjai 结束了一局
+->	{"type":"none"}

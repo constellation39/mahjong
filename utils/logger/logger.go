@@ -1,10 +1,10 @@
 package logger
 
 import (
+	"os"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
-	"runtime"
 )
 
 var logger *zap.Logger
@@ -21,10 +21,10 @@ func init() {
 		ErrorOutputPaths: []string{"stderr", "log/error.log"},
 	}
 
-	if runtime.GOOS == "windows" {
-		cfg.Encoding = "console"
-		cfg.OutputPaths = append(cfg.OutputPaths, "stdout")
-	}
+	// if runtime.GOOS == "windows" {
+	cfg.Encoding = "console"
+	cfg.OutputPaths = append(cfg.OutputPaths, "stdout")
+	// }
 
 	var err error
 	logger, err = cfg.Build(zap.AddCallerSkip(1))
