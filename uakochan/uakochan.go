@@ -1,4 +1,4 @@
-package akochan
+package uakochan
 
 import (
 	"bufio"

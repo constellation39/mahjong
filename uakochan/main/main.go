@@ -1,9 +1,9 @@
 package main
 
 import (
-	"mjai"
+	"uakochan"
 )
 
 func main() {
-	mjai.Service()
+	uakochan.Service()
 }
