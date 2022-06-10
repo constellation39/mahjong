@@ -10,44 +10,10 @@ import (
 )
 
 func main() {
-	m := NewMajsoul()
-
-	loginRes, err := m.Login(m.Ctx, &message.ReqLogin{
-		Account:   "1601198895@qq.com",
-		Password:  majsoul.Hash("miku39.."),
-		Reconnect: false,
-		Device: &message.ClientDeviceInfo{
-			Platform:       "pc",
-			Hardware:       "pc",
-			Os:             "windows",
-			OsVersion:      "win10",
-			IsBrowser:      true,
-			Software:       "Chrome",
-			SalePlatform:   "web",
-			HardwareVendor: "",
-			ModelNumber:    "",
-			ScreenWidth:    914,
-			ScreenHeight:   1316,
-		},
-		RandomKey: "cfc35be-f519-4cbc-9765-c4c124cdc6a16",
-		ClientVersion: &message.ClientVersionInfo{
-			Resource: m.Version.Version,
-			Package:  "",
-		},
-		GenAccessToken:    true,
-		CurrencyPlatforms: []uint32{2, 6, 8, 10, 11},
-		// 电话1 邮箱0
-		Type:                0,
-		Version:             0,
-		ClientVersionString: m.Version.ClientVersionString,
-	})
-	if err != nil {
-		return
-	}
-	logger.Debug("Login success", zap.Reflect("Nickname", loginRes.Account.Nickname))
-
+	mSoul := NewMajsoul()
+	mSoul.Login("1601198895@qq.com", "miku39..")
 	select {
-	case <-m.Ctx.Done():
+	case <-mSoul.Ctx.Done():
 	}
 }
 
@@ -58,7 +24,8 @@ type Majsoul struct {
 
 func NewMajsoul() *Majsoul {
 	cfg := majsoul.LoadConfig()
-	m := &Majsoul{Majsoul: majsoul.New(cfg), UAkochan: uakochan.New()}
+	m := &Majsoul{Majsoul: majsoul.New(cfg)}
+	//m := &Majsoul{Majsoul: majsoul.New(cfg), UAkochan: uakochan.New()}
 	m.IFReceive = m
 	return m
 }
@@ -69,6 +36,7 @@ func (m *Majsoul) NotifyCaptcha(notify *message.NotifyCaptcha) {
 
 func (m *Majsoul) NotifyRoomGameStart(notify *message.NotifyRoomGameStart) {
 	logger.Debug("NotifyRoomGameStart", zap.Reflect("notify", notify))
+	m.Majsoul.NotifyRoomGameStart(notify)
 }
 
 func (m *Majsoul) NotifyMatchGameStart(notify *message.NotifyMatchGameStart) {

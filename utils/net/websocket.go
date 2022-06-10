@@ -10,7 +10,6 @@ import (
 
 type WSClient struct {
 	connAddr string // 连接地址
-	token    string // 身份认证token
 	mu       *sync.Mutex
 	header   http.Header
 	conn     *websocket.Conn // websocket连接
