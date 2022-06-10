@@ -19,3 +19,4 @@ ibukisaar.cache
 *.log
 *.linux
 record/
+.idea

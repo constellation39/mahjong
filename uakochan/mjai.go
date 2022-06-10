@@ -1,5 +1,10 @@
 package uakochan
 
+import (
+	"go.uber.org/zap"
+	"utils/logger"
+)
+
 // MJAI is a message type.
 type Type struct {
 	Type string `json:"type"`
@@ -143,4 +148,46 @@ type Ryukyoku struct {
 	Tenpais []bool     `json:"tenpais"`
 	Deltas  []int      `json:"deltas"`
 	Scores  []int      `json:"scores"`
+}
+
+func GetMessageType(name string) (ret interface{}) {
+	switch name {
+	case "hello":
+		ret = new(Hello)
+	case "join":
+		ret = new(Join)
+	case "start_game":
+		ret = new(StartGame)
+	case "none":
+		ret = new(None)
+	case "start_kyoku":
+		ret = new(StartKyoku)
+	case "tsumo":
+		ret = new(Tsumo)
+	case "dahai":
+		ret = new(Dahai)
+	case "pon":
+		ret = new(Pon)
+	case "chi":
+		ret = new(Chi)
+	case "kakan":
+		ret = new(Kakan)
+	case "daiminkan":
+		ret = new(Daiminkan)
+	case "ankan":
+		ret = new(Ankan)
+	case "reach":
+		ret = new(Reach)
+	case "reach_accepted":
+		ret = new(ReachAccepted)
+	case "hora":
+		ret = new(Hora)
+	case "end_kyoku":
+		ret = new(EndKyoku)
+	case "ryukyoku":
+		ret = new(Ryukyoku)
+	default:
+		logger.Error("GetMessageType not found", zap.String("name", name))
+	}
+	return
 }

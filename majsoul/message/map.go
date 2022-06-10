@@ -1,6 +1,10 @@
 package message
 
-import "github.com/golang/protobuf/proto"
+import (
+	"github.com/golang/protobuf/proto"
+	"go.uber.org/zap"
+	"utils/logger"
+)
 
 func GetNotifyType(name string) (ret proto.Message) {
 	switch name {
@@ -164,6 +168,8 @@ func GetNotifyType(name string) (ret proto.Message) {
 		ret = &NotifyEndGameVote_VoteResult{}
 	case ".lq.ActionPrototype":
 		ret = &ActionPrototype{}
+	default:
+		logger.Error("GetNotifyType not found", zap.String("name", name))
 	}
 	return
 }

@@ -153,6 +153,11 @@ func (m *Majsoul) NotifyClientMessage(notify *message.NotifyClientMessage) {
 		return
 	}
 	logger.Debug("Join Room", zap.Reflect("res", joinRoom))
+	readyPlay, err := m.ReadyPlay(m.Ctx, &message.ReqRoomReady{Ready: true})
+	if err != nil {
+		return
+	}
+	logger.Debug("ready Play", zap.Reflect("res", readyPlay))
 }
 
 func (m *Majsoul) NotifyAccountUpdate(notify *message.NotifyAccountUpdate) {

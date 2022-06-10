@@ -74,26 +74,25 @@ func New() *UAkochan {
 }
 
 func (uAkochan *UAkochan) Hello() string {
-	res := new(Join)
 	err := uAkochan.invoke(&Hello{
 		Type:            "hello",
 		Protocol:        "mjsonp",
 		ProtocolVersion: 1,
-	}, res)
+	})
 	if err != nil {
 		logger.Panic("hello error:", zap.Error(err))
 	}
-	logger.Debug("hello success", zap.Reflect("Name", res.Name))
-	return res.Name
+	join := uAkochan.out.(*Join)
+	logger.Debug("hello success", zap.Reflect("Name", join.Name))
+	return join.Name
 }
 
 func (uAkochan *UAkochan) StartGame(names []string) {
-	res := new(None)
 	err := uAkochan.invoke(&StartGame{
 		Type:  "start_kyoku",
 		ID:    1,
 		Names: names,
-	}, res)
+	})
 	if err != nil {
 		logger.Error("start game error:", zap.Error(err))
 		return
@@ -101,7 +100,6 @@ func (uAkochan *UAkochan) StartGame(names []string) {
 }
 
 func (uAkochan *UAkochan) StartKyoku(bakaze string, kyoku int, honba int, kyotaku int, oya int, dora_marker string, tehais [][]string) {
-	res := new(None)
 	err := uAkochan.invoke(&StartKyoku{
 		Type:       "start_kyoku",
 		Bakaze:     bakaze,
@@ -111,21 +109,140 @@ func (uAkochan *UAkochan) StartKyoku(bakaze string, kyoku int, honba int, kyotak
 		Oya:        oya,
 		DoraMarker: dora_marker,
 		Tehais:     tehais,
-	}, res)
+	})
 	if err != nil {
 		logger.Error("start kyoku error:", zap.Error(err))
 		return
 	}
 }
 
-func (uAkochan *UAkochan) Tsumo(actor int, pai string) {
-	res := new(None)
+func (uAkochan *UAkochan) Tsumo(actor int, pai string) interface{} {
+	err := uAkochan.invoke(&Tsumo{
+		Type:  "tsumo",
+		Actor: actor,
+		Pai:   pai,
+	})
+	if err != nil {
+		logger.Error("tsumo error:", zap.Error(err))
+		return nil
+	}
+	return uAkochan.out
 }
 
-func (uAkochan *UAkochan) invoke(in interface{}, out interface{}) error {
-	uAkochan.send(in)
-	uAkochan.out = out
+func (uAkochan *UAkochan) Dahai(actor int, pai string, tsumogiri bool) {
+	err := uAkochan.invoke(&Dahai{
+		Type:      "dahai",
+		Actor:     actor,
+		Pai:       pai,
+		Tsumogiri: tsumogiri,
+	})
+	if err != nil {
+		logger.Error("dahai error:", zap.Error(err))
+	}
+}
 
+func (uAkochan *UAkochan) Kakan(actor int, pai string, consumed []string) {
+	err := uAkochan.invoke(&Kakan{
+		Type:     "kakan",
+		Actor:    actor,
+		Pai:      pai,
+		Consumed: consumed,
+	})
+	if err != nil {
+		logger.Error("kakan error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) Daiminkan(actor int, target int, pai string, consumed []string) {
+	err := uAkochan.invoke(&Daiminkan{
+		Type:     "daiminkan",
+		Actor:    actor,
+		Target:   target,
+		Pai:      pai,
+		Consumed: consumed,
+	})
+	if err != nil {
+		logger.Error("kakan error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) Ankan(actor int, consumed []string) {
+	err := uAkochan.invoke(&Ankan{
+		Type:     "ankan",
+		Actor:    actor,
+		Consumed: consumed,
+	})
+	if err != nil {
+		logger.Error("daiminkan error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) Reach(actor int) {
+	err := uAkochan.invoke(&Reach{
+		Type:  "reach",
+		Actor: actor,
+	})
+	if err != nil {
+		logger.Error("reach error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) ReachAccepted(actor int, deltas []int, scores []int) {
+	err := uAkochan.invoke(&ReachAccepted{
+		Type:   "reach_accepted",
+		Actor:  actor,
+		Deltas: deltas,
+		Scores: scores,
+	})
+	if err != nil {
+		logger.Error("reach accepted error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) Hora(actor, target int, pai string, uradoraMarkers, horaTehais []string, yakus [][]interface{}, fu, fan, horaPoints int, deltas []int, scores []int) {
+	err := uAkochan.invoke(&Hora{
+		Type:           "hora",
+		Actor:          actor,
+		Target:         target,
+		Pai:            "",
+		UradoraMarkers: uradoraMarkers,
+		HoraTehais:     horaTehais,
+		Yakus:          yakus,
+		Fu:             fu,
+		Fan:            fan,
+		HoraPoints:     horaPoints,
+		Deltas:         deltas,
+		Scores:         scores,
+	})
+	if err != nil {
+		logger.Error("hora error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) EndKyoku() {
+	err := uAkochan.invoke(&EndKyoku{Type: "end_kyoku"})
+	if err != nil {
+		logger.Error("end_kyoku error:", zap.Error(err))
+	}
+}
+
+func (uAkochan *UAkochan) Ryukyoku(reason string, tehais [][]string, tenpais []bool, deltas, scores []int) {
+	err := uAkochan.invoke(&Ryukyoku{
+		Type:    "ryukyoku",
+		Reason:  reason,
+		Tehais:  tehais,
+		Tenpais: tenpais,
+		Deltas:  deltas,
+		Scores:  scores,
+	})
+	if err != nil {
+		logger.Error("ryukyoku error:", zap.Error(err))
+	}
+}
+
+//func (uAkochan *UAkochan) invoke(in interface{}, out interface{}) {
+func (uAkochan *UAkochan) invoke(in interface{}) error {
+	uAkochan.send(in)
 	select {
 	case <-time.After(time.Second * 3):
 		return fmt.Errorf("invoke timeout")
@@ -153,6 +270,7 @@ func (uAkochan *UAkochan) send(in interface{}) {
 func (uAkochan *UAkochan) receive() {
 	defer uAkochan.conn.Close()
 	reader := bufio.NewReader(uAkochan.conn)
+	t := new(Type)
 	for {
 		data, err := reader.ReadBytes('\n')
 		if err != nil {
@@ -161,10 +279,16 @@ func (uAkochan *UAkochan) receive() {
 		}
 		data = data[:len(data)-1]
 		logger.Debug("recv:", zap.ByteString("raw", data))
-		err = json.Unmarshal(data, uAkochan.out)
+		err = json.Unmarshal(data, t)
 		if err != nil {
 			logger.Error("json.Unmarshal error:", zap.Error(err))
 		}
+		v := GetMessageType(t.Type)
+		err = json.Unmarshal(data, v)
+		if err != nil {
+			logger.Error("json.Unmarshal error:", zap.Error(err))
+		}
+		uAkochan.out = v
 		uAkochan.wait <- struct{}{}
 	}
 }
@@ -175,38 +299,3 @@ func (uAkochan *UAkochan) close() {
 		logger.Error("close conn", zap.Error(err))
 	}
 }
-
-//func New
-
-//
-//type Conn struct {
-//	net.Conn
-//}
-//
-//func New(conn net.Conn) *Conn {
-//	return &Conn{
-//		Conn: conn,
-//	}
-//}
-//
-//func (conn *Conn) send(msg proto.Message) {
-//	buff := new(bytes.Buffer)
-//	data, _ := json.Marshal(msg)
-//	buff.Write(data)
-//	buff.WriteByte('\n')
-//	conn.Write(buff.Bytes())
-//}
-//
-//func (conn *Conn) handle() {
-//	defer conn.close()
-//	reader := bufio.NewReader(conn)
-//	for {
-//		data, err := reader.ReadBytes('\n')
-//		if err != nil {
-//			logger.Debug("read error:", zap.Error(err))
-//			break
-//		}
-//		data = data[:len(data)-1]
-//		logger.Debug("recv:", zap.ByteString("data", data))
-//	}
-//}
