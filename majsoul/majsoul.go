@@ -27,8 +27,7 @@ type Config struct {
 	GatewayAddress string `json:"gatewayAddress"`
 }
 
-type IFMajsoul interface {
-	message.LobbyClient
+type IFReceive interface {
 	NotifyCaptcha(notify *message.NotifyCaptcha)
 	NotifyRoomGameStart(notify *message.NotifyRoomGameStart)
 	NotifyMatchGameStart(notify *message.NotifyMatchGameStart)
@@ -117,7 +116,8 @@ type Majsoul struct {
 	message.LobbyClient
 	request *net.Request
 	conn    *ClientConn
-	IFMajsoul
+	IFReceive
+	*Version
 }
 
 func New(c *Config) *Majsoul {
@@ -130,7 +130,7 @@ func New(c *Config) *Majsoul {
 		LobbyClient: message.NewLobbyClient(cConn),
 		conn:        cConn,
 	}
-	m.IFMajsoul = m
+	m.IFReceive = m
 	m.check()
 	go m.heatbeat()
 	go m.receive()
@@ -156,9 +156,10 @@ func (majsoul *Majsoul) Start() {
 }
 
 type Version struct {
-	Version      string `json:"version"`
-	ForceVersion string `json:"force_version"`
-	Code         string `json:"code"`
+	Version             string `json:"version"`
+	ForceVersion        string `json:"force_version"`
+	Code                string `json:"code"`
+	ClientVersionString string
 }
 
 func (majsoul *Majsoul) GetVersion() *Version {
@@ -166,17 +167,18 @@ func (majsoul *Majsoul) GetVersion() *Version {
 	if err != nil {
 		logger.Error("GetVersion", zap.Error(err))
 	}
-	version := new(Version)
-	err = json.Unmarshal(body, version)
+	majsoul.Version = new(Version)
+	err = json.Unmarshal(body, majsoul.Version)
 	if err != nil {
 		logger.Error("GetVersion", zap.Error(err))
 	}
-	return version
+	majsoul.ClientVersionString = fmt.Sprintf("web-%s", majsoul.Version.Version[:len(majsoul.Version.Version)-2])
+	return majsoul.Version
 }
 func (majsoul *Majsoul) check() {
 	version := majsoul.GetVersion()
 	if version.Version != "0.10.105.w" {
-		logger.Info("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
+		logger.Error("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
 	}
 	logger.Debug("当前雀魂版本为: ", zap.String("Version", version.Version))
 }
@@ -195,168 +197,168 @@ func (majsoul *Majsoul) heatbeat() {
 }
 func (majsoul *Majsoul) receive() {
 	for data := range majsoul.conn.Receive() {
-		logger.Debug("loopNotify", zap.Reflect("data", data))
+		logger.Debug("majsoul.receive", zap.Reflect("raw", data))
 		switch notify := data.(type) {
 		case *message.NotifyCaptcha:
-			majsoul.IFMajsoul.NotifyCaptcha(notify)
+			majsoul.IFReceive.NotifyCaptcha(notify)
 		case *message.NotifyRoomGameStart:
-			majsoul.IFMajsoul.NotifyRoomGameStart(notify)
+			majsoul.IFReceive.NotifyRoomGameStart(notify)
 		case *message.NotifyMatchGameStart:
-			majsoul.IFMajsoul.NotifyMatchGameStart(notify)
+			majsoul.IFReceive.NotifyMatchGameStart(notify)
 		case *message.NotifyRoomPlayerReady:
-			majsoul.IFMajsoul.NotifyRoomPlayerReady(notify)
+			majsoul.IFReceive.NotifyRoomPlayerReady(notify)
 		case *message.NotifyRoomPlayerDressing:
-			majsoul.IFMajsoul.NotifyRoomPlayerDressing(notify)
+			majsoul.IFReceive.NotifyRoomPlayerDressing(notify)
 		case *message.NotifyRoomPlayerUpdate:
-			majsoul.IFMajsoul.NotifyRoomPlayerUpdate(notify)
+			majsoul.IFReceive.NotifyRoomPlayerUpdate(notify)
 		case *message.NotifyRoomKickOut:
-			majsoul.IFMajsoul.NotifyRoomKickOut(notify)
+			majsoul.IFReceive.NotifyRoomKickOut(notify)
 		case *message.NotifyFriendStateChange:
-			majsoul.IFMajsoul.NotifyFriendStateChange(notify)
+			majsoul.IFReceive.NotifyFriendStateChange(notify)
 		case *message.NotifyFriendViewChange:
-			majsoul.IFMajsoul.NotifyFriendViewChange(notify)
+			majsoul.IFReceive.NotifyFriendViewChange(notify)
 		case *message.NotifyFriendChange:
-			majsoul.IFMajsoul.NotifyFriendChange(notify)
+			majsoul.IFReceive.NotifyFriendChange(notify)
 		case *message.NotifyNewFriendApply:
-			majsoul.IFMajsoul.NotifyNewFriendApply(notify)
+			majsoul.IFReceive.NotifyNewFriendApply(notify)
 		case *message.NotifyClientMessage:
-			majsoul.IFMajsoul.NotifyClientMessage(notify)
+			majsoul.IFReceive.NotifyClientMessage(notify)
 		case *message.NotifyAccountUpdate:
-			majsoul.IFMajsoul.NotifyAccountUpdate(notify)
+			majsoul.IFReceive.NotifyAccountUpdate(notify)
 		case *message.NotifyAnotherLogin:
-			majsoul.IFMajsoul.NotifyAnotherLogin(notify)
+			majsoul.IFReceive.NotifyAnotherLogin(notify)
 		case *message.NotifyAccountLogout:
-			majsoul.IFMajsoul.NotifyAccountLogout(notify)
+			majsoul.IFReceive.NotifyAccountLogout(notify)
 		case *message.NotifyAnnouncementUpdate:
-			majsoul.IFMajsoul.NotifyAnnouncementUpdate(notify)
+			majsoul.IFReceive.NotifyAnnouncementUpdate(notify)
 		case *message.NotifyNewMail:
-			majsoul.IFMajsoul.NotifyNewMail(notify)
+			majsoul.IFReceive.NotifyNewMail(notify)
 		case *message.NotifyDeleteMail:
-			majsoul.IFMajsoul.NotifyDeleteMail(notify)
+			majsoul.IFReceive.NotifyDeleteMail(notify)
 		case *message.NotifyReviveCoinUpdate:
-			majsoul.IFMajsoul.NotifyReviveCoinUpdate(notify)
+			majsoul.IFReceive.NotifyReviveCoinUpdate(notify)
 		case *message.NotifyDailyTaskUpdate:
-			majsoul.IFMajsoul.NotifyDailyTaskUpdate(notify)
+			majsoul.IFReceive.NotifyDailyTaskUpdate(notify)
 		case *message.NotifyActivityTaskUpdate:
-			majsoul.IFMajsoul.NotifyActivityTaskUpdate(notify)
+			majsoul.IFReceive.NotifyActivityTaskUpdate(notify)
 		case *message.NotifyActivityPeriodTaskUpdate:
-			majsoul.IFMajsoul.NotifyActivityPeriodTaskUpdate(notify)
+			majsoul.IFReceive.NotifyActivityPeriodTaskUpdate(notify)
 		case *message.NotifyAccountRandomTaskUpdate:
-			majsoul.IFMajsoul.NotifyAccountRandomTaskUpdate(notify)
+			majsoul.IFReceive.NotifyAccountRandomTaskUpdate(notify)
 		case *message.NotifyActivitySegmentTaskUpdate:
-			majsoul.IFMajsoul.NotifyActivitySegmentTaskUpdate(notify)
+			majsoul.IFReceive.NotifyActivitySegmentTaskUpdate(notify)
 		case *message.NotifyActivityUpdate:
-			majsoul.IFMajsoul.NotifyActivityUpdate(notify)
+			majsoul.IFReceive.NotifyActivityUpdate(notify)
 		case *message.NotifyAccountChallengeTaskUpdate:
-			majsoul.IFMajsoul.NotifyAccountChallengeTaskUpdate(notify)
+			majsoul.IFReceive.NotifyAccountChallengeTaskUpdate(notify)
 		case *message.NotifyNewComment:
-			majsoul.IFMajsoul.NotifyNewComment(notify)
+			majsoul.IFReceive.NotifyNewComment(notify)
 		case *message.NotifyRollingNotice:
-			majsoul.IFMajsoul.NotifyRollingNotice(notify)
+			majsoul.IFReceive.NotifyRollingNotice(notify)
 		case *message.NotifyGiftSendRefresh:
-			majsoul.IFMajsoul.NotifyGiftSendRefresh(notify)
+			majsoul.IFReceive.NotifyGiftSendRefresh(notify)
 		case *message.NotifyShopUpdate:
-			majsoul.IFMajsoul.NotifyShopUpdate(notify)
+			majsoul.IFReceive.NotifyShopUpdate(notify)
 		case *message.NotifyVipLevelChange:
-			majsoul.IFMajsoul.NotifyVipLevelChange(notify)
+			majsoul.IFReceive.NotifyVipLevelChange(notify)
 		case *message.NotifyServerSetting:
-			majsoul.IFMajsoul.NotifyServerSetting(notify)
+			majsoul.IFReceive.NotifyServerSetting(notify)
 		case *message.NotifyPayResult:
-			majsoul.IFMajsoul.NotifyPayResult(notify)
+			majsoul.IFReceive.NotifyPayResult(notify)
 		case *message.NotifyCustomContestAccountMsg:
-			majsoul.IFMajsoul.NotifyCustomContestAccountMsg(notify)
+			majsoul.IFReceive.NotifyCustomContestAccountMsg(notify)
 		case *message.NotifyCustomContestSystemMsg:
-			majsoul.IFMajsoul.NotifyCustomContestSystemMsg(notify)
+			majsoul.IFReceive.NotifyCustomContestSystemMsg(notify)
 		case *message.NotifyMatchTimeout:
-			majsoul.IFMajsoul.NotifyMatchTimeout(notify)
+			majsoul.IFReceive.NotifyMatchTimeout(notify)
 		case *message.NotifyCustomContestState:
-			majsoul.IFMajsoul.NotifyCustomContestState(notify)
+			majsoul.IFReceive.NotifyCustomContestState(notify)
 		case *message.NotifyActivityChange:
-			majsoul.IFMajsoul.NotifyActivityChange(notify)
+			majsoul.IFReceive.NotifyActivityChange(notify)
 		case *message.NotifyAFKResult:
-			majsoul.IFMajsoul.NotifyAFKResult(notify)
+			majsoul.IFReceive.NotifyAFKResult(notify)
 		case *message.NotifyGameFinishRewardV2:
-			majsoul.IFMajsoul.NotifyGameFinishRewardV2(notify)
+			majsoul.IFReceive.NotifyGameFinishRewardV2(notify)
 		case *message.NotifyActivityRewardV2:
-			majsoul.IFMajsoul.NotifyActivityRewardV2(notify)
+			majsoul.IFReceive.NotifyActivityRewardV2(notify)
 		case *message.NotifyActivityPointV2:
-			majsoul.IFMajsoul.NotifyActivityPointV2(notify)
+			majsoul.IFReceive.NotifyActivityPointV2(notify)
 		case *message.NotifyLeaderboardPointV2:
-			majsoul.IFMajsoul.NotifyLeaderboardPointV2(notify)
+			majsoul.IFReceive.NotifyLeaderboardPointV2(notify)
 		case *message.NotifyNewGame:
-			majsoul.IFMajsoul.NotifyNewGame(notify)
+			majsoul.IFReceive.NotifyNewGame(notify)
 		case *message.NotifyPlayerLoadGameReady:
-			majsoul.IFMajsoul.NotifyPlayerLoadGameReady(notify)
+			majsoul.IFReceive.NotifyPlayerLoadGameReady(notify)
 		case *message.NotifyGameBroadcast:
-			majsoul.IFMajsoul.NotifyGameBroadcast(notify)
+			majsoul.IFReceive.NotifyGameBroadcast(notify)
 		case *message.NotifyGameEndResult:
-			majsoul.IFMajsoul.NotifyGameEndResult(notify)
+			majsoul.IFReceive.NotifyGameEndResult(notify)
 		case *message.NotifyGameTerminate:
-			majsoul.IFMajsoul.NotifyGameTerminate(notify)
+			majsoul.IFReceive.NotifyGameTerminate(notify)
 		case *message.NotifyPlayerConnectionState:
-			majsoul.IFMajsoul.NotifyPlayerConnectionState(notify)
+			majsoul.IFReceive.NotifyPlayerConnectionState(notify)
 		case *message.NotifyAccountLevelChange:
-			majsoul.IFMajsoul.NotifyAccountLevelChange(notify)
+			majsoul.IFReceive.NotifyAccountLevelChange(notify)
 		case *message.NotifyGameFinishReward:
-			majsoul.IFMajsoul.NotifyGameFinishReward(notify)
+			majsoul.IFReceive.NotifyGameFinishReward(notify)
 		case *message.NotifyActivityReward:
-			majsoul.IFMajsoul.NotifyActivityReward(notify)
+			majsoul.IFReceive.NotifyActivityReward(notify)
 		case *message.NotifyActivityPoint:
-			majsoul.IFMajsoul.NotifyActivityPoint(notify)
+			majsoul.IFReceive.NotifyActivityPoint(notify)
 		case *message.NotifyLeaderboardPoint:
-			majsoul.IFMajsoul.NotifyLeaderboardPoint(notify)
+			majsoul.IFReceive.NotifyLeaderboardPoint(notify)
 		case *message.NotifyGamePause:
-			majsoul.IFMajsoul.NotifyGamePause(notify)
+			majsoul.IFReceive.NotifyGamePause(notify)
 		case *message.NotifyEndGameVote:
-			majsoul.IFMajsoul.NotifyEndGameVote(notify)
+			majsoul.IFReceive.NotifyEndGameVote(notify)
 		case *message.NotifyObserveData:
-			majsoul.IFMajsoul.NotifyObserveData(notify)
+			majsoul.IFReceive.NotifyObserveData(notify)
 		case *message.NotifyRoomPlayerReady_AccountReadyState:
-			majsoul.IFMajsoul.NotifyRoomPlayerReady_AccountReadyState(notify)
+			majsoul.IFReceive.NotifyRoomPlayerReady_AccountReadyState(notify)
 		case *message.NotifyRoomPlayerDressing_AccountDressingState:
-			majsoul.IFMajsoul.NotifyRoomPlayerDressing_AccountDressingState(notify)
+			majsoul.IFReceive.NotifyRoomPlayerDressing_AccountDressingState(notify)
 		case *message.NotifyAnnouncementUpdate_AnnouncementUpdate:
-			majsoul.IFMajsoul.NotifyAnnouncementUpdate_AnnouncementUpdate(notify)
+			majsoul.IFReceive.NotifyAnnouncementUpdate_AnnouncementUpdate(notify)
 		case *message.NotifyActivityUpdate_FeedActivityData:
-			majsoul.IFMajsoul.NotifyActivityUpdate_FeedActivityData(notify)
+			majsoul.IFReceive.NotifyActivityUpdate_FeedActivityData(notify)
 		case *message.NotifyActivityUpdate_FeedActivityData_CountWithTimeData:
-			majsoul.IFMajsoul.NotifyActivityUpdate_FeedActivityData_CountWithTimeData(notify)
+			majsoul.IFReceive.NotifyActivityUpdate_FeedActivityData_CountWithTimeData(notify)
 		case *message.NotifyActivityUpdate_FeedActivityData_GiftBoxData:
-			majsoul.IFMajsoul.NotifyActivityUpdate_FeedActivityData_GiftBoxData(notify)
+			majsoul.IFReceive.NotifyActivityUpdate_FeedActivityData_GiftBoxData(notify)
 		case *message.NotifyPayResult_ResourceModify:
-			majsoul.IFMajsoul.NotifyPayResult_ResourceModify(notify)
+			majsoul.IFReceive.NotifyPayResult_ResourceModify(notify)
 		case *message.NotifyGameFinishRewardV2_LevelChange:
-			majsoul.IFMajsoul.NotifyGameFinishRewardV2_LevelChange(notify)
+			majsoul.IFReceive.NotifyGameFinishRewardV2_LevelChange(notify)
 		case *message.NotifyGameFinishRewardV2_MatchChest:
-			majsoul.IFMajsoul.NotifyGameFinishRewardV2_MatchChest(notify)
+			majsoul.IFReceive.NotifyGameFinishRewardV2_MatchChest(notify)
 		case *message.NotifyGameFinishRewardV2_MainCharacter:
-			majsoul.IFMajsoul.NotifyGameFinishRewardV2_MainCharacter(notify)
+			majsoul.IFReceive.NotifyGameFinishRewardV2_MainCharacter(notify)
 		case *message.NotifyGameFinishRewardV2_CharacterGift:
-			majsoul.IFMajsoul.NotifyGameFinishRewardV2_CharacterGift(notify)
+			majsoul.IFReceive.NotifyGameFinishRewardV2_CharacterGift(notify)
 		case *message.NotifyActivityRewardV2_ActivityReward:
-			majsoul.IFMajsoul.NotifyActivityRewardV2_ActivityReward(notify)
+			majsoul.IFReceive.NotifyActivityRewardV2_ActivityReward(notify)
 		case *message.NotifyActivityPointV2_ActivityPoint:
-			majsoul.IFMajsoul.NotifyActivityPointV2_ActivityPoint(notify)
+			majsoul.IFReceive.NotifyActivityPointV2_ActivityPoint(notify)
 		case *message.NotifyLeaderboardPointV2_LeaderboardPoint:
-			majsoul.IFMajsoul.NotifyLeaderboardPointV2_LeaderboardPoint(notify)
+			majsoul.IFReceive.NotifyLeaderboardPointV2_LeaderboardPoint(notify)
 		case *message.NotifyGameFinishReward_LevelChange:
-			majsoul.IFMajsoul.NotifyGameFinishReward_LevelChange(notify)
+			majsoul.IFReceive.NotifyGameFinishReward_LevelChange(notify)
 		case *message.NotifyGameFinishReward_MatchChest:
-			majsoul.IFMajsoul.NotifyGameFinishReward_MatchChest(notify)
+			majsoul.IFReceive.NotifyGameFinishReward_MatchChest(notify)
 		case *message.NotifyGameFinishReward_MainCharacter:
-			majsoul.IFMajsoul.NotifyGameFinishReward_MainCharacter(notify)
+			majsoul.IFReceive.NotifyGameFinishReward_MainCharacter(notify)
 		case *message.NotifyGameFinishReward_CharacterGift:
-			majsoul.IFMajsoul.NotifyGameFinishReward_CharacterGift(notify)
+			majsoul.IFReceive.NotifyGameFinishReward_CharacterGift(notify)
 		case *message.NotifyActivityReward_ActivityReward:
-			majsoul.IFMajsoul.NotifyActivityReward_ActivityReward(notify)
+			majsoul.IFReceive.NotifyActivityReward_ActivityReward(notify)
 		case *message.NotifyActivityPoint_ActivityPoint:
-			majsoul.IFMajsoul.NotifyActivityPoint_ActivityPoint(notify)
+			majsoul.IFReceive.NotifyActivityPoint_ActivityPoint(notify)
 		case *message.NotifyLeaderboardPoint_LeaderboardPoint:
-			majsoul.IFMajsoul.NotifyLeaderboardPoint_LeaderboardPoint(notify)
+			majsoul.IFReceive.NotifyLeaderboardPoint_LeaderboardPoint(notify)
 		case *message.NotifyEndGameVote_VoteResult:
-			majsoul.IFMajsoul.NotifyEndGameVote_VoteResult(notify)
+			majsoul.IFReceive.NotifyEndGameVote_VoteResult(notify)
 		case *message.ActionPrototype:
-			majsoul.IFMajsoul.ActionPrototype(notify)
+			majsoul.IFReceive.ActionPrototype(notify)
 		}
 	}
 }

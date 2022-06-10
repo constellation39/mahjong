@@ -71,7 +71,7 @@ func (c *ClientConn) handleNotify(msg []byte) {
 		logger.Error("handleNotify", zap.Error(err))
 		return
 	}
-	logger.Debug("notify", zap.String("name", wrapper.Name))
+	logger.Debug("handleNotify", zap.String("name", wrapper.Name))
 	pm := message.GetNotifyType(wrapper.Name)
 	if pm == nil {
 		logger.Error("handleNotify", zap.String("name", wrapper.Name))

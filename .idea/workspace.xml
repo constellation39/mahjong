@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="131f6e7e-6de2-46fc-95a0-a10b658df6c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/message/map.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/message/map.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/main/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/majsoul.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/uakochan.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,5 +69,16 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/majsoul/majsoul.go</url>
+          <line>175</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
