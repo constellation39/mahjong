@@ -165,12 +165,12 @@ type Version struct {
 func (majsoul *Majsoul) GetVersion() *Version {
 	body, err := majsoul.request.Get(fmt.Sprintf("1/version.json?randv=%d", rand.Intn(1000000000)))
 	if err != nil {
-		logger.Error("GetVersion", zap.Error(err))
+		logger.Panic("GetVersion", zap.Error(err))
 	}
 	majsoul.Version = new(Version)
 	err = json.Unmarshal(body, majsoul.Version)
 	if err != nil {
-		logger.Error("GetVersion", zap.Error(err))
+		logger.Panic("GetVersion", zap.Error(err))
 	}
 	majsoul.ClientVersionString = fmt.Sprintf("web-%s", majsoul.Version.Version[:len(majsoul.Version.Version)-2])
 	return majsoul.Version
@@ -178,7 +178,7 @@ func (majsoul *Majsoul) GetVersion() *Version {
 func (majsoul *Majsoul) check() {
 	version := majsoul.GetVersion()
 	if version.Version != "0.10.105.w" {
-		logger.Error("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
+		logger.Info("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
 	}
 	logger.Debug("当前雀魂版本为: ", zap.String("Version", version.Version))
 }

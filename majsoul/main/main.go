@@ -44,13 +44,7 @@ func main() {
 	if err != nil {
 		return
 	}
-	logger.Debug("Login", zap.Reflect("Res", loginRes))
-
-	fetchFriendList, err := m.FetchFriendList(m.Ctx, &message.ReqCommon{})
-	if err != nil {
-		return
-	}
-	logger.Debug("FetchFriendList", zap.Reflect("Res", fetchFriendList))
+	logger.Debug("Login success", zap.Reflect("Nickname", loginRes.Account.Nickname))
 
 	select {
 	case <-m.Ctx.Done():
