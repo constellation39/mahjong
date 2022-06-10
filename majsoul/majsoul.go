@@ -43,7 +43,6 @@ func New(c *Config) *Majsoul {
 		request:     net.NewRequest(c.ServerAddress),
 		LobbyClient: message.NewLobbyClient(cConn),
 	}
-	cConn.Start()
 	m.check()
 	go m.heatbeat()
 	return m

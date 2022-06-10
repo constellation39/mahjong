@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="899af9b3-3ab9-4f02-8127-9810906329e1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/majsoul/message/map.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/majsoul.json" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/majsoul.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/main/main.go" afterDir="false" />
+    </list>
+    <list id="738ebe02-0528-4f5e-b141-49eafca85ef9" name="Changes by const" comment="">
+      <change beforePath="$PROJECT_DIR$/majsoul/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/uakochan.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +33,25 @@
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/majsoul/client.go">
+      <ranges>
+        <range start1="18" end1="19" start2="18" end2="19" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="22" end1="22" start2="22" end2="23" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="33" end1="34" start2="34" end2="35" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="35" end1="35" start2="36" end2="37" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="36" end1="41" start2="38" end2="39" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="44" end1="45" start2="42" end2="44" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="47" end1="48" start2="46" end2="47" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="53" end1="54" start2="52" end2="53" changelist="899af9b3-3ab9-4f02-8127-9810906329e1" />
+        <range start1="55" end1="56" start2="54" end2="55" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="60" end1="61" start2="59" end2="60" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="67" end1="68" start2="66" end2="67" changelist="899af9b3-3ab9-4f02-8127-9810906329e1" />
+        <range start1="76" end1="77" start2="75" end2="76" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+        <range start1="101" end1="101" start2="100" end2="104" changelist="738ebe02-0528-4f5e-b141-49eafca85ef9" />
+      </ranges>
+    </file>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -41,19 +61,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/const&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/Users/const",
+    "settings.editor.selected.configurable": "http.proxy"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\const\Desktop\mahjong\ukanachan\main" />

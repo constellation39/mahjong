@@ -43,10 +43,6 @@ func New(conn net.Conn) *Conn {
 	}
 }
 
-func Service() {
-
-}
-
 func (conn *Conn) Send(msg proto.Message) {
 	buff := new(bytes.Buffer)
 	data, _ := json.Marshal(msg)

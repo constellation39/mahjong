@@ -16,10 +16,11 @@ import (
 )
 
 type ClientConn struct {
-	Ctx context.Context
+	ctx context.Context
 	*net.WSClient
 	msgIndex uint8
 	replys   sync.Map // 回复消息 map[uint8]*Reply
+	notify   chan proto.Message
 }
 
 type Reply struct {
@@ -31,41 +32,39 @@ func NewClientConn(ctx context.Context, addr string) *ClientConn {
 	header := http.Header{}
 	header.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.44")
 	cConn := &ClientConn{
-		Ctx:      ctx,
+		ctx:      ctx,
 		WSClient: net.NewWSClient(addr, header),
+		notify:   make(chan proto.Message, 32),
 	}
-	return cConn
-}
-
-func (c *ClientConn) Start() {
-	err := c.WSClient.Connect()
+	err := cConn.WSClient.Connect()
 	if err != nil {
 		logger.Fatal("connect to websocket server failed", zap.Error(err))
 	}
-	go c.Loop()
+	go cConn.loop()
+	return cConn
 }
 
-func (c *ClientConn) Loop() {
+func (c *ClientConn) loop() {
 receive:
 	for {
 		msg := c.WSClient.Read()
 		switch msg[0] {
 		case MsgTypeNotify:
-			c.HandleNotify(msg)
+			c.handleNotify(msg)
 		case MsgTypeResponse:
-			c.HandleResponse(msg)
+			c.handleResponse(msg)
 		default:
 			logger.Info("message does not have any path", zap.ByteString("msg", msg))
 		}
 		select {
-		case <-c.Ctx.Done():
+		case <-c.ctx.Done():
 			break receive
 		default:
 		}
 	}
 }
 
-func (c *ClientConn) HandleNotify(msg []byte) {
+func (c *ClientConn) handleNotify(msg []byte) {
 	wrapper := new(message.Wrapper)
 	err := proto.Unmarshal(msg[1:], wrapper)
 	if err != nil {
@@ -74,7 +73,7 @@ func (c *ClientConn) HandleNotify(msg []byte) {
 	logger.Debug("notify", zap.String("name", wrapper.Name))
 }
 
-func (c *ClientConn) HandleResponse(msg []byte) {
+func (c *ClientConn) handleResponse(msg []byte) {
 	key := (msg[2] << 8) + msg[1]
 	v, ok := c.replys.Load(key)
 	if !ok {
@@ -98,6 +97,10 @@ func (c *ClientConn) HandleResponse(msg []byte) {
 		return
 	}
 	close(reply.wait)
+}
+
+func (c *ClientConn) Receive() proto.Message {
+	return nil
 }
 
 func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, out interface{}, opts ...grpc.CallOption) error {
