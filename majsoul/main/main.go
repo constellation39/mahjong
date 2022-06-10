@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"go.uber.org/zap"
 	"majsoul"
 	"majsoul/message"
@@ -51,7 +52,55 @@ func main() {
 	}
 	logger.Debug("FetchFriendList", zap.Reflect("Res", fetchFriendList))
 
+	loopNotify(m)
+
 	select {
 	case <-m.Ctx.Done():
 	}
+}
+
+func loopNotify(m *majsoul.Majsoul) {
+
+}
+
+type InvitationRoom struct {
+	RoomID    int    `json:"room_id"`
+	Mode      Mode   `json:"mode"`
+	Nickname  string `json:"nickname"`
+	Verified  int    `json:"verified"`
+	AccountID int    `json:"account_id"`
+}
+type Mode struct {
+	Mode       int        `json:"mode"`
+	Ai         bool       `json:"ai"`
+	DetailRule DetailRule `json:"detail_rule"`
+}
+type DetailRule struct {
+	TimeFixed    int  `json:"time_fixed"`
+	TimeAdd      int  `json:"time_add"`
+	DoraCount    int  `json:"dora_count"`
+	Shiduan      int  `json:"shiduan"`
+	InitPoint    int  `json:"init_point"`
+	Fandian      int  `json:"fandian"`
+	Bianjietishi bool `json:"bianjietishi"`
+	AiLevel      int  `json:"ai_level"`
+	Fanfu        int  `json:"fanfu"`
+	GuyiMode     int  `json:"guyi_mode"`
+	OpenHand     int  `json:"open_hand"`
+}
+
+func NotifyClientMessage(notify *message.NotifyClientMessage) {
+	if notify.Type != 1 {
+		logger.Info("NotifyClientMessage", zap.Reflect("notify", notify))
+		return
+	}
+	invitationRoom := new(InvitationRoom)
+	err := json.Unmarshal([]byte(notify.Content), invitationRoom)
+	if err != nil {
+		logger.Error("NotifyClientMessage", zap.Error(err))
+		return
+	}
+	//invitationRoom.RoomID
+
+	//notify.Content
 }

@@ -68,9 +68,21 @@ func (c *ClientConn) handleNotify(msg []byte) {
 	wrapper := new(message.Wrapper)
 	err := proto.Unmarshal(msg[1:], wrapper)
 	if err != nil {
+		logger.Error("handleNotify", zap.Error(err))
 		return
 	}
 	logger.Debug("notify", zap.String("name", wrapper.Name))
+	pm := message.GetNotifyType(wrapper.Name)
+	if pm == nil {
+		logger.Error("handleNotify", zap.String("name", wrapper.Name))
+		return
+	}
+	err = proto.Unmarshal(wrapper.Data, pm)
+	if err != nil {
+		logger.Error("handleNotify", zap.Error(err))
+		return
+	}
+	c.notify <- pm
 }
 
 func (c *ClientConn) handleResponse(msg []byte) {
@@ -99,8 +111,8 @@ func (c *ClientConn) handleResponse(msg []byte) {
 	close(reply.wait)
 }
 
-func (c *ClientConn) Receive() proto.Message {
-	return nil
+func (c *ClientConn) Receive() <-chan proto.Message {
+	return c.notify
 }
 
 func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, out interface{}, opts ...grpc.CallOption) error {

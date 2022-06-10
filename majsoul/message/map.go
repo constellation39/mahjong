@@ -162,6 +162,8 @@ func GetNotifyType(name string) (ret proto.Message) {
 		ret = &NotifyLeaderboardPoint_LeaderboardPoint{}
 	case ".lq.NotifyEndGameVote_VoteResult":
 		ret = &NotifyEndGameVote_VoteResult{}
+	case ".lq.ActionPrototype":
+		ret = &ActionPrototype{}
 	}
 	return
 }
