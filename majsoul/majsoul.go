@@ -23,9 +23,25 @@ const (
 	MsgTypeResponse uint8 = 3
 )
 
+const (
+	DISCARD = 1
+	CHI     = 2
+	PON     = 3
+	ANKAN   = 4
+	MINKAN  = 5
+	KAKAN   = 6
+	RIICHI  = 7
+	TSUMO   = 8
+	RON     = 9
+	KUKU    = 10
+	KITA    = 11
+	PASS    = 12
+)
+
 type Config struct {
 	ServerAddress  string `json:"serverAddress"`
 	GatewayAddress string `json:"gatewayAddress"`
+	GameAddress    string `json:"gameAddress"`
 }
 
 type IFReceive interface {
@@ -124,8 +140,10 @@ type Majsoul struct {
 	conn    *ClientConn
 	game    *ClientConn
 
-	*Version
-	*message.Account
+	Config   *Config
+	Version  *Version
+	Account  *message.Account
+	GameInfo *message.ResAuthGame
 }
 
 func New(c *Config) *Majsoul {
@@ -136,6 +154,7 @@ func New(c *Config) *Majsoul {
 		Cancel:      cancel,
 		request:     net.NewRequest(c.ServerAddress),
 		LobbyClient: message.NewLobbyClient(cConn),
+		Config:      c,
 		conn:        cConn,
 	}
 	m.IFReceive = m
@@ -164,10 +183,13 @@ func (majsoul *Majsoul) Start() {
 }
 
 type Version struct {
-	Version             string `json:"version"`
-	ForceVersion        string `json:"force_version"`
-	Code                string `json:"code"`
-	ClientVersionString string
+	Version      string `json:"version"`
+	ForceVersion string `json:"force_version"`
+	Code         string `json:"code"`
+}
+
+func (v *Version) String() string {
+	return fmt.Sprintf("web-%s", v.Version[:len(v.Version)-2])
 }
 
 func (majsoul *Majsoul) Login(username, password string) {
@@ -198,7 +220,7 @@ func (majsoul *Majsoul) Login(username, password string) {
 		// 电话1 邮箱0
 		Type:                0,
 		Version:             0,
-		ClientVersionString: majsoul.Version.ClientVersionString,
+		ClientVersionString: majsoul.Version.String(),
 	})
 	if err != nil {
 		return
@@ -217,7 +239,6 @@ func (majsoul *Majsoul) GetVersion() *Version {
 	if err != nil {
 		logger.Panic("GetVersion", zap.Error(err))
 	}
-	majsoul.ClientVersionString = fmt.Sprintf("web-%s", majsoul.Version.Version[:len(majsoul.Version.Version)-2])
 	return majsoul.Version
 }
 
@@ -423,9 +444,11 @@ func (majsoul *Majsoul) handleNotify(data proto.Message) {
 }
 func (majsoul *Majsoul) NotifyCaptcha(notify *message.NotifyCaptcha) {}
 func (majsoul *Majsoul) NotifyRoomGameStart(notify *message.NotifyRoomGameStart) {
-	majsoul.game = NewClientConn(majsoul.Ctx, notify.GameUrl)
+	majsoul.game = NewClientConn(majsoul.Ctx, majsoul.Config.GameAddress)
 	majsoul.FastTestClient = message.NewFastTestClient(majsoul.game)
-	authGame, err := majsoul.AuthGame(majsoul.Ctx, &message.ReqAuthGame{
+	go majsoul.receiveGame()
+	var err error
+	majsoul.GameInfo, err = majsoul.AuthGame(majsoul.Ctx, &message.ReqAuthGame{
 		AccountId: majsoul.Account.AccountId,
 		Token:     notify.ConnectToken,
 		GameUuid:  notify.GameUuid,
@@ -435,11 +458,21 @@ func (majsoul *Majsoul) NotifyRoomGameStart(notify *message.NotifyRoomGameStart)
 		return
 	}
 	fields := make([]zap.Field, 0)
-	for _, player := range authGame.Players {
+	for _, player := range majsoul.GameInfo.Players {
 		fields = append(fields, zap.Uint32(player.Nickname, player.AccountId))
 	}
 	logger.Debug("AuthGame", fields...)
-	go majsoul.receiveGame()
+	_, err = majsoul.CheckNetworkDelay(majsoul.Ctx, &message.ReqCommon{})
+	if err != nil {
+		logger.Panic("NotifyRoomGameStart", zap.Error(err))
+		return
+	}
+	_, err = majsoul.EnterGame(majsoul.Ctx, &message.ReqCommon{})
+	if err != nil {
+		logger.Panic("NotifyRoomGameStart", zap.Error(err))
+		return
+	}
+	logger.Debug("EnterGame")
 }
 func (majsoul *Majsoul) NotifyMatchGameStart(notify *message.NotifyMatchGameStart)         {}
 func (majsoul *Majsoul) NotifyRoomPlayerReady(notify *message.NotifyRoomPlayerReady)       {}

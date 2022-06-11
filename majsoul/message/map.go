@@ -166,10 +166,62 @@ func GetNotifyType(name string) (ret proto.Message) {
 		ret = &NotifyLeaderboardPoint_LeaderboardPoint{}
 	case ".lq.NotifyEndGameVote_VoteResult":
 		ret = &NotifyEndGameVote_VoteResult{}
+	case ".lq.PlayerLeaving":
+		ret = &PlayerLeaving{}
 	case ".lq.ActionPrototype":
 		ret = &ActionPrototype{}
 	default:
 		logger.Error("GetNotifyType not found", zap.String("name", name))
+	}
+	return
+}
+
+func GetActionType(name string) (ret proto.Message) {
+	switch name {
+	case "ActionMJStart":
+		ret = &ActionMJStart{}
+	case "ActionNewCard":
+		ret = &ActionNewCard{}
+	case "ActionNewRound":
+		ret = &ActionNewRound{}
+	case "ActionPrototype":
+		ret = &ActionPrototype{}
+	case "ActionSelectGap":
+		ret = &ActionSelectGap{}
+	case "ActionChangeTile":
+		ret = &ActionChangeTile{}
+	case "ActionRevealTile":
+		ret = &ActionRevealTile{}
+	case "ActionUnveilTile":
+		ret = &ActionUnveilTile{}
+	case "ActionLockTile":
+		ret = &ActionLockTile{}
+	case "ActionDiscardTile":
+		ret = &ActionDiscardTile{}
+	case "ActionDealTile":
+		ret = &ActionDealTile{}
+	case "ActionChiPengGang":
+		ret = &ActionChiPengGang{}
+	case "ActionGangResult":
+		ret = &ActionGangResult{}
+	case "ActionGangResultEnd":
+		ret = &ActionGangResultEnd{}
+	case "ActionAnGangAddGang":
+		ret = &ActionAnGangAddGang{}
+	case "ActionBaBei":
+		ret = &ActionBaBei{}
+	case "ActionHule":
+		ret = &ActionHule{}
+	case "ActionHuleXueZhanMid":
+		ret = &ActionHuleXueZhanMid{}
+	case "ActionHuleXueZhanEnd":
+		ret = &ActionHuleXueZhanEnd{}
+	case "ActionLiuJu":
+		ret = &ActionLiuJu{}
+	case "ActionNoTile":
+		ret = &ActionNoTile{}
+	default:
+		logger.Error("GetActionType not found", zap.String("name", name))
 	}
 	return
 }

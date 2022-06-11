@@ -40,10 +40,10 @@ type None struct {
 type StartKyoku struct {
 	Type       string     `json:"type"`
 	Bakaze     string     `json:"bakaze"`
-	Kyoku      int        `json:"kyoku"`
-	Honba      int        `json:"honba"`
-	Kyotaku    int        `json:"kyotaku"`
-	Oya        int        `json:"oya"`
+	Kyoku      uint32     `json:"kyoku"`
+	Honba      uint32     `json:"honba"`
+	Kyotaku    uint32     `json:"kyotaku"`
+	Oya        uint32     `json:"oya"`
 	DoraMarker string     `json:"dora_marker"`
 	Tehais     [][]string `json:"tehais"`
 }

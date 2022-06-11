@@ -11,14 +11,6 @@ import (
 	"utils/logger"
 )
 
-const (
-	E = "E"
-	S = "S"
-	W = "W"
-	N = "N"
-	//E(東), S(南), W(西), N(北)
-)
-
 var port = ":11600"
 var waits []*UAkochan
 
@@ -69,7 +61,7 @@ func New() *UAkochan {
 	case <-uAkochan.wait:
 	}
 	uAkochan.Hello()
-	uAkochan.StartGame([]string{"1", "2", "3", "4"})
+	uAkochan.StartGame(1, []string{"1", "2", "3", "4"})
 	return uAkochan
 }
 
@@ -87,10 +79,10 @@ func (uAkochan *UAkochan) Hello() string {
 	return join.Name
 }
 
-func (uAkochan *UAkochan) StartGame(names []string) {
+func (uAkochan *UAkochan) StartGame(id int, names []string) {
 	err := uAkochan.invoke(&StartGame{
 		Type:  "start_kyoku",
-		ID:    1,
+		ID:    id,
 		Names: names,
 	})
 	if err != nil {
@@ -99,7 +91,7 @@ func (uAkochan *UAkochan) StartGame(names []string) {
 	}
 }
 
-func (uAkochan *UAkochan) StartKyoku(bakaze string, kyoku int, honba int, kyotaku int, oya int, dora_marker string, tehais [][]string) {
+func (uAkochan *UAkochan) StartKyoku(bakaze string, kyoku uint32, honba uint32, kyotaku uint32, oya uint32, dora_marker string, tehais [][]string) {
 	err := uAkochan.invoke(&StartKyoku{
 		Type:       "start_kyoku",
 		Bakaze:     bakaze,
@@ -129,7 +121,7 @@ func (uAkochan *UAkochan) Tsumo(actor int, pai string) interface{} {
 	return uAkochan.out
 }
 
-func (uAkochan *UAkochan) Dahai(actor int, pai string, tsumogiri bool) {
+func (uAkochan *UAkochan) Dahai(actor int, pai string, tsumogiri bool) interface{} {
 	err := uAkochan.invoke(&Dahai{
 		Type:      "dahai",
 		Actor:     actor,
@@ -139,6 +131,7 @@ func (uAkochan *UAkochan) Dahai(actor int, pai string, tsumogiri bool) {
 	if err != nil {
 		logger.Error("dahai error:", zap.Error(err))
 	}
+	return uAkochan.out
 }
 
 func (uAkochan *UAkochan) Kakan(actor int, pai string, consumed []string) {

@@ -56,13 +56,13 @@ func TestBuildKey(t *testing.T) {
 	// 		info, ok := shantenMap.Load(key)
 	// 		//info, _ := shantenMap[key]
 	// 		if !ok {
-	// 			log.Printf("Error %v key %v", tiles, key)
+	// 			log1.Printf("Error %v key %v", tiles, key)
 	// 			os.Exit(0)
 	// 		}
 
 	// 		list := analysis(info.(*analysis.Info), keys)
 	// 		_ = list
-	// 		//log.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
+	// 		//log1.Printf("%+v %+v %+v \n", tiles, info.(*analysis.Info), list)
 	// 	}
 	// }
 	log.Printf("time use %dms", time.Now().Sub(now).Milliseconds())
