@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1ae38d0-0ce8-4c3c-baf2-08703a5761af" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/majsoul/main/map.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/main/action.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/action.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/uakochan.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/map.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/map.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/mjai.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/mjai.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/uakochan.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,5 +83,16 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/majsoul/main/action.go</url>
+          <line>88</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

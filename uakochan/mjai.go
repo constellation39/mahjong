@@ -89,6 +89,12 @@ type Kakan struct {
 	Consumed []string `json:"consumed"`
 }
 
+// MJAI 宝牌变化
+type Dora struct {
+	Type       string `json:"type"`
+	DoraMarker string `json:"dora_marker"`
+}
+
 // MJAI 明杠
 type Daiminkan struct {
 	Type     string   `json:"type"`

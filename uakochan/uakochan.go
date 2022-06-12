@@ -134,6 +134,34 @@ func (uAkochan *UAkochan) Dahai(actor int, pai string, tsumogiri bool) interface
 	return uAkochan.out
 }
 
+func (uAkochan *UAkochan) Pon(actor, target int, pai string, consumed []string) interface{} {
+	err := uAkochan.invoke(&Pon{
+		Type:     "pon",
+		Target:   target,
+		Actor:    actor,
+		Pai:      pai,
+		Consumed: consumed,
+	})
+	if err != nil {
+		logger.Error("pon error:", zap.Error(err))
+	}
+	return uAkochan.out
+}
+
+func (uAkochan *UAkochan) Chi(actor, target int, pai string, consumed []string) interface{} {
+	err := uAkochan.invoke(&Chi{
+		Type:     "chi",
+		Target:   target,
+		Actor:    actor,
+		Pai:      pai,
+		Consumed: consumed,
+	})
+	if err != nil {
+		logger.Error("chi error:", zap.Error(err))
+	}
+	return uAkochan.out
+}
+
 func (uAkochan *UAkochan) Kakan(actor int, pai string, consumed []string) {
 	err := uAkochan.invoke(&Kakan{
 		Type:     "kakan",
