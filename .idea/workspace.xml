@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1ae38d0-0ce8-4c3c-baf2-08703a5761af" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/majsoul/main/action.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/majsoul/main/notify.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/majsoul/main/uakochan.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uakochan/map.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/majsoul/main/map.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/ibukisaar/create_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/game/ibukisaar/create_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/majsoul.json" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/majsoul.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/message/map.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/message/map.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/mjai.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/mjai.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/uakochan.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/action.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/action.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/uakochan.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uakochan/map.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/map.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,22 +35,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/const"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/const&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="go build majsoul/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="mahjong" />
@@ -94,16 +84,5 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/majsoul/majsoul.go</url>
-          <line>455</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

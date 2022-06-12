@@ -82,7 +82,7 @@ func (m *Majsoul) ActionNewRound(in *message.ActionNewRound) {
 		if player.AccountId == m.Account.AccountId {
 			actor = i
 			isOya = uint32(i) == oya
-			tehais[i] = uakochan.GetAkoChanTiles(in.Tiles[:13])
+			tehais[i] = uakochan.GetTiles(in.Tiles[:13])
 			continue
 		}
 		tehais[i] = []string{"?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?"}
@@ -94,7 +94,7 @@ func (m *Majsoul) ActionNewRound(in *message.ActionNewRound) {
 	if !isOya {
 		return
 	}
-	m.Tsumo(actor, in.Tiles[13])
+	m.Tsumo(actor, in.Tiles[13], in.Operation)
 }
 func (m *Majsoul) ActionSelectGap(in *message.ActionSelectGap)         {}
 func (m *Majsoul) ActionChangeTile(in *message.ActionChangeTile)       {}

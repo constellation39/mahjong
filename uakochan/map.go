@@ -1,9 +1,9 @@
 package uakochan
 
 import (
-	"utils/logger"
-
 	"go.uber.org/zap"
+	"strings"
+	"utils/logger"
 )
 
 func GetBakaze(id uint32) (ret string) {
@@ -22,7 +22,7 @@ func GetBakaze(id uint32) (ret string) {
 	return
 }
 
-func GetAkoChanTile(t string) (ret string) {
+func GetTile(t string) (ret string) {
 	ret = t
 	switch t {
 	case "1z":
@@ -48,45 +48,15 @@ func GetAkoChanTile(t string) (ret string) {
 	}
 	return
 }
-func GetAkoChanTiles(tiles []string) (ret []string) {
+
+func GetTiles(tiles []string) (ret []string) {
 	ret = make([]string, len(tiles))
 	for i, tile := range tiles {
-		ret[i] = GetAkoChanTile(tile)
+		ret[i] = GetTile(tile)
 	}
 	return
 }
 
-func GetSoulTile(t string) (ret string) {
-	ret = t
-	switch t {
-	case "E":
-		ret = "1z"
-	case "S":
-		ret = "2z"
-	case "W":
-		ret = "3z"
-	case "N":
-		ret = "4z"
-	case "P":
-		ret = "5z"
-	case "F":
-		ret = "6z"
-	case "C":
-		ret = "7z"
-	case "5mr":
-		ret = "0m"
-	case "5pr":
-		ret = "0p"
-	case "5sr":
-		ret = "0s"
-	}
-	return t
-}
-
-func GetSoulTiles(tiles []string) (ret []string) {
-	ret = make([]string, len(tiles))
-	for i, tile := range tiles {
-		ret[i] = GetSoulTile(tile)
-	}
-	return
+func GetComb(comb []string) (ret string) {
+	return strings.Join(comb, "|")
 }
