@@ -62,7 +62,6 @@ func New() *UAkochan {
 	case <-uAkochan.wait:
 	}
 	uAkochan.Hello()
-	uAkochan.StartGame(1, []string{"1", "2", "3", "4"})
 	return uAkochan
 }
 
@@ -199,7 +198,7 @@ func (uAkochan *UAkochan) Ankan(actor int, consumed []string) {
 	}
 }
 
-func (uAkochan *UAkochan) Reach(actor int) {
+func (uAkochan *UAkochan) Reach(actor int) interface{} {
 	err := uAkochan.invoke(&Reach{
 		Type:  "reach",
 		Actor: actor,
@@ -207,6 +206,7 @@ func (uAkochan *UAkochan) Reach(actor int) {
 	if err != nil {
 		logger.Error("reach error:", zap.Error(err))
 	}
+	return uAkochan.out
 }
 
 func (uAkochan *UAkochan) ReachAccepted(actor int, deltas []int, scores []int) {
@@ -262,11 +262,24 @@ func (uAkochan *UAkochan) Ryukyoku(reason string, tehais [][]string, tenpais []b
 	}
 }
 
+func (uAkochan *UAkochan) Ryukyoku_() {
+	err := uAkochan.invoke(&Ryukyoku{
+		Type: "ryukyoku",
+	})
+	if err != nil {
+		logger.Error("ryukyoku error:", zap.Error(err))
+	}
+}
+
 //func (uAkochan *UAkochan) invoke(in interface{}, out interface{}) {
 func (uAkochan *UAkochan) invoke(in interface{}) error {
 	uAkochan.send(in)
+	now := time.Now()
+	defer func() {
+		logger.Debug("invoke time", zap.Reflect("use", time.Now().Sub(now)))
+	}()
 	select {
-	case <-time.After(time.Second * 5):
+	case <-time.After(time.Second * 10):
 		return fmt.Errorf("invoke timeout")
 	case <-uAkochan.wait:
 	}

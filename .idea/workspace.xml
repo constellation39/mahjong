@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cfe55c9e-bcee-4726-bfad-a22fca119cc6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/main/action.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/action.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/majsoul/main/map.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/map.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/main/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/uakochan.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/map.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/uakochan/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/uakochan.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +42,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="settings.editor.selected.configurable" value="Console" />
   </component>
   <component name="RunManager">
     <configuration name="go build majsoul/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">

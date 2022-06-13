@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"go.uber.org/zap"
+	"majsoul"
 	"majsoul/message"
 	"strconv"
 	"time"
@@ -65,18 +66,17 @@ func (m *Majsoul) ActionPrototype(notify *message.ActionPrototype) {
 
 func (m *Majsoul) ActionMJStart(in *message.ActionMJStart) {
 	names := make([]string, 4)
-	playerIndex := 0
-
 	for i, uid := range m.GameInfo.SeatList {
-		playerIndex = i
 		if uid == m.Account.AccountId {
 			m.Seat = i
 		}
+		if uid == 0 {
+			names[i] = fmt.Sprintf("Bot%d", i+1)
+			continue
+		}
 		names[i] = strconv.Itoa(int(uid))
 	}
-	for i := playerIndex + 1; i < 4; i++ {
-		names[i] = fmt.Sprintf("Bot%d", i+1)
-	}
+
 	m.UAkochan.StartGame(m.Seat, names)
 	logger.Debug("ActionMJStart", zap.Reflect("in", in))
 }
@@ -91,17 +91,16 @@ func (m *Majsoul) ActionNewRound(in *message.ActionNewRound) {
 	oya := in.Ju
 	dora_marker := GetUAkochanTile(in.Doras[0])
 	tehais := make([][]string, 4)
-	actor := 0
 	for i := 0; i < 4; i++ {
 		tehais[i] = []string{"?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?"}
 	}
-	tehais[m.Seat] =GetUAkochanTiles(in.Tiles[:13])
+	tehais[m.Seat] = GetUAkochanTiles(in.Tiles[:13])
 	m.UAkochan.StartKyoku(bakaze, kyoku, honba, kyotaku, oya, dora_marker, tehais)
 	if in.Ju != uint32(m.Seat) {
 		return
 	}
 	time.Sleep(time.Second * 3)
-	m.Tsumo(actor, in.Tiles[13], in.Operation)
+	m.Tsumo(m.Seat, in.Tiles[13], in.Operation)
 	logger.Debug("ActionNewRound", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionSelectGap(in *message.ActionSelectGap) {
@@ -131,24 +130,42 @@ func (m *Majsoul) ActionDealTile(in *message.ActionDealTile) {
 }
 func (m *Majsoul) ActionChiPengGang(in *message.ActionChiPengGang) {
 	logger.Debug("ActionChiPengGang", zap.Reflect("in", in))
-	//switch in.Type {
-	//case majsoul.CHI:
-	//	m.UAkochan.Chi(int(in.Seat), in, uakochan.GetSoulTiles(in.Tiles))
-	//case majsoul.PON:
-	//	m.UAkochan.Pon()
-	//case majsoul.ANKAN:
-	//	m.UAkochan.Ankan()
-	//case majsoul.MINKAN:
-	//	m.UAkochan.Daiminkan()
-	//case majsoul.KAKAN:
-	//	m.UAkochan.Kakan()
-	//}
+	f := 0
+	for _, from := range in.Froms {
+		if from != in.Seat {
+			f = int(from)
+		}
+	}
+	switch in.Type {
+	case majsoul.CHI:
+		m.UAkochan.Chi(int(in.Seat), f, GetUAkochanTiles(in.Tiles)[0], GetUAkochanTiles(in.Tiles))
+	case majsoul.PON:
+		m.UAkochan.Pon(int(in.Seat), f, GetUAkochanTiles(in.Tiles)[0], GetUAkochanTiles(in.Tiles))
+	case majsoul.MINKAN:
+		m.UAkochan.Daiminkan(int(in.Seat), f, GetUAkochanTiles(in.Tiles)[0], GetUAkochanTiles(in.Tiles))
+	default:
+		logger.Debug("ActionChiPengGang in.Type not found", zap.Reflect("in", in))
+	}
 }
 func (m *Majsoul) ActionGangResult(in *message.ActionGangResult)       {}
 func (m *Majsoul) ActionGangResultEnd(in *message.ActionGangResultEnd) {}
-func (m *Majsoul) ActionAnGangAddGang(in *message.ActionAnGangAddGang) {}
-func (m *Majsoul) ActionBaBei(in *message.ActionBaBei)                 {}
+func (m *Majsoul) ActionAnGangAddGang(in *message.ActionAnGangAddGang) {
+	consumed := make([]string, 4)
+	for i := 0; i < len(consumed); i++ {
+		consumed[i] = GetUAkochanTile(in.Tiles)
+	}
+	switch in.Type {
+	case majsoul.ANKAN:
+		m.UAkochan.Ankan(int(in.Seat), consumed)
+	case majsoul.KAKAN:
+		m.UAkochan.Kakan(int(in.Seat), GetSoulTile(in.Tiles), consumed)
+	default:
+		logger.Debug("ActionAnGangAddGang in.Type not found", zap.Reflect("in", in))
+	}
+}
+func (m *Majsoul) ActionBaBei(in *message.ActionBaBei) {}
 func (m *Majsoul) ActionHule(in *message.ActionHule) {
+	m.UAkochan.EndKyoku()
 	_, err := m.ConfirmNewRound(m.Ctx, &message.ReqCommon{})
 	if err != nil {
 		logger.Error("ActionHule", zap.Error(err))
@@ -164,4 +181,7 @@ func (m *Majsoul) ActionLiuJu(in *message.ActionLiuJu) {
 		return
 	}
 }
-func (m *Majsoul) ActionNoTile(in *message.ActionNoTile) {}
+func (m *Majsoul) ActionNoTile(in *message.ActionNoTile) {
+	m.UAkochan.Ryukyoku_()
+	m.UAkochan.EndKyoku()
+}

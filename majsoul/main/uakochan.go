@@ -34,13 +34,6 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			Timeuse:   1,
 			TileState: 0,
 		})
-		logger.Debug("InputOperation", zap.Reflect("ReqSelfOperation", &message.ReqSelfOperation{
-			Type:      majsoul.DISCARD,
-			Tile:      GetSoulTile(in.Pai),
-			Moqie:     in.Tsumogiri,
-			Timeuse:   1,
-			TileState: 0,
-		}))
 		if err != nil {
 			logger.Error("tsumo error:", zap.Error(err))
 			return
@@ -90,12 +83,21 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			logger.Error("tsumo reply is Reach, but option is nil")
 			return
 		}
+		in := reply.(*uakochan.Reach)
+		r := m.UAkochan.Reach(in.Actor)
+		i := r.(*uakochan.Dahai)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.RIICHI,
-			Tile:    tile,
-			Moqie:   true,
+			Tile:    GetSoulTile(i.Pai),
+			Moqie:   i.Tsumogiri,
 			Timeuse: 1,
 		})
+		logger.Debug("Reach", zap.Reflect("ReqSelfOperation", &message.ReqSelfOperation{
+			Type:    majsoul.RIICHI,
+			Tile:    tile,
+			Moqie:   false,
+			Timeuse: 1,
+		}))
 		if err != nil {
 			logger.Error("tsumo error:", zap.Error(err))
 			return
@@ -108,7 +110,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			return
 		}
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
-			Type:  majsoul.RON,
+			Type:  majsoul.TSUMO,
 			Index: 0,
 		})
 		if err != nil {
@@ -132,7 +134,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 	case *uakochan.None:
 		logger.Debug("dahai reply is None", zap.Int("actor", actor), zap.String("tile", tile))
 		if optionalOperationList != nil && len(optionalOperationList.OperationList) > 0 {
-			_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
+			_, err := m.InputChiPengGang(m.Ctx, &message.ReqChiPengGang{
 				CancelOperation: true,
 				Timeuse:         1,
 			})
@@ -151,7 +153,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 		in := reply.(*uakochan.Pon)
 		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
-		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
+		_, err := m.InputChiPengGang(m.Ctx, &message.ReqChiPengGang{
 			Type:    majsoul.PON,
 			Index:   index,
 			Timeuse: 1,
@@ -170,7 +172,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 		in := reply.(*uakochan.Chi)
 		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
-		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
+		_, err := m.InputChiPengGang(m.Ctx, &message.ReqChiPengGang{
 			Type:    majsoul.CHI,
 			Index:   index,
 			Timeuse: 1,
@@ -189,7 +191,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 		in := reply.(*uakochan.Daiminkan)
 		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
-		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
+		_, err := m.InputChiPengGang(m.Ctx, &message.ReqChiPengGang{
 			Type:    majsoul.MINKAN,
 			Index:   index,
 			Timeuse: 1,
@@ -219,6 +221,9 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 }
 
 func GetOptionalOperation(option int, optionalOperationList *message.OptionalOperationList) (ret *message.OptionalOperation) {
+	if optionalOperationList == nil {
+		return nil
+	}
 	for _, operation := range optionalOperationList.OperationList {
 		if operation.Type == uint32(option) {
 			ret = operation
