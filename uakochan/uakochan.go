@@ -55,8 +55,9 @@ type UAkochan struct {
 func New() *UAkochan {
 	uAkochan := &UAkochan{wait: make(chan struct{})}
 	waits = append(waits, uAkochan)
+	logger.Info("wait Akochan conn")
 	select {
-	case <-time.After(time.Minute):
+	case <-time.After(time.Minute * 60):
 		logger.Panic("wait Akochan conn timeout")
 	case <-uAkochan.wait:
 	}
@@ -81,7 +82,7 @@ func (uAkochan *UAkochan) Hello() string {
 
 func (uAkochan *UAkochan) StartGame(id int, names []string) {
 	err := uAkochan.invoke(&StartGame{
-		Type:  "start_kyoku",
+		Type:  "start_game",
 		ID:    id,
 		Names: names,
 	})
@@ -265,7 +266,7 @@ func (uAkochan *UAkochan) Ryukyoku(reason string, tehais [][]string, tenpais []b
 func (uAkochan *UAkochan) invoke(in interface{}) error {
 	uAkochan.send(in)
 	select {
-	case <-time.After(time.Second * 3):
+	case <-time.After(time.Second * 5):
 		return fmt.Errorf("invoke timeout")
 	case <-uAkochan.wait:
 	}

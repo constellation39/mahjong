@@ -5,8 +5,8 @@ import (
 	"github.com/golang/protobuf/proto"
 	"go.uber.org/zap"
 	"majsoul/message"
+	"strconv"
 	"time"
-	"uakochan"
 	"utils/logger"
 )
 
@@ -64,53 +64,40 @@ func (m *Majsoul) ActionPrototype(notify *message.ActionPrototype) {
 }
 
 func (m *Majsoul) ActionMJStart(in *message.ActionMJStart) {
-	id := 0
 	names := make([]string, 4)
 	playerIndex := 0
-	for i, player := range m.GameInfo.Players {
-		playerIndex = i
-		if player.AccountId == m.Account.AccountId {
-			id = i
-		}
-		names[i] = player.Nickname
-	}
 
+	for i, uid := range m.GameInfo.SeatList {
+		playerIndex = i
+		if uid == m.Account.AccountId {
+			m.Seat = i
+		}
+		names[i] = strconv.Itoa(int(uid))
+	}
 	for i := playerIndex + 1; i < 4; i++ {
 		names[i] = fmt.Sprintf("Bot%d", i+1)
 	}
-
-	m.UAkochan.StartGame(id, names)
+	m.UAkochan.StartGame(m.Seat, names)
 	logger.Debug("ActionMJStart", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionNewCard(in *message.ActionNewCard) {
 	logger.Debug("ActionNewCard", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionNewRound(in *message.ActionNewRound) {
-	bakaze := uakochan.GetBakaze(in.Chang)
+	bakaze := GetUAkochanBakaze(in.Chang)
 	kyoku := in.Ju + 1
 	honba := in.Ben
 	kyotaku := in.Liqibang
 	oya := in.Ju
-	dora_marker := in.Doras[0]
+	dora_marker := GetUAkochanTile(in.Doras[0])
 	tehais := make([][]string, 4)
-	playerIndex := 0
-	isOya := true
 	actor := 0
-	for i, player := range m.GameInfo.Players {
-		playerIndex = i
-		if player.AccountId == m.Account.AccountId {
-			actor = i
-			isOya = uint32(i) == oya
-			tehais[i] = uakochan.GetTiles(in.Tiles[:13])
-			continue
-		}
+	for i := 0; i < 4; i++ {
 		tehais[i] = []string{"?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?"}
 	}
-	for i := playerIndex + 1; i < 4; i++ {
-		tehais[i] = []string{"?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?", "?"}
-	}
+	tehais[m.Seat] =GetUAkochanTiles(in.Tiles[:13])
 	m.UAkochan.StartKyoku(bakaze, kyoku, honba, kyotaku, oya, dora_marker, tehais)
-	if !isOya {
+	if in.Ju != uint32(m.Seat) {
 		return
 	}
 	time.Sleep(time.Second * 3)
@@ -146,7 +133,7 @@ func (m *Majsoul) ActionChiPengGang(in *message.ActionChiPengGang) {
 	logger.Debug("ActionChiPengGang", zap.Reflect("in", in))
 	//switch in.Type {
 	//case majsoul.CHI:
-	//	m.UAkochan.Chi(int(in.Seat), in, uakochan.GetTiles(in.Tiles))
+	//	m.UAkochan.Chi(int(in.Seat), in, uakochan.GetSoulTiles(in.Tiles))
 	//case majsoul.PON:
 	//	m.UAkochan.Pon()
 	//case majsoul.ANKAN:

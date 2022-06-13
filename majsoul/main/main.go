@@ -8,6 +8,7 @@ import (
 type Majsoul struct {
 	*majsoul.Majsoul
 	*uakochan.UAkochan
+	Seat int
 }
 
 func NewMajsoul() *Majsoul {

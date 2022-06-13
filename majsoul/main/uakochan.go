@@ -9,7 +9,7 @@ import (
 )
 
 func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.OptionalOperationList) {
-	reply := m.UAkochan.Tsumo(actor, uakochan.GetTile(tile))
+	reply := m.UAkochan.Tsumo(actor, GetUAkochanTile(tile))
 
 	if reply == nil {
 		logger.Error("tsumo reply is nil")
@@ -29,11 +29,18 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 		in := reply.(*uakochan.Dahai)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:      majsoul.DISCARD,
-			Tile:      uakochan.GetTile(in.Pai),
+			Tile:      GetSoulTile(in.Pai),
 			Moqie:     in.Tsumogiri,
 			Timeuse:   1,
 			TileState: 0,
 		})
+		logger.Debug("InputOperation", zap.Reflect("ReqSelfOperation", &message.ReqSelfOperation{
+			Type:      majsoul.DISCARD,
+			Tile:      GetSoulTile(in.Pai),
+			Moqie:     in.Tsumogiri,
+			Timeuse:   1,
+			TileState: 0,
+		}))
 		if err != nil {
 			logger.Error("tsumo error:", zap.Error(err))
 			return
@@ -46,7 +53,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			return
 		}
 		in := reply.(*uakochan.Kakan)
-		comb := uakochan.GetComb(in.Consumed)
+		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.KAKAN,
@@ -65,7 +72,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			return
 		}
 		in := reply.(*uakochan.Ankan)
-		comb := uakochan.GetComb(in.Consumed)
+		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.ANKAN,
@@ -83,10 +90,9 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			logger.Error("tsumo reply is Reach, but option is nil")
 			return
 		}
-		//in := reply.(*uakochan.Reach)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.RIICHI,
-			Tile:    uakochan.GetTile(tile),
+			Tile:    tile,
 			Moqie:   true,
 			Timeuse: 1,
 		})
@@ -101,7 +107,6 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 			logger.Error("tsumo reply is Hora, but option is nil")
 			return
 		}
-		//in := reply.(*uakochan.Hora)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:  majsoul.RON,
 			Index: 0,
@@ -116,7 +121,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 }
 
 func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperationList *message.OptionalOperationList) {
-	reply := m.UAkochan.Dahai(actor, uakochan.GetTile(tile), tsumogiri)
+	reply := m.UAkochan.Dahai(actor, GetUAkochanTile(tile), tsumogiri)
 
 	if reply == nil {
 		logger.Error("dahai reply is nil")
@@ -126,6 +131,16 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 	switch reply.(type) {
 	case *uakochan.None:
 		logger.Debug("dahai reply is None", zap.Int("actor", actor), zap.String("tile", tile))
+		if optionalOperationList != nil && len(optionalOperationList.OperationList) > 0 {
+			_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
+				CancelOperation: true,
+				Timeuse:         1,
+			})
+			if err != nil {
+				logger.Error("none error:", zap.Error(err))
+				return
+			}
+		}
 	case *uakochan.Pon:
 		logger.Debug("dahai reply is Pon", zap.Int("actor", actor), zap.String("tile", tile))
 		option := GetOptionalOperation(majsoul.PON, optionalOperationList)
@@ -134,7 +149,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 			return
 		}
 		in := reply.(*uakochan.Pon)
-		comb := uakochan.GetComb(in.Consumed)
+		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.PON,
@@ -153,7 +168,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 			return
 		}
 		in := reply.(*uakochan.Chi)
-		comb := uakochan.GetComb(in.Consumed)
+		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.CHI,
@@ -172,7 +187,7 @@ func (m *Majsoul) Dahai(actor int, tile string, tsumogiri bool, optionalOperatio
 			return
 		}
 		in := reply.(*uakochan.Daiminkan)
-		comb := uakochan.GetComb(in.Consumed)
+		comb := GetSoulComb(in.Consumed)
 		index := GetOperationIndex(comb, option)
 		_, err := m.InputOperation(m.Ctx, &message.ReqSelfOperation{
 			Type:    majsoul.MINKAN,
