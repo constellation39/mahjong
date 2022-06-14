@@ -3,6 +3,7 @@ package net
 import (
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
+	"io"
 	"net/http"
 	"sync"
 	"utils/logger"
@@ -24,31 +25,33 @@ func NewWSClient(addr string, header http.Header) *WSClient {
 }
 
 func (client *WSClient) Connect() error {
-	logger.Info("connecting to websocket server", zap.String("addr", client.connAddr))
 	conn, response, err := websocket.DefaultDialer.Dial(client.connAddr, client.header)
-
 	if err != nil {
-		logger.Fatal("connect to websocket server failed", zap.Error(err))
+		logger.DPanic("WSClient.Connect failed", zap.String("addr", client.connAddr), zap.Error(err))
 		return err
 	}
 
-	defer response.Body.Close()
-	client.conn = conn
-	logger.Info("connect to websocket server success", zap.String("addr", client.connAddr), zap.String("response", response.Status))
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			logger.DPanic("WSClient.Connect close failed", zap.Error(err))
+		}
+	}(response.Body)
 
+	client.conn = conn
+	logger.Debug("WSClient.Connect success", zap.String("addr", client.connAddr))
 	return nil
 }
 
 func (client *WSClient) Read() []byte {
 	t, payload, err := client.conn.ReadMessage()
-
 	if err != nil {
-		logger.DPanic("read message failed", zap.Error(err))
+		logger.DPanic("WSClient.Read", zap.Error(err))
 		return []byte{}
 	}
 
 	if t != websocket.BinaryMessage {
-		logger.DPanic("read message failed", zap.Error(err))
+		logger.DPanic("WSClient.Read type not is websocket.BinaryMessage")
 		return []byte{}
 	}
 	return payload
@@ -60,12 +63,18 @@ func (client *WSClient) Send(body []byte) {
 
 	err := client.conn.WriteMessage(websocket.BinaryMessage, body)
 	if err != nil {
-		logger.DPanic("send message failed", zap.Error(err))
+		logger.DPanic("WSClient.Send", zap.Reflect("body", body), zap.Error(err))
 	}
 }
 
 func (client *WSClient) Close() {
-	if client.conn != nil {
-		client.conn.Close()
+	if client.conn == nil {
+		logger.DPanic("WSClient.Close conn is nil")
+		return
+	}
+	err := client.conn.Close()
+	if err != nil {
+		logger.DPanic("WSClient.Close conn close failed", zap.Error(err))
+		return
 	}
 }

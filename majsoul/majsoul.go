@@ -246,8 +246,9 @@ func (majsoul *Majsoul) init() {
 	version := majsoul.GetVersion()
 	if version.Version != "0.10.105.w" {
 		logger.Info("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
+	} else {
+		logger.Debug("当前雀魂版本为", zap.String("Version", version.Version))
 	}
-	logger.Debug("当前雀魂版本为: ", zap.String("Version", version.Version))
 }
 
 func (majsoul *Majsoul) heatbeat() {

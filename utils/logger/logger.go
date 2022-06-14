@@ -1,10 +1,11 @@
 package logger
 
 import (
-	"os"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
+	"runtime"
+	"utils"
 )
 
 var logger *zap.Logger
@@ -13,18 +14,18 @@ func init() {
 	ExitsFile("log")
 
 	cfg := zap.Config{
-		Level:            zap.NewAtomicLevelAt(zapcore.Level(zapcore.DebugLevel)),
-		Development:      true,
+		Level:            zap.NewAtomicLevelAt(zapcore.DebugLevel),
+		Development:      utils.Env != "prod",
 		Encoding:         "json",
 		EncoderConfig:    zap.NewDevelopmentEncoderConfig(),
 		OutputPaths:      []string{"log/debug.log"},
 		ErrorOutputPaths: []string{"stderr", "log/error.log"},
 	}
 
-	// if runtime.GOOS == "windows" {
-	cfg.Encoding = "console"
-	cfg.OutputPaths = append(cfg.OutputPaths, "stdout")
-	// }
+	if runtime.GOOS == "windows" {
+		cfg.Encoding = "console"
+		cfg.OutputPaths = append(cfg.OutputPaths, "stdout")
+	}
 
 	var err error
 	logger, err = cfg.Build(zap.AddCallerSkip(1))
@@ -58,7 +59,7 @@ func Info(msg string, fields ...zap.Field) {
 	logger.Info(msg, fields...)
 }
 
-// Wran logs a message at WarnLevel. The message includes any fields passed
+// Warn logs a message at WarnLevel. The message includes any fields passed
 func Warn(msg string, fields ...zap.Field) {
 	logger.Warn(msg, fields...)
 }
@@ -68,7 +69,7 @@ func Error(msg string, fields ...zap.Field) {
 	logger.Error(msg, fields...)
 }
 
-// Dpanic logs a message at PanicLevel. The message includes any fields passed
+// DPanic logs a message at PanicLevel. The message includes any fields passed
 func DPanic(msg string, fields ...zap.Field) {
 	logger.DPanic(msg, fields...)
 }

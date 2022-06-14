@@ -2,65 +2,66 @@ package main
 
 import (
 	"fmt"
-	"github.com/golang/protobuf/proto"
-	"go.uber.org/zap"
 	"majsoul"
 	"majsoul/message"
 	"strconv"
 	"time"
 	"utils/logger"
+
+	"github.com/golang/protobuf/proto"
+	"go.uber.org/zap"
 )
 
 func (m *Majsoul) ActionPrototype(notify *message.ActionPrototype) {
 	logger.Debug("ActionPrototype", zap.Reflect("notify", notify))
-	ret := message.GetActionType(notify.Name)
-	err := proto.Unmarshal(notify.Data, ret)
+	data := message.GetActionType(notify.Name)
+	err := proto.Unmarshal(notify.Data, data)
 	if err != nil {
 		logger.Error("ActionPrototype", zap.Error(err))
 		return
 	}
-	logger.Debug("ActionPrototype", zap.Reflect("ret", ret))
+	logger.Debug("ActionPrototype", zap.Reflect("name", notify.Name), zap.Reflect("data", data))
 	switch notify.Name {
 	case "ActionMJStart":
-		m.ActionMJStart(ret.(*message.ActionMJStart))
+		m.ActionMJStart(data.(*message.ActionMJStart))
 	case "ActionNewCard":
-		m.ActionNewCard(ret.(*message.ActionNewCard))
+		m.ActionNewCard(data.(*message.ActionNewCard))
 	case "ActionNewRound":
-		m.ActionNewRound(ret.(*message.ActionNewRound))
+		m.ActionNewRound(data.(*message.ActionNewRound))
 	case "ActionSelectGap":
-		m.ActionSelectGap(ret.(*message.ActionSelectGap))
+		m.ActionSelectGap(data.(*message.ActionSelectGap))
 	case "ActionChangeTile":
-		m.ActionChangeTile(ret.(*message.ActionChangeTile))
+		m.ActionChangeTile(data.(*message.ActionChangeTile))
 	case "ActionRevealTile":
-		m.ActionRevealTile(ret.(*message.ActionRevealTile))
+		m.ActionRevealTile(data.(*message.ActionRevealTile))
 	case "ActionUnveilTile":
-		m.ActionUnveilTile(ret.(*message.ActionUnveilTile))
+		m.ActionUnveilTile(data.(*message.ActionUnveilTile))
 	case "ActionLockTile":
-		m.ActionLockTile(ret.(*message.ActionLockTile))
+		m.ActionLockTile(data.(*message.ActionLockTile))
 	case "ActionDiscardTile":
-		m.ActionDiscardTile(ret.(*message.ActionDiscardTile))
+		m.ActionDiscardTile(data.(*message.ActionDiscardTile))
 	case "ActionDealTile":
-		m.ActionDealTile(ret.(*message.ActionDealTile))
+		m.ActionDealTile(data.(*message.ActionDealTile))
 	case "ActionChiPengGang":
-		m.ActionChiPengGang(ret.(*message.ActionChiPengGang))
+		m.ActionChiPengGang(data.(*message.ActionChiPengGang))
 	case "ActionGangResult":
-		m.ActionGangResult(ret.(*message.ActionGangResult))
+		m.ActionGangResult(data.(*message.ActionGangResult))
 	case "ActionGangResultEnd":
-		m.ActionGangResultEnd(ret.(*message.ActionGangResultEnd))
+		m.ActionGangResultEnd(data.(*message.ActionGangResultEnd))
 	case "ActionAnGangAddGang":
-		m.ActionAnGangAddGang(ret.(*message.ActionAnGangAddGang))
+		m.ActionAnGangAddGang(data.(*message.ActionAnGangAddGang))
 	case "ActionBaBei":
-		m.ActionBaBei(ret.(*message.ActionBaBei))
+		m.ActionBaBei(data.(*message.ActionBaBei))
 	case "ActionHule":
-		m.ActionHule(ret.(*message.ActionHule))
+		m.ActionHule(data.(*message.ActionHule))
 	case "ActionHuleXueZhanMid":
-		m.ActionHuleXueZhanMid(ret.(*message.ActionHuleXueZhanMid))
+		m.ActionHuleXueZhanMid(data.(*message.ActionHuleXueZhanMid))
 	case "ActionHuleXueZhanEnd":
-		m.ActionHuleXueZhanEnd(ret.(*message.ActionHuleXueZhanEnd))
+		m.ActionHuleXueZhanEnd(data.(*message.ActionHuleXueZhanEnd))
 	case "ActionLiuJu":
-		m.ActionLiuJu(ret.(*message.ActionLiuJu))
+		m.ActionLiuJu(data.(*message.ActionLiuJu))
 	case "ActionNoTile":
-		m.ActionNoTile(ret.(*message.ActionNoTile))
+		m.ActionNoTile(data.(*message.ActionNoTile))
 	}
 }
 
@@ -165,6 +166,8 @@ func (m *Majsoul) ActionAnGangAddGang(in *message.ActionAnGangAddGang) {
 }
 func (m *Majsoul) ActionBaBei(in *message.ActionBaBei) {}
 func (m *Majsoul) ActionHule(in *message.ActionHule) {
+	f := in.Hules[0].Seat
+	m.UAkochan.Reach(int(f))
 	m.UAkochan.EndKyoku()
 	_, err := m.ConfirmNewRound(m.Ctx, &message.ReqCommon{})
 	if err != nil {

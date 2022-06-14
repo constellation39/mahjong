@@ -23,7 +23,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 		logger.Debug("tsumo reply is Dahai", zap.Int("actor", actor), zap.String("tile", tile))
 		option := GetOptionalOperation(majsoul.DISCARD, optionalOperationList)
 		if option == nil {
-			logger.Error("tsumo reply is Dahai, but option is nil")
+			logger.Error("tsumo reply is Dahai, but option is nil", zap.Reflect("optionalOperationList", optionalOperationList))
 			return
 		}
 		in := reply.(*uakochan.Dahai)
@@ -42,7 +42,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 		logger.Debug("tsumo reply is Kakan", zap.Int("actor", actor), zap.String("tile", tile))
 		option := GetOptionalOperation(majsoul.KAKAN, optionalOperationList)
 		if option == nil {
-			logger.Error("tsumo reply is Kakan, but option is nil")
+			logger.Error("tsumo reply is Kakan, but option is nil", zap.Reflect("optionalOperationList", optionalOperationList))
 			return
 		}
 		in := reply.(*uakochan.Kakan)
@@ -94,8 +94,8 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 		})
 		logger.Debug("Reach", zap.Reflect("ReqSelfOperation", &message.ReqSelfOperation{
 			Type:    majsoul.RIICHI,
-			Tile:    tile,
-			Moqie:   false,
+			Tile:    GetSoulTile(i.Pai),
+			Moqie:   i.Tsumogiri,
 			Timeuse: 1,
 		}))
 		if err != nil {
@@ -104,7 +104,7 @@ func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.O
 		}
 	case *uakochan.Hora:
 		logger.Debug("tsumo reply is Hora", zap.Int("actor", actor), zap.String("tile", tile))
-		option := GetOptionalOperation(majsoul.RON, optionalOperationList)
+		option := GetOptionalOperation(majsoul.TSUMO, optionalOperationList)
 		if option == nil {
 			logger.Error("tsumo reply is Hora, but option is nil")
 			return
