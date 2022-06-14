@@ -13,14 +13,13 @@ import (
 )
 
 func (m *Majsoul) ActionPrototype(notify *message.ActionPrototype) {
-	logger.Debug("ActionPrototype", zap.Reflect("notify", notify))
 	data := message.GetActionType(notify.Name)
 	err := proto.Unmarshal(notify.Data, data)
 	if err != nil {
 		logger.Error("ActionPrototype", zap.Error(err))
 		return
 	}
-	logger.Debug("ActionPrototype", zap.Reflect("name", notify.Name), zap.Reflect("data", data))
+	logger.Debug("Majsoul.ActionPrototype", zap.Reflect("name", notify.Name), zap.Reflect("data", data))
 	switch notify.Name {
 	case "ActionMJStart":
 		m.ActionMJStart(data.(*message.ActionMJStart))
@@ -79,7 +78,6 @@ func (m *Majsoul) ActionMJStart(in *message.ActionMJStart) {
 	}
 
 	m.UAkochan.StartGame(m.Seat, names)
-	logger.Debug("ActionMJStart", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionNewCard(in *message.ActionNewCard) {
 	logger.Debug("ActionNewCard", zap.Reflect("in", in))
@@ -102,25 +100,18 @@ func (m *Majsoul) ActionNewRound(in *message.ActionNewRound) {
 	}
 	time.Sleep(time.Second * 3)
 	m.Tsumo(m.Seat, in.Tiles[13], in.Operation)
-	logger.Debug("ActionNewRound", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionSelectGap(in *message.ActionSelectGap) {
-	logger.Debug("ActionSelectGap", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionChangeTile(in *message.ActionChangeTile) {
-	logger.Debug("ActionChangeTile", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionRevealTile(in *message.ActionRevealTile) {
-	logger.Debug("ActionRevealTile", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionUnveilTile(in *message.ActionUnveilTile) {
-	logger.Debug("ActionUnveilTile", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionLockTile(in *message.ActionLockTile) {
-	logger.Debug("ActionLockTile", zap.Reflect("in", in))
 }
 func (m *Majsoul) ActionDiscardTile(in *message.ActionDiscardTile) {
-	logger.Debug("ActionDiscardTile", zap.Reflect("in", in))
 	m.Dahai(int(in.Seat), in.Tile, in.Moqie, in.Operation)
 }
 func (m *Majsoul) ActionDealTile(in *message.ActionDealTile) {
@@ -128,6 +119,9 @@ func (m *Majsoul) ActionDealTile(in *message.ActionDealTile) {
 		in.Tile = "?"
 	}
 	m.Tsumo(int(in.Seat), in.Tile, in.Operation)
+	if in.Liqi != nil {
+		m.ReachAccepted(int(in.Liqi.Seat))
+	}
 }
 func (m *Majsoul) ActionChiPengGang(in *message.ActionChiPengGang) {
 	logger.Debug("ActionChiPengGang", zap.Reflect("in", in))
@@ -137,7 +131,7 @@ func (m *Majsoul) ActionChiPengGang(in *message.ActionChiPengGang) {
 			f = int(from)
 		}
 	}
-	switch in.Type {
+	switch in.Type + 1 {
 	case majsoul.CHI:
 		m.UAkochan.Chi(int(in.Seat), f, GetUAkochanTiles(in.Tiles)[0], GetUAkochanTiles(in.Tiles))
 	case majsoul.PON:
@@ -145,7 +139,10 @@ func (m *Majsoul) ActionChiPengGang(in *message.ActionChiPengGang) {
 	case majsoul.MINKAN:
 		m.UAkochan.Daiminkan(int(in.Seat), f, GetUAkochanTiles(in.Tiles)[0], GetUAkochanTiles(in.Tiles))
 	default:
-		logger.Debug("ActionChiPengGang in.Type not found", zap.Reflect("in", in))
+		logger.Error("ActionChiPengGang in.Type not found", zap.Reflect("in", in))
+	}
+	if in.Liqi != nil {
+		m.ReachAccepted(int(in.Liqi.Seat))
 	}
 }
 func (m *Majsoul) ActionGangResult(in *message.ActionGangResult)       {}
@@ -167,7 +164,7 @@ func (m *Majsoul) ActionAnGangAddGang(in *message.ActionAnGangAddGang) {
 func (m *Majsoul) ActionBaBei(in *message.ActionBaBei) {}
 func (m *Majsoul) ActionHule(in *message.ActionHule) {
 	f := in.Hules[0].Seat
-	m.UAkochan.Reach(int(f))
+	m.UAkochan.Hora_(int(f), int(in.Hules[0].Seat))
 	m.UAkochan.EndKyoku()
 	_, err := m.ConfirmNewRound(m.Ctx, &message.ReqCommon{})
 	if err != nil {

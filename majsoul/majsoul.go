@@ -226,18 +226,18 @@ func (majsoul *Majsoul) Login(username, password string) {
 		return
 	}
 	majsoul.Account = loginRes.Account
-	logger.Debug("Login success", zap.Reflect("Nickname", loginRes.Account.Nickname))
+	logger.Debug("Majsoul.Login", zap.Reflect("Nickname", loginRes.Account.Nickname))
 }
 
 func (majsoul *Majsoul) GetVersion() *Version {
 	body, err := majsoul.request.Get(fmt.Sprintf("1/version.json?randv=%d", rand.Intn(1000000000)))
 	if err != nil {
-		logger.Panic("GetVersion", zap.Error(err))
+		logger.Panic("Majsoul.GetVersion", zap.Error(err))
 	}
 	majsoul.Version = new(Version)
 	err = json.Unmarshal(body, majsoul.Version)
 	if err != nil {
-		logger.Panic("GetVersion", zap.Error(err))
+		logger.Panic("Majsoul.GetVersion", zap.Error(err))
 	}
 	return majsoul.Version
 }
@@ -247,7 +247,7 @@ func (majsoul *Majsoul) init() {
 	if version.Version != "0.10.105.w" {
 		logger.Info("liqi.json的版本为0.10.105.w,雀魂当前版本为", zap.String("Version", version.Version))
 	} else {
-		logger.Debug("当前雀魂版本为", zap.String("Version", version.Version))
+		logger.Debug("Majsoul.init", zap.String("Version", version.Version))
 	}
 }
 
@@ -258,7 +258,7 @@ func (majsoul *Majsoul) heatbeat() {
 		case <-t.C:
 			_, err := majsoul.Heatbeat(majsoul.Ctx, &message.ReqHeatBeat{})
 			if err != nil {
-				logger.Info("Heatbeat", zap.Error(err))
+				logger.Info("Majsoul.Heatbeat", zap.Error(err))
 				return
 			}
 		}
@@ -267,14 +267,12 @@ func (majsoul *Majsoul) heatbeat() {
 
 func (majsoul *Majsoul) receiveConn() {
 	for data := range majsoul.conn.Receive() {
-		logger.Debug("majsoul.receiveConn", zap.Reflect("raw", data))
 		majsoul.handleNotify(data)
 	}
 }
 
 func (majsoul *Majsoul) receiveGame() {
 	for data := range majsoul.game.Receive() {
-		logger.Debug("majsoul.receiveGame", zap.Reflect("raw", data))
 		majsoul.handleNotify(data)
 	}
 }
@@ -471,9 +469,7 @@ func (majsoul *Majsoul) NotifyRoomGameStart(notify *message.NotifyRoomGameStart)
 	_, err = majsoul.EnterGame(majsoul.Ctx, &message.ReqCommon{})
 	if err != nil {
 		logger.Panic("NotifyRoomGameStart", zap.Error(err))
-		return
 	}
-	logger.Debug("EnterGame")
 }
 func (majsoul *Majsoul) NotifyMatchGameStart(notify *message.NotifyMatchGameStart)         {}
 func (majsoul *Majsoul) NotifyRoomPlayerReady(notify *message.NotifyRoomPlayerReady)       {}

@@ -38,7 +38,7 @@ func NewClientConn(ctx context.Context, addr string) *ClientConn {
 	}
 	err := cConn.WSClient.Connect()
 	if err != nil {
-		logger.Fatal("connect to websocket server failed", zap.Error(err))
+		logger.Panic("majsoul.NewClientConn", zap.Error(err))
 	}
 	go cConn.loop()
 	return cConn
@@ -54,7 +54,7 @@ receive:
 		case MsgTypeResponse:
 			c.handleResponse(msg)
 		default:
-			logger.Info("message does not have any path", zap.ByteString("msg", msg))
+			logger.Info("ClientConn.loop no case", zap.ByteString("msg", msg))
 		}
 		select {
 		case <-c.ctx.Done():
@@ -68,46 +68,47 @@ func (c *ClientConn) handleNotify(msg []byte) {
 	wrapper := new(message.Wrapper)
 	err := proto.Unmarshal(msg[1:], wrapper)
 	if err != nil {
-		logger.Error("handleNotify", zap.Error(err))
+		logger.Error("ClientConn.handleNotify", zap.Error(err))
 		return
 	}
-	logger.Debug("handleNotify", zap.String("name", wrapper.Name))
 	pm := message.GetNotifyType(wrapper.Name)
 	if pm == nil {
-		logger.Error("handleNotify", zap.String("name", wrapper.Name))
+		logger.Error("ClientConn.handleNotify", zap.String("name", wrapper.Name))
 		return
 	}
 	err = proto.Unmarshal(wrapper.Data, pm)
 	if err != nil {
-		logger.Error("handleNotify", zap.Error(err))
+		logger.Error("ClientConn.handleNotify", zap.Error(err))
 		return
 	}
+	logger.Debug("ClientConn.handleNotify", zap.String("name", wrapper.Name), zap.Reflect("data", pm))
 	c.notify <- pm
 }
 
 func (c *ClientConn) handleResponse(msg []byte) {
-	key := (msg[2] << 8) + msg[1]
+	key := (msg[2] << 7) + msg[1]
 	v, ok := c.replys.Load(key)
 	if !ok {
-		logger.Error("Response not found", zap.Uint8("key", key))
+		logger.Error("ClientConn.handleResponse not found", zap.Uint8("key", key))
 		return
 	}
 	reply, ok := v.(*Reply)
 	if !ok {
-		logger.Error("rv not proto.Message", zap.Reflect("rv", reply))
+		logger.Error("ClientConn.handleResponse rv not proto.Message", zap.Reflect("rv", reply))
 		return
 	}
 	wrapper := new(message.Wrapper)
 	err := proto.Unmarshal(msg[3:], wrapper)
 	if err != nil {
-		logger.Error("proto.Unmarshal failed", zap.Error(err))
+		logger.Error("ClientConn.handleResponse", zap.Error(err))
 		return
 	}
 	err = proto.Unmarshal(wrapper.Data, reply.out)
 	if err != nil {
-		logger.Error("proto.Unmarshal failed", zap.Error(err))
+		logger.Error("ClientConn.handleResponse", zap.Error(err))
 		return
 	}
+	logger.Debug("ClientConn.handleResponse", zap.String("name", wrapper.Name), zap.Reflect("data", reply.out))
 	close(reply.wait)
 }
 
@@ -121,7 +122,7 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, 
 
 	body, err := proto.Marshal(in.(proto.Message))
 	if err != nil {
-		logger.DPanic("marshal message failed", zap.Error(err))
+		logger.DPanic("ClientConn.Invoke", zap.Error(err))
 		return fmt.Errorf("marshal message failed")
 	}
 
@@ -130,16 +131,18 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, 
 		Data: body,
 	}
 
+	logger.Debug("ClientConn.Invoke", zap.String("name", wrapper.Name), zap.Reflect("data", in))
+
 	body, err = proto.Marshal(wrapper)
 	if err != nil {
-		logger.DPanic("marshal message failed", zap.Error(err))
+		logger.DPanic("ClientConn.Invoke", zap.Error(err))
 		return fmt.Errorf("marshal message failed")
 	}
 	buff := new(bytes.Buffer)
 	c.msgIndex %= 255
 	buff.WriteByte(MsgTypeRequest)
-	buff.WriteByte(c.msgIndex - (c.msgIndex >> 8 << 8))
-	buff.WriteByte(c.msgIndex >> 8)
+	buff.WriteByte(c.msgIndex - (c.msgIndex >> 7 << 7))
+	buff.WriteByte(c.msgIndex >> 7)
 	buff.Write(body)
 	c.Send(buff.Bytes())
 	reply := &Reply{
@@ -147,7 +150,8 @@ func (c *ClientConn) Invoke(ctx context.Context, method string, in interface{}, 
 		wait: make(chan struct{}),
 	}
 	if _, ok := c.replys.LoadOrStore(c.msgIndex, reply); ok {
-		logger.DPanic("c.msgIndex exists", zap.Uint8("msgIndex", c.msgIndex))
+		logger.DPanic("ClientConn.Invoke index exists", zap.Uint8("msgIndex", c.msgIndex))
+		return fmt.Errorf("index exists")
 	}
 	defer c.replys.Delete(c.msgIndex)
 	c.msgIndex++

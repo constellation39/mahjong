@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfe55c9e-bcee-4726-bfad-a22fca119cc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/buildInfo.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/client.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/main/action.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/action.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/majsoul/main/notify.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/notify.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/main/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/main/uakochan.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/majsoul/majsoul.go" beforeDir="false" afterPath="$PROJECT_DIR$/majsoul/majsoul.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uakochan/main/main.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/uakochan/uakochan.go" beforeDir="false" afterPath="$PROJECT_DIR$/uakochan/uakochan.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/logger/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/net/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/net/websocket.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/net/websocket.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,5 +107,16 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/majsoul/majsoul.go</url>
+          <line>102</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

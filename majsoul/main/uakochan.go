@@ -8,6 +8,10 @@ import (
 	"utils/logger"
 )
 
+func (m *Majsoul) ReachAccepted(actor int) {
+	m.UAkochan.ReachAccepted_(actor)
+}
+
 func (m *Majsoul) Tsumo(actor int, tile string, optionalOperationList *message.OptionalOperationList) {
 	reply := m.UAkochan.Tsumo(actor, GetUAkochanTile(tile))
 

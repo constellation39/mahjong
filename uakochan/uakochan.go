@@ -32,8 +32,8 @@ func listen() {
 				continue
 			}
 			logger.Debug("uakochan.listen Accept", zap.String("addr", conn.RemoteAddr().String()))
-			if len(waits) > 0 {
-				logger.Error("len(waits) == 0", zap.String("listener", conn.RemoteAddr().String()))
+			if len(waits) == 0 {
+				logger.Error("uakochan.listen no wait", zap.String("listener", conn.RemoteAddr().String()))
 				err := conn.Close()
 				if err != nil {
 					return
@@ -66,7 +66,7 @@ func New() *UAkochan {
 	case <-uAkochan.wait:
 	}
 	uAkochan.Hello()
-	logger.Info("uakochan.New", zap.String("duration", time.Since(now).String()))
+	logger.Info("uakochan.New", zap.String("time", time.Since(now).String()))
 	return uAkochan
 }
 
@@ -237,6 +237,17 @@ func (uAkochan *UAkochan) ReachAccepted(actor int, deltas []int, scores []int) {
 	logger.Debug("UAkochan.ReachAccepted")
 }
 
+func (uAkochan *UAkochan) ReachAccepted_(actor int) {
+	err := uAkochan.invoke(&ReachAccepted{
+		Type:  "reach_accepted",
+		Actor: actor,
+	})
+	if err != nil {
+		logger.Error("UAkochan.ReachAccepted_", zap.Error(err))
+	}
+	logger.Debug("UAkochan.ReachAccepted_")
+}
+
 func (uAkochan *UAkochan) Hora(actor, target int, pai string, uradoraMarkers, horaTehais []string, yakus [][]interface{}, fu, fan, horaPoints int, deltas []int, scores []int) {
 	err := uAkochan.invoke(&Hora{
 		Type:           "hora",
@@ -258,13 +269,25 @@ func (uAkochan *UAkochan) Hora(actor, target int, pai string, uradoraMarkers, ho
 	logger.Debug("UAkochan.Hora")
 }
 
+func (uAkochan *UAkochan) Hora_(actor, target int) {
+	err := uAkochan.invoke(&Hora{
+		Type:   "hora",
+		Actor:  actor,
+		Target: target,
+	})
+	if err != nil {
+		logger.Error("UAkochan.Hora", zap.Error(err))
+	}
+	logger.Debug("UAkochan.Hora")
+}
+
 func (uAkochan *UAkochan) EndKyoku() {
 	err := uAkochan.invoke(&EndKyoku{Type: "end_kyoku"})
 	if err != nil {
 		logger.Error("UAkochan.EndKyoku", zap.Error(err))
 		return
 	}
-	logger.Error("UAkochan.EndKyoku")
+	logger.Debug("UAkochan.EndKyoku")
 }
 
 func (uAkochan *UAkochan) Ryukyoku(reason string, tehais [][]string, tenpais []bool, deltas, scores []int) {
@@ -279,7 +302,7 @@ func (uAkochan *UAkochan) Ryukyoku(reason string, tehais [][]string, tenpais []b
 	if err != nil {
 		logger.Error("UAkochan.Ryukyoku", zap.Error(err))
 	}
-	logger.Error("UAkochan.Ryukyoku")
+	logger.Debug("UAkochan.Ryukyoku")
 }
 
 func (uAkochan *UAkochan) Ryukyoku_() {
@@ -289,7 +312,7 @@ func (uAkochan *UAkochan) Ryukyoku_() {
 	if err != nil {
 		logger.Error("UAkochan.Ryukyoku_", zap.Error(err))
 	}
-	logger.Error("UAkochan.Ryukyoku_")
+	logger.Debug("UAkochan.Ryukyoku_")
 }
 
 //func (uAkochan *UAkochan) invoke(in interface{}, out interface{}) {
@@ -334,7 +357,7 @@ func (uAkochan *UAkochan) receive() {
 			break
 		}
 		data = data[:len(data)-1]
-		logger.Debug("recv:", zap.ByteString("raw", data))
+		logger.Debug("UAkochan.receive", zap.ByteString("raw", data))
 		err = json.Unmarshal(data, t)
 		if err != nil {
 			logger.Error("UAkochan.receive", zap.Error(err))
